@@ -2,10 +2,9 @@
   <div id="home">
     <!-- 关于对话框 -->
     <el-dialog
-      title="关于"
+      title="关于本站"
       width="60%"
       center
-      show-close="false"
       :visible.sync="centerDialogVisible"
       @close="closeDialog"
       custom-class="el-opacity"
@@ -15,13 +14,70 @@
     <el-drawer
       direction="ltr"
       :visible="drawerVisible"
-      show-close="false"
-      custom-class=" el-opacity"
+      custom-class="el-opacity"
       @close="closeDrawer"
+      size="26%"
     >
+      <!-- 内容 -->
+
+      <div id="loginInput">
+        <!-- 头像 -->
+        <el-row class="loginAvatar">
+          <el-col :span="24" :offset="0"
+            ><el-avatar
+              :size="100"
+              icon="el-icon-user-solid"
+              style="font-size:60px"
+            >
+            </el-avatar
+          ></el-col>
+        </el-row>
+        <!-- 登陆输入 -->
+        <el-row id="loginInput">
+          <el-col :span="22" :offset="1">
+            <el-form
+              :model="ruleForm"
+              :rules="rules"
+              ref="ruleForm"
+              status-icon
+            >
+              <el-form-item label="用户名" prop="name">
+                <el-input v-model="ruleForm.name"></el-input>
+              </el-form-item>
+              <el-form-item type="password" label="密码" prop="password">
+                <el-input v-model="ruleForm.password"></el-input>
+              </el-form-item>
+              <el-form-item label="确认密码" prop="checkPass">
+                <el-input
+                  type="password"
+                  v-model="ruleForm.checkPass"
+                  autocomplete="off"
+                ></el-input>
+              </el-form-item>
+              <!-- 表单按钮 -->
+              <el-row :gutter="0" class="loginButton">
+                <el-form-item style="margin-top:20px">
+                  <el-col>
+                    <el-button type="info" @click="resetLoginForm" round
+                      >重置<i class="el-icon-s-release el-icon--right"></i
+                    ></el-button>
+                    <el-button type="primary" @click="login" round
+                      >登录<i class="el-icon-upload el-icon--right"></i
+                    ></el-button>
+                  </el-col>
+                </el-form-item>
+              </el-row>
+            </el-form>
+          </el-col>
+        </el-row>
+      </div>
     </el-drawer>
     <!-- 导航nav -->
-    <el-header class="nav" ref="nav">
+    <el-header
+      class="nav"
+      ref="nav"
+      :class="{ transparent: isTransparent == 1 }"
+    >
       <el-row>
         <el-col :span="8"
           ><a href="/" class="left"
@@ -172,7 +228,6 @@
           }"
         ></div>
       </div>
-      <!-- 第一屏登录页 -->
       <!-- 第二屏 -->
       <div class="section" id="home2">
         <!-- 第二屏Corpus -->
@@ -200,6 +255,26 @@ import like from "./like.vue";
 
 export default {
   data() {
+    //表单验证密码相同
+    var validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入密码"));
+      } else {
+        if (this.ruleForm.checkPass !== "") {
+          this.$refs.ruleForm.validateField("checkPass");
+        }
+        callback();
+      }
+    };
+    var validatePass2 = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请再次输入密码"));
+      } else if (value !== this.ruleForm.password) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    };
     return {
       //fullpage插件设置
       options: {
@@ -222,12 +297,40 @@ export default {
       isclick2: true,
       //防止nav变化过快
       isscroll: true,
+      // 收藏页nav透明度
+      isTransparent: 0,
       // 关于对话框显示
       centerDialogVisible: false,
       // 登陆显示
-      drawerVisible: false
+      drawerVisible: false,
+      // 登陆表单绑定
+      ruleForm: {
+        name: "",
+        password: "",
+        checkPass: ""
+      },
+      //登录表单验证规则
+      rules: {
+        name: [
+          { required: true, message: "请输入用户名", trigger: "blur" },
+          { min: 1, max: 20, message: "长度在 1 到 20 个字符", trigger: "blur" }
+        ],
+        password: [
+          { required: true, message: "请输入密码", trigger: "blur" },
+          {
+            min: 3,
+            max: 20,
+            message: "长度在 3 到 20 个字符",
+            trigger: "blur"
+          },
+          { validator: validatePass, trigger: "blur" }
+        ],
+        checkPass: [{ validator: validatePass2, trigger: "blur" }]
+      }
     };
   },
+  // 登陆表单校验规则
+
   created() {
     this.set_bgimg_interval();
   },
@@ -289,20 +392,35 @@ export default {
         }, 1000);
       }
     },
-    // nav栏渐变:能否得到当前section的值?
+    // nav栏渐变控制；可以理解为朝向；第一个section索引为0
     navChangeStyle(e) {
+      alert(this.$refs.fullpage.api.getActiveSlide().index);
+      if (this.$refs.fullpage.api.getActiveSlide().index == 1) {
+        document.querySelector(".nav").style.backgroundColor =
+          "rgba(189, 182, 182, 0.1)";
+        return;
+      }
       if (this.isscroll) {
-        this.isscroll = false;
-        if (e.deltaY > 0) {
-          document.querySelector(".nav").style.backgroundColor =
-            "rgba(255, 255, 255, 0.65)";
-        } else {
-          document.querySelector(".nav").style.backgroundColor =
-            "rgba(255, 255, 255, 0.1)";
+        //去下面
+        if (this.$refs.fullpage.api.getActiveSection().index == 1) {
+          if (e.deltaY > 0) {
+            this.isscroll = false;
+            document.querySelector(".nav").style.backgroundColor =
+              "rgba(255, 255, 255, 0.65)";
+          }
+        }
+        //去上面
+        if (this.$refs.fullpage.api.getActiveSection().index == 0) {
+          if (e.deltaY < 0) {
+            this.isscroll = false;
+            document.querySelector(".nav").style.backgroundColor =
+              "rgba(255, 255, 255, 0.1)";
+          }
         }
         setTimeout(() => {
           this.isscroll = true;
-        }, 780);
+        }, 100);
+        this.getSlide();
       }
     },
     //滚动到第几页，第几个幻灯片；页面从1计算，幻灯片从0计算;同时改变nav,且定位到头部
@@ -310,6 +428,7 @@ export default {
       this.$refs.fullpage.api.moveTo(section, slide);
       document.querySelector(".nav").style.backgroundColor =
         "rgba(255, 255, 255, 0.65)";
+
       // this.$refs.fullpage.api.fitToSection();
     },
     closeDialog() {
@@ -317,7 +436,11 @@ export default {
     },
     closeDrawer() {
       this.drawerVisible = false;
-    }
+    },
+    //表单提交
+    login() {},
+    // 重置表单
+    resetLoginForm() {}
   }
 };
 </script>

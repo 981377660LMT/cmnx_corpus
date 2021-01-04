@@ -1,0 +1,19 @@
+#like {
+    background-color: rgba(189, 182, 182, 0.1);
+  }
+  
+  #like {
+    position: relative;
+  }
+  
+  /* 手机 */
+  #like .marvel-device.iphone8plus.landscape {
+    box-shadow: 0px 0px 15px 5px #666;
+    opacity: 0.8;
+    position: absolute;
+    width: 60%;
+    height: 500px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }

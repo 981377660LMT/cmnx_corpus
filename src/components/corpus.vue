@@ -13,7 +13,7 @@
       <!-- 卡片里放东西 -->
 
       <el-row :gutter="20">
-        <el-col :span="12" :offset="6" id="help" @click="showLive2d = true"
+        <el-col :span="12" :offset="6" id="help" @click="showHelp = true"
           >需要一些帮助?</el-col
         >
       </el-row>
@@ -48,11 +48,11 @@
         class="paginationUp"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage4"
-        :page-sizes="[100, 200, 300, 400]"
-        :page-size="100"
+        :current-page="currentPage"
+        :page-sizes="[3, 5, 10, 20]"
+        :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400"
+        :total="totalNumber"
       >
       </el-pagination>
       <!-- 表格 -->
@@ -87,18 +87,14 @@
         class="paginationBottom"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage4"
-        :page-sizes="[100, 200, 300, 400]"
-        :page-size="100"
+        :current-page="currentPage"
+        :page-sizes="[3, 5, 10, 20]"
+        :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400"
+        :total="totalNumber"
       >
       </el-pagination>
     </el-card>
-    <!-- 回到顶部 -->
-    <el-backtop
-      target=".page-component__scroll .el-scrollbar__wrap"
-    ></el-backtop>
   </div>
 </template>
 
@@ -107,6 +103,14 @@ export default {
   name: "corpus",
   data() {
     return {
+      // 我打算前端分页还是后端分页？数据量大，肯定是后端分页
+      // 向后台发送currentPage,pageSize,input三个参数，全部查询排序取一部分后返回到tableData里
+      //查询到的词条数
+      totalNumber: 10,
+      //当前的页数,默认1
+      currentPage: 1,
+      //当前的页数size，默认3
+      pageSize: 3,
       //绑定表格数据
       tableData: [
         {
@@ -129,15 +133,15 @@ export default {
           chinese: "变迁，沧海桑田，要怎样面对呢？",
           japanese: "どうなるものか、この天地の大きな動きが。",
           like: false
-        },
-        {
-          from: "Chusingura46+1 S",
-          chinese:
-            "「その傷は、我が亡き主君である浅野内匠頭が殿中、松の廊下で刃傷の際に切りつけた傷ではござらぬか？」",
-          japanese:
-            "「その傷は、我が亡き主君である浅野内匠頭が殿中、松の廊下で刃傷の際に切りつけた傷ではござらぬか？」",
-          like: false
         }
+        // {
+        //   from: "Chusingura46+1 S",
+        //   chinese:
+        //     "「その傷は、我が亡き主君である浅野内匠頭が殿中、松の廊下で刃傷の際に切りつけた傷ではござらぬか？」",
+        //   japanese:
+        //     "「その傷は、我が亡き主君である浅野内匠頭が殿中、松の廊下で刃傷の際に切りつけた傷ではござらぬか？」",
+        //   like: false
+        // },
         // {
         //   from: "美少女万华镜1-4",
         //   chinese:
@@ -167,7 +171,7 @@ export default {
         //   japanese:
         //     "不敵な含笑に嗜虐の色さえ滲ませながら、｜朱《チュウ》はその破壊力を見せつけるかのように、おのれの周囲に鞭を振り巡らせて結界を張った。",
         //   like: true
-        // }
+        // },
         // {
         //   from: "罗生门",
         //   chinese:
@@ -183,7 +187,7 @@ export default {
         //   japanese:
         //     "鬱蒼とした山の中の道を一人歩く少女の姿も同様に、木の葉の陰から届く月光に映し出される。",
         //   like: false
-        // },
+        // }
         // {
         //   from: "明日方舟语音集",
         //   chinese: "过道内严禁烟火，请各位干员不要在走道吸烟，谢谢配合！",
@@ -239,8 +243,8 @@ export default {
       ],
       // input里的输入
       input: "",
-      // 显示live2d
-      showLive2d: false,
+      // 显示帮助
+      showHelp: false,
       // 夜间模式
       switch_value: true
     };
@@ -275,6 +279,22 @@ export default {
         document.querySelector(".paginationUp").style.opacity = "0.2";
         document.querySelector(".paginationBottom").style.opacity = "0.2";
       }
+    },
+    // 开始搜索
+    doSearch() {
+      // 发送请求
+      // this.totalNumber = 10;
+      // this.tableData=
+    },
+    // 页码size变化
+    handleSizeChange(newSize) {
+      this.pageSize = newSize;
+      // this.doSearch();
+    },
+    // 当前页码数变化
+    handleCurrentChange(newPage) {
+      this.currentPage = newPage;
+      // this.doSearch();
     }
   }
 };

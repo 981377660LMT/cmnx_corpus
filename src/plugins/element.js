@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { Button, TableColumn, Input, Drawer, Form, FormItem, MessageBox, Card, Message, Backtop, Header, Icon, Loading, Table, Popover, Row, Col, Dialog, Pagination, Switch } from 'element-ui'
+import { Button, Avatar, TableColumn, Input, Drawer, Form, FormItem, MessageBox, Card, Message, Backtop, Header, Icon, Loading, Table, Popover, Row, Col, Dialog, Pagination, Switch } from 'element-ui'
 
 Vue.use(Dialog)
 Vue.use(Drawer)
@@ -19,6 +19,7 @@ Vue.use(FormItem)
 Vue.use(Input)
 Vue.use(TableColumn)
 Vue.use(Switch)
+Vue.use(Avatar)
 //弹框组件挂载到vue原型对象上
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm

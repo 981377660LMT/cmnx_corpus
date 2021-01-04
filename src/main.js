@@ -7,6 +7,7 @@ import 'fullpage.js/vendors/scrolloverflow';
 import VueFullPage from 'vue-fullpage.js'
 
 
+
 //导入全局样式表
 import './assets/css/global.css'
 import './assets/css/fullpage.min.css'
