@@ -1,6 +1,26 @@
 <template>
   <div id="home">
-    <!-- 导航固定在整个应用的头部 -->
+    <!-- 关于对话框 -->
+    <el-dialog
+      title="关于"
+      width="60%"
+      center
+      show-close="false"
+      :visible.sync="centerDialogVisible"
+      @close="closeDialog"
+      custom-class="el-opacity"
+    >
+    </el-dialog>
+    <!-- 登陆的drawer -->
+    <el-drawer
+      direction="ltr"
+      :visible="drawerVisible"
+      show-close="false"
+      custom-class=" el-opacity"
+      @close="closeDrawer"
+    >
+    </el-drawer>
+    <!-- 导航nav -->
     <el-header class="nav" ref="nav">
       <el-row>
         <el-col :span="8"
@@ -36,26 +56,7 @@
         </el-col>
       </el-row>
     </el-header>
-    <!-- 关于对话框 -->
-    <el-dialog
-      title="提示"
-      :visible.sync="centerDialogVisible"
-      width="50%"
-      center
-      custom-class="el-dialog-about"
-    >
-      <span>需要注意的是内容是默认不居中的</span>
-      <span slot="footer" class="dialog-footer">
-        test
-      </span>
-    </el-dialog>
-    <!-- 登陆的drawer -->
-    <el-drawer
-      direction="ltr"
-      :visible.sync="drawerVisible"
-      custom-class="demo-drawer"
-    >
-    </el-drawer>
+
     <!-- 整个应用开始 -->
     <full-page :options="options" ref="fullpage">
       <!-- 第一屏 -->
@@ -132,7 +133,7 @@
               </li>
             </div>
             <!-- 底部标记 -->
-            <div class="arrow " @click="SectionDown">
+            <div class="arrow " @click="moveTo(2, 0)">
               <img src="../assets/arrow.png" />
             </div>
           </div>
@@ -310,6 +311,12 @@ export default {
       document.querySelector(".nav").style.backgroundColor =
         "rgba(255, 255, 255, 0.65)";
       // this.$refs.fullpage.api.fitToSection();
+    },
+    closeDialog() {
+      this.centerDialogVisible = false;
+    },
+    closeDrawer() {
+      this.drawerVisible = false;
     }
   }
 };
