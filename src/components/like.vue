@@ -1,21 +1,17 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
+  <div>
+    我喜欢的
   </div>
 </template>
 
 <script>
 export default {
-  name: "app",
+  name: "",
   data() {
     return {};
   },
-
   created() {},
-  // created时去除loading层
-  mounted() {
-    document.body.removeChild(document.getElementById("Loading"));
-  },
+  // mounted () {},
   computed: {},
   watch: {},
   methods: {}
@@ -24,4 +20,3 @@ export default {
 
 <style lang="less" scoped>
 </style>
-
