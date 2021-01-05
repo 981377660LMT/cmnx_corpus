@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../components/home.vue'
-import Error404 from '../components/error/404.vue'
-import Error500 from '../components/error/500.vue'
+import Error404 from '../components/404.vue'
+
 
 Vue.use(VueRouter)
 

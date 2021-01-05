@@ -261,7 +261,7 @@ export default {
     // 点击like按钮发生的改变操作
     changeLike() {
       // alert(1);
-      console.log(this.$parent.api);
+      console.log(this.$parent);
       // console.log(this.$refs.fullpage.api);
       // this.$refs.fullpage.api.moveTo(1, 0);
     },

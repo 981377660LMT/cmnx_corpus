@@ -73,11 +73,7 @@
       </div>
     </el-drawer>
     <!-- 导航nav -->
-    <el-header
-      class="nav"
-      ref="nav"
-      :class="{ transparent: isTransparent == 1 }"
-    >
+    <el-header class="nav" ref="nav" :class="{ navShow: isnavShow }">
       <el-row>
         <el-col :span="8"
           ><a href="/" class="left"
@@ -276,16 +272,44 @@ export default {
       }
     };
     return {
+      isnavShow: false,
+      // currentSection: this.$refs.fullpage.api.getActiveSection().index,
+      // cuurentSlide: this.$refs.fullpage.api.getActiveSlide().index,
       //fullpage插件设置
       options: {
         navigation: false,
         keyboardScrolling: false,
         controlArrows: false,
         navigationTooltips: ["Home", "Corpus"],
+        // anchors: ["firstPage", "secondPage", "thirdPage"],
         // 内容超过满屏时是否显示滚动条，需要jquery.slimscroll插件
         scrollOverflow: true,
         // 是否显示横向幻灯片的导航
-        slidesNavigation: false
+        slidesNavigation: false,
+        //Section滚动前的回调函数onLeave (index, nextIndex, direction),从0开始计算
+        onLeave: function(index, nextIndex, direction) {
+          // console.log(this.item.id);  //this是
+          // console.log(window.$vue.isnavShow);
+          // console.log(index, nextIndex, direction);
+          if (nextIndex.index == 0) {
+            window.$homeVue.currentSlide = window.$homeVue.$refs.fullpage.api.getActiveSlide().index;
+            window.$homeVue.isnavShow = false;
+          } else {
+            if (window.$homeVue.currentSlide == 0) {
+              window.$homeVue.isnavShow = true;
+            }
+          }
+        },
+        // 某一水平滑块滚动前的回调函数，从0开始算起
+        onSlideLeave(anchorLink, index, slideIndex, direction, nextSlideIndex) {
+          // console.log(index.index, slideIndex.index, nextSlideIndex);
+          if (slideIndex.index == 1) {
+            window.$homeVue.isnavShow = false;
+          } else {
+            window.$homeVue.isnavShow = true;
+          }
+        }
+        // afterLoad (anchorLink, index)到某一屏后的回调函数
       },
       //主页面图片都可能出现，steins0的图片出现几率最大
       random_arr: [steins0, steins1, steins2, steins3, steins4].sort(() => {
@@ -299,6 +323,8 @@ export default {
       isscroll: true,
       // 收藏页nav透明度
       isTransparent: 0,
+      // 记录当前的Slide，初始为0
+      currentSlide: 0,
       // 关于对话框显示
       centerDialogVisible: false,
       // 登陆显示
@@ -329,16 +355,13 @@ export default {
       }
     };
   },
-  // 登陆表单校验规则
 
   created() {
+    //挂载vue到window
+    window.$homeVue = this;
     this.set_bgimg_interval();
   },
-  mounted() {
-    //mounted相当于jquery里的ready?
-    // 这里监听不到scroll事件，用mousewheel强行代替
-    window.addEventListener("mousewheel", this.navChangeStyle);
-  },
+  mounted() {},
   computed: {},
   watch: {},
   components: {
@@ -346,9 +369,10 @@ export default {
     like
   },
   methods: {
-    test() {
-      alert(1);
-    },
+    // 得到当前的section数与slide数
+    // getSectionAndSlide() {
+    //   console.log(this.onLeave);
+    // },
     // 背景图片计时器挂载到vue对象上
     set_bgimg_interval() {
       this.bg_img_interval = window.setInterval(() => {
@@ -392,44 +416,9 @@ export default {
         }, 1000);
       }
     },
-    // nav栏渐变控制；可以理解为朝向；第一个section索引为0
-    navChangeStyle(e) {
-      alert(this.$refs.fullpage.api.getActiveSlide().index);
-      if (this.$refs.fullpage.api.getActiveSlide().index == 1) {
-        document.querySelector(".nav").style.backgroundColor =
-          "rgba(189, 182, 182, 0.1)";
-        return;
-      }
-      if (this.isscroll) {
-        //去下面
-        if (this.$refs.fullpage.api.getActiveSection().index == 1) {
-          if (e.deltaY > 0) {
-            this.isscroll = false;
-            document.querySelector(".nav").style.backgroundColor =
-              "rgba(255, 255, 255, 0.65)";
-          }
-        }
-        //去上面
-        if (this.$refs.fullpage.api.getActiveSection().index == 0) {
-          if (e.deltaY < 0) {
-            this.isscroll = false;
-            document.querySelector(".nav").style.backgroundColor =
-              "rgba(255, 255, 255, 0.1)";
-          }
-        }
-        setTimeout(() => {
-          this.isscroll = true;
-        }, 100);
-        this.getSlide();
-      }
-    },
-    //滚动到第几页，第几个幻灯片；页面从1计算，幻灯片从0计算;同时改变nav,且定位到头部
+    //滚动到第几页，第几个幻灯片；页面从1计算，幻灯片从0计算;
     moveTo(section, slide) {
       this.$refs.fullpage.api.moveTo(section, slide);
-      document.querySelector(".nav").style.backgroundColor =
-        "rgba(255, 255, 255, 0.65)";
-
-      // this.$refs.fullpage.api.fitToSection();
     },
     closeDialog() {
       this.centerDialogVisible = false;

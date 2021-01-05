@@ -1,6 +1,6 @@
 <template>
   <div id="likeScreen">
-    sadffafsdf
+    {{ test }}
   </div>
 </template>
 
@@ -8,7 +8,9 @@
 export default {
   name: "likeScreen",
   data() {
-    return {};
+    return {
+      test: window.$homeVue.isnavShow
+    };
   },
   created() {},
   // mounted () {},
