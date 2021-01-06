@@ -30,7 +30,7 @@
 
       <!-- 搜索框 -->
       <el-row :gutter="20" id="search">
-        <el-col :span="24">
+        <el-col :span="18" :offset="3">
           <el-input
             v-model="input"
             placeholder="请输入中文/日文开始搜索"

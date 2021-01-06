@@ -7,7 +7,7 @@
   z-index: 999 ;
   transition: all 0.6s ease;
   background-color: rgba(255, 255, 255, 0.1);
-  user-select: none;
+  user-select:none;
   min-width: 990px;
   font-family: '宋体';
 }
@@ -18,7 +18,7 @@
 }
 
 .nav a:hover {
-  color: #dd3333;
+  color: #42b983;
   
 }
 
@@ -109,6 +109,7 @@
     background-color: #000;
     transition: background-image 1s ease-in-out;
     overflow: hidden;
+    user-select: none;
   }
   
   #home1 .center_info {
@@ -131,7 +132,6 @@
     font-weight: bold;
     margin-block-start: 0.83em;
     margin-block-end: 0.83em;
-    user-select: none;
     cursor: pointer;
   }
 
@@ -194,7 +194,6 @@
     border-radius: 15px;
     box-sizing: initial;
     white-space: nowrap;
-    user-select: none;
   }
   
   #home1 .head_info p {

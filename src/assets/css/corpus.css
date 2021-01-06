@@ -62,10 +62,11 @@
 #corpus #search{
     opacity: 0.7;
     border-radius: 10px;
+    
 }
 
 #corpus #search .el-input{
-    font-size: 16px;
+    font-size: 18px;
 }
 
 #corpus  .el-pagination{
@@ -73,9 +74,17 @@
    
 }
 
+
 #corpus .el-table{
     border-radius: 10px;
     border:1px solid rgb(146, 144, 144);
+    font-weight: 700;
+    font-size: 16px;
+    user-select: text !important;
+}
+
+.matched{
+  color: #42b983;
 }
 
 

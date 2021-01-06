@@ -1,5 +1,5 @@
 <template>
-  <div id="home">
+  <div id="home" class="rwl-exempt">
     <!-- 关于对话框 -->
     <el-dialog
       title="关于本站"
@@ -58,10 +58,10 @@
               <el-row :gutter="0" class="loginButton">
                 <el-form-item style="margin-top:20px">
                   <el-col>
-                    <el-button type="info" @click="resetLoginForm" round
+                    <el-button type="danger" @click="resetLoginForm" round
                       >重置<i class="el-icon-s-release el-icon--right"></i
                     ></el-button>
-                    <el-button type="primary" @click="login" round
+                    <el-button type="success" @click="login" round
                       >登录<i class="el-icon-upload el-icon--right"></i
                     ></el-button>
                   </el-col>
@@ -73,7 +73,7 @@
       </div>
     </el-drawer>
     <!-- 导航nav -->
-    <el-header class="nav" ref="nav" :class="{ navShow: isnavShow }">
+    <el-header class="nav " ref="nav" :class="{ navShow: isnavShow }">
       <el-row>
         <el-col :span="8"
           ><a href="/" class="left"
@@ -273,8 +273,6 @@ export default {
     };
     return {
       isnavShow: false,
-      // currentSection: this.$refs.fullpage.api.getActiveSection().index,
-      // cuurentSlide: this.$refs.fullpage.api.getActiveSlide().index,
       //fullpage插件设置
       options: {
         navigation: false,
@@ -323,11 +321,8 @@ export default {
       isscroll: true,
       // 收藏页nav透明度
       isTransparent: 0,
-      // 记录当前的Slide，初始为0
       currentSlide: 0,
-      // 关于对话框显示
       centerDialogVisible: false,
-      // 登陆显示
       drawerVisible: false,
       // 登陆表单绑定
       ruleForm: {
