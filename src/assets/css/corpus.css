@@ -59,14 +59,14 @@
     background-color: #000000;
   }
 
-#corpus #search{
+   #corpus #search{
     opacity: 0.7;
-    border-radius: 10px;
-    
+    /* border-radius: 10px;  */
 }
 
-#corpus #search .el-input{
+html /deep/ #corpus #search .el-input{
     font-size: 18px;
+    border-radius: 5px;
 }
 
 #corpus  .el-pagination{
@@ -75,13 +75,14 @@
 }
 
 
-#corpus .el-table{
+html /deep/  #corpus .el-table{
     border-radius: 10px;
     border:1px solid rgb(146, 144, 144);
     font-weight: 700;
     font-size: 16px;
-    user-select: text !important;
+    -webkit-user-select: text;
 }
+
 
 .matched{
   color: #42b983;
@@ -89,9 +90,50 @@
 
 
 
-  #corpus .el-input,.el-pagination,.el-table{
-      margin-bottom: 30px;
-  }
+#corpus .el-input,.el-pagination,.el-table{
+  margin-bottom: 30px;
+}
+
+html /deep/ .el-select-dropdown__item.selected{
+  color:#42b983 ;
+}
+  
+html /deep/ .el-pagination__sizes .el-input .el-input__inner:hover{
+  border-color:#42b983 ;
+}
+
+html /deep/ .el-select .el-input.is-focus .el-input__inner{
+  border-color:#42b983 ;
+}
+
+html /deep/ .el-select .el-input__inner:focus{
+  border-color:#42b983 ;
+}
+
+html /deep/ .el-pager li.active{
+  color:#42b983 ;
+}
+
+html /deep/ .el-pager li:hover{
+  color:#42b983 ;
+}
+
+html /deep/ .el-select-dropdown__item.selected{
+  color:#42b983
+}
+
+html /deep/ .el-input.is-active .el-input__inner,html /deep/ .el-input__inner:focus{
+  border-color: #42b983 ;
+}
+
+html /deep/ .el-pagination span:not([class*=suffix]) {
+  font-size:16px
+}
+
+html /deep/ .el-pager li,html /deep/ .el-pagination__sizes .el-input .el-input__inner{
+  font-size:15px
+
+}
 
   #corpus .box-card::after {
     content: "© 2021 by CMNX";

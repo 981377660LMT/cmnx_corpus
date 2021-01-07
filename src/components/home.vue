@@ -1,5 +1,5 @@
 <template>
-  <div id="home" class="rwl-exempt">
+  <div id="home" class="rwl-exempt" @keydown.ctrl="test">
     <!-- 关于对话框 -->
     <el-dialog
       title="关于本站"
@@ -18,59 +18,8 @@
       @close="closeDrawer"
       size="26%"
     >
-      <!-- 内容 -->
-
-      <div id="loginInput">
-        <!-- 头像 -->
-        <el-row class="loginAvatar">
-          <el-col :span="24" :offset="0"
-            ><el-avatar
-              :size="100"
-              icon="el-icon-user-solid"
-              style="font-size:60px"
-            >
-            </el-avatar
-          ></el-col>
-        </el-row>
-        <!-- 登陆输入 -->
-        <el-row id="loginInput">
-          <el-col :span="22" :offset="1">
-            <el-form
-              :model="ruleForm"
-              :rules="rules"
-              ref="ruleForm"
-              status-icon
-            >
-              <el-form-item label="用户名" prop="name">
-                <el-input v-model="ruleForm.name"></el-input>
-              </el-form-item>
-              <el-form-item type="password" label="密码" prop="password">
-                <el-input v-model="ruleForm.password"></el-input>
-              </el-form-item>
-              <el-form-item label="确认密码" prop="checkPass">
-                <el-input
-                  type="password"
-                  v-model="ruleForm.checkPass"
-                  autocomplete="off"
-                ></el-input>
-              </el-form-item>
-              <!-- 表单按钮 -->
-              <el-row :gutter="0" class="loginButton">
-                <el-form-item style="margin-top:20px">
-                  <el-col>
-                    <el-button type="danger" @click="resetLoginForm" round
-                      >重置<i class="el-icon-s-release el-icon--right"></i
-                    ></el-button>
-                    <el-button type="success" @click="login" round
-                      >登录<i class="el-icon-upload el-icon--right"></i
-                    ></el-button>
-                  </el-col>
-                </el-form-item>
-              </el-row>
-            </el-form>
-          </el-col>
-        </el-row>
-      </div>
+      <login></login>
+      <signUp v-if="isSignUp"></signUp>
     </el-drawer>
     <!-- 导航nav -->
     <el-header class="nav " ref="nav" :class="{ navShow: isnavShow }">
@@ -244,33 +193,20 @@
 import steins0 from "../assets/steins0.jpg";
 import steins1 from "../assets/steins1.jpg";
 import steins2 from "../assets/steins2.jpg";
-import steins3 from "../assets/steins3.jpg";
-import steins4 from "../assets/steins4.jpg";
+import lovelive0 from "../assets/lovelive0.jpg";
+import arknights0 from "../assets/arknights0.jpg";
+import arknights1 from "../assets/arknights1.jpg";
+import arknights2 from "../assets/arknights2.jpg";
+import arknights3 from "../assets/arknights3.jpg";
+import arknights4 from "../assets/arknights4.jpg";
+
 import corpus from "./corpus.vue";
 import like from "./like.vue";
+import login from "../components/beforeEnter/login";
+import signUp from "../components/beforeEnter/signUp";
 
 export default {
   data() {
-    //表单验证密码相同
-    var validatePass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入密码"));
-      } else {
-        if (this.ruleForm.checkPass !== "") {
-          this.$refs.ruleForm.validateField("checkPass");
-        }
-        callback();
-      }
-    };
-    var validatePass2 = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请再次输入密码"));
-      } else if (value !== this.ruleForm.password) {
-        callback(new Error("两次输入密码不一致!"));
-      } else {
-        callback();
-      }
-    };
     return {
       isnavShow: false,
       //fullpage插件设置
@@ -290,11 +226,11 @@ export default {
           // console.log(window.$vue.isnavShow);
           // console.log(index, nextIndex, direction);
           if (nextIndex.index == 0) {
-            window.$homeVue.currentSlide = window.$homeVue.$refs.fullpage.api.getActiveSlide().index;
-            window.$homeVue.isnavShow = false;
+            document.$homeVue.currentSlide = document.$homeVue.$refs.fullpage.api.getActiveSlide().index;
+            document.$homeVue.isnavShow = false;
           } else {
-            if (window.$homeVue.currentSlide == 0) {
-              window.$homeVue.isnavShow = true;
+            if (document.$homeVue.currentSlide == 0) {
+              document.$homeVue.isnavShow = true;
             }
           }
         },
@@ -302,17 +238,25 @@ export default {
         onSlideLeave(anchorLink, index, slideIndex, direction, nextSlideIndex) {
           // console.log(index.index, slideIndex.index, nextSlideIndex);
           if (slideIndex.index == 1) {
-            window.$homeVue.isnavShow = false;
+            document.$homeVue.isnavShow = false;
           } else {
-            window.$homeVue.isnavShow = true;
+            document.$homeVue.isnavShow = true;
           }
         }
         // afterLoad (anchorLink, index)到某一屏后的回调函数
       },
       //主页面图片都可能出现，steins0的图片出现几率最大
-      random_arr: [steins0, steins1, steins2, steins3, steins4].sort(() => {
-        return 0.5 - Math.random();
-      }),
+      random_arr: this.Lodash.shuffle([
+        steins0,
+        steins1,
+        steins2,
+        lovelive0,
+        arknights0,
+        arknights1,
+        arknights2,
+        arknights3,
+        arknights4
+      ]),
       random_home_img_index: 0,
       //防止切换图片过快
       isclick1: true,
@@ -323,37 +267,13 @@ export default {
       isTransparent: 0,
       currentSlide: 0,
       centerDialogVisible: false,
-      drawerVisible: false,
-      // 登陆表单绑定
-      ruleForm: {
-        name: "",
-        password: "",
-        checkPass: ""
-      },
-      //登录表单验证规则
-      rules: {
-        name: [
-          { required: true, message: "请输入用户名", trigger: "blur" },
-          { min: 1, max: 20, message: "长度在 1 到 20 个字符", trigger: "blur" }
-        ],
-        password: [
-          { required: true, message: "请输入密码", trigger: "blur" },
-          {
-            min: 3,
-            max: 20,
-            message: "长度在 3 到 20 个字符",
-            trigger: "blur"
-          },
-          { validator: validatePass, trigger: "blur" }
-        ],
-        checkPass: [{ validator: validatePass2, trigger: "blur" }]
-      }
+      drawerVisible: false
     };
   },
 
   created() {
-    //挂载vue到window
-    window.$homeVue = this;
+    //挂载
+    document.$homeVue = this;
     this.set_bgimg_interval();
   },
   mounted() {},
@@ -361,14 +281,14 @@ export default {
   watch: {},
   components: {
     corpus,
-    like
+    like,
+    login,
+    signUp
   },
   methods: {
-    // 得到当前的section数与slide数
-    // getSectionAndSlide() {
-    //   console.log(this.onLeave);
-    // },
-    // 背景图片计时器挂载到vue对象上
+    test() {
+      console.log("1");
+    },
     set_bgimg_interval() {
       this.bg_img_interval = window.setInterval(() => {
         this.random_home_img_index =
@@ -377,7 +297,6 @@ export default {
             : this.random_home_img_index + 1;
       }, 10000);
     },
-    //点击→
     image_index_plus() {
       if (this.isclick1) {
         this.isclick1 = false;
@@ -394,15 +313,14 @@ export default {
         }, 1000);
       }
     },
-    // 点击←
     image_index_minus() {
       if (this.isclick2) {
         this.isclick2 = false;
         this.isclick1 = false;
         this.random_home_img_index =
-          this.random_home_img_index == this.random_arr.length - 1
-            ? 0
-            : this.random_home_img_index + 1;
+          this.random_home_img_index == 0
+            ? this.random_arr.length - 1
+            : this.random_home_img_index - 1;
         clearInterval(this.bg_img_interval);
         this.set_bgimg_interval();
         setTimeout(() => {
