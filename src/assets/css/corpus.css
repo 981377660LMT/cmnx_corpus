@@ -139,3 +139,34 @@ html /deep/ .el-pager li,html /deep/ .el-pagination__sizes .el-input .el-input__
     font-family: "Microsoft YaHei";
 }
 
+
+#corpus .arrow{
+  position: absolute;
+  bottom: 50%;
+  right: 10px;
+  animation-name:arrow-twinkling-right;
+  animation-duration: 1.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  cursor: pointer;
+ 
+}
+
+@keyframes arrow-twinkling-right {
+  0% {
+    opacity: 0.3;
+    transform: translate(0, 0);
+  }
+  50% {
+    opacity: 0.3;
+    transform: translate(-10px,0);
+  }
+  100% {
+    opacity: 0.3;
+    transform: translate(0, 0);
+  }
+}
+
+#corpus .arrow img{
+    transform: rotate(-90deg);
+}

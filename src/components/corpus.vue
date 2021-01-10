@@ -96,6 +96,10 @@
       >
       </el-pagination>
     </el-card>
+    <!-- 右箭头 -->
+    <div class="arrow " @click="goToCorpus">
+      <img src="../assets/arrow.png" />
+    </div>
   </div>
 </template>
 
@@ -301,6 +305,9 @@ export default {
     handleCurrentChange(newPage) {
       this.currentPage = newPage;
       // this.doSearch();
+    },
+    goToCorpus() {
+      this.$parent.api.moveTo(2, 1);
     }
   }
 };

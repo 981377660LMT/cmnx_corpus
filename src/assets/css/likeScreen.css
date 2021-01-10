@@ -1,5 +1,8 @@
 #likeScreen{
     width: 100%;
     height: 100%;
-    background-image: url(../steins0.jpg);
+    background-color: #303033;
+    background-image: url(../arknights1.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
