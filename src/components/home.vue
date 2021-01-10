@@ -16,7 +16,7 @@
       :visible="drawerVisible"
       custom-class="el-opacity"
       @close="closeDrawer"
-      size="26%"
+      size="20%"
     >
       <login></login>
       <signUp v-if="isSignUp"></signUp>
@@ -33,7 +33,7 @@
         <el-col :span="16"
           ><a class="right" @click="drawerVisible = true"
             ><div class="el-icon-user-solid icon"></div>
-            登录
+            我的
           </a>
           <a class="middle" @click="moveTo(2, 1)"
             ><div class="el-icon-star-on icon"></div>
@@ -82,7 +82,7 @@
               <li id="bg-pre">
                 <img
                   class="flipx"
-                  src="https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/images/next-b.svg"
+                  src="../assets/next-b.svg"
                   @click="image_index_minus"
                 />
               </li>
@@ -127,10 +127,7 @@
                 </a>
               </li>
               <li id="bg-next">
-                <img
-                  src="https://cdn.jsdelivr.net/gh/moezx/cdn@3.1.9/img/Sakura/images/next-b.svg"
-                  @click="image_index_plus"
-                />
+                <img src="../assets/next-b.svg" @click="image_index_plus" />
               </li>
             </div>
             <!-- 底部标记 -->
@@ -191,19 +188,18 @@
 <script>
 // 改变图片的方式：import图片存入数组，style绑定
 import steins0 from "../assets/steins0.jpg";
-import steins1 from "../assets/steins1.jpg";
-import steins2 from "../assets/steins2.jpg";
 import lovelive0 from "../assets/lovelive0.jpg";
-import arknights0 from "../assets/arknights0.jpg";
-import arknights1 from "../assets/arknights1.jpg";
 import arknights2 from "../assets/arknights2.jpg";
 import arknights3 from "../assets/arknights3.jpg";
 import arknights4 from "../assets/arknights4.jpg";
+import arknights7 from "../assets/arknights7.jpg";
+import arknights8 from "../assets/arknights8.jpg";
+import arknights9 from "../assets/arknights9.jpg";
 
-import corpus from "./corpus.vue";
-import like from "./like.vue";
-import login from "../components/beforeEnter/login";
-import signUp from "../components/beforeEnter/signUp";
+import Corpus from "./Corpus";
+import Like from "./Like";
+import Login from "../components/beforeEnter/Login";
+import SignUp from "../components/beforeEnter/SignUp";
 
 export default {
   data() {
@@ -221,41 +217,43 @@ export default {
         // 是否显示横向幻灯片的导航
         slidesNavigation: false,
         //Section滚动前的回调函数onLeave (index, nextIndex, direction),从0开始计算
-        onLeave: function(index, nextIndex, direction) {
-          // console.log(this.item.id);  //this是
-          // console.log(window.$vue.isnavShow);
-          // console.log(index, nextIndex, direction);
+        onLeave: (index, nextIndex, direction) => {
+          // console.log(this);
           if (nextIndex.index == 0) {
-            document.$homeVue.currentSlide = document.$homeVue.$refs.fullpage.api.getActiveSlide().index;
-            document.$homeVue.isnavShow = false;
+            this.currentSlide = this.$refs.fullpage.api.getActiveSlide().index;
+            this.isnavShow = false;
           } else {
-            if (document.$homeVue.currentSlide == 0) {
-              document.$homeVue.isnavShow = true;
+            if (this.currentSlide == 0) {
+              this.isnavShow = true;
             }
           }
         },
         // 某一水平滑块滚动前的回调函数，从0开始算起
-        onSlideLeave(anchorLink, index, slideIndex, direction, nextSlideIndex) {
+        onSlideLeave: (
+          anchorLink,
+          index,
+          slideIndex,
+          direction,
+          nextSlideIndex
+        ) => {
           // console.log(index.index, slideIndex.index, nextSlideIndex);
           if (slideIndex.index == 1) {
-            document.$homeVue.isnavShow = false;
+            this.isnavShow = false;
           } else {
-            document.$homeVue.isnavShow = true;
+            this.isnavShow = true;
           }
         }
-        // afterLoad (anchorLink, index)到某一屏后的回调函数
       },
-      //主页面图片都可能出现，steins0的图片出现几率最大
+      //主页面图片
       random_arr: this.Lodash.shuffle([
         steins0,
-        steins1,
-        steins2,
         lovelive0,
-        arknights0,
-        arknights1,
         arknights2,
         arknights3,
-        arknights4
+        arknights4,
+        arknights7,
+        arknights8,
+        arknights9
       ]),
       random_home_img_index: 0,
       //防止切换图片过快
@@ -272,18 +270,17 @@ export default {
   },
 
   created() {
-    //挂载
-    document.$homeVue = this;
     this.set_bgimg_interval();
   },
+
   mounted() {},
   computed: {},
   watch: {},
   components: {
-    corpus,
-    like,
-    login,
-    signUp
+    Corpus,
+    Like,
+    Login,
+    SignUp
   },
   methods: {
     test() {

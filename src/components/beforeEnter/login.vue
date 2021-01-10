@@ -1,58 +1,66 @@
 <template>
   <div id="login">
-    <!-- 内容 -->
-    <div id="loginInput">
+    <el-container>
+      <!-- 内容 -->
       <!-- 头像 -->
-      <el-row class="loginAvatar">
-        <el-col :span="24" :offset="0"
-          ><el-avatar
-            :size="100"
-            icon="el-icon-user-solid"
-            style="font-size:60px"
+      <el-header>
+        <el-row class="loginAvatar">
+          <el-col :span="24" :offset="0"
+            ><el-avatar :size="120" :src="require('../../assets/akarin.jpg')">
+              <!-- <span style="font-size:50px">User</span> -->
+            </el-avatar></el-col
           >
-          </el-avatar
-        ></el-col>
-      </el-row>
+        </el-row>
+      </el-header>
       <!-- 登陆输入 -->
-      <el-row id="loginInput">
-        <el-col :span="22" :offset="1">
-          <el-form :model="ruleForm" :rules="rules" ref="ruleForm" status-icon>
-            <el-form-item label="用户名" prop="name">
-              <el-input v-model="ruleForm.name"></el-input>
-            </el-form-item>
-            <el-form-item type="password" label="密码" prop="password">
-              <el-input v-model="ruleForm.password"></el-input>
-            </el-form-item>
-            <el-form-item label="确认密码" prop="checkPass">
-              <el-input
-                type="password"
-                v-model="ruleForm.checkPass"
-                autocomplete="off"
-              ></el-input>
-            </el-form-item>
-            <!-- 表单按钮 -->
-            <el-row :gutter="0" class="loginButton">
-              <el-form-item style="margin-top:20px">
-                <el-col>
-                  <el-button type="danger" @click="resetLoginForm" round
-                    >重置<i class="el-icon-s-release el-icon--right"></i
-                  ></el-button>
-                  <el-button type="success" @click="login" round
-                    >登录<i class="el-icon-upload el-icon--right"></i
-                  ></el-button>
-                </el-col>
+      <el-main>
+        <el-row id="loginInput">
+          <el-col :span="22" :offset="1">
+            <el-form
+              :model="ruleForm"
+              :rules="rules"
+              ref="ruleForm"
+              status-icon
+            >
+              <el-form-item label="用户名" prop="name">
+                <el-input v-model="ruleForm.name" clearable></el-input>
               </el-form-item>
-            </el-row>
-          </el-form>
-        </el-col>
-      </el-row>
-    </div>
+              <el-form-item type="password" label="密码" prop="password">
+                <el-input v-model="ruleForm.password" clearable></el-input>
+              </el-form-item>
+              <el-form-item label="确认密码" prop="checkPass" id="check">
+                <el-input
+                  type="password"
+                  v-model="ruleForm.checkPass"
+                  autocomplete="off"
+                  clearable
+                ></el-input>
+              </el-form-item>
+              <!-- 表单按钮 -->
+              <el-row :gutter="0" class="loginButton">
+                <el-form-item style="margin-top:20px">
+                  <el-col>
+                    <el-button type="primary" @click="resetLoginForm" round
+                      >注册<i class="el-icon-document el-icon--right"></i
+                    ></el-button>
+                    <el-button type="success" @click="login" round
+                      >登录<i class="el-icon-upload el-icon--right"></i
+                    ></el-button>
+                  </el-col>
+                </el-form-item>
+              </el-row>
+            </el-form>
+          </el-col>
+        </el-row>
+      </el-main>
+      <el-footer>登陆以使用收藏功能</el-footer>
+    </el-container>
   </div>
 </template>
 
 <script>
 export default {
-  name: "login",
+  name: "Login",
   data() {
     //表单验证密码相同
     var validatePass = (rule, value, callback) => {
@@ -110,4 +118,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import "../../assets/css/login.css";
 </style>

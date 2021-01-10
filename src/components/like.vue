@@ -1,5 +1,9 @@
 <template>
   <div id="like">
+    <!-- 左标记 -->
+    <div class="arrow " @click="goToCorpus">
+      <img src="../assets/arrow.png" />
+    </div>
     <div class="marvel-device iphone8plus silver landscape">
       <div class="top-bar"></div>
       <div class="sleep"></div>
@@ -17,9 +21,9 @@
 </template>
 
 <script>
-import likeScreen from "./likeScreen.vue";
+import LikeScreen from "./LikeScreen";
 export default {
-  name: "",
+  name: "Like",
   data() {
     return {};
   },
@@ -27,10 +31,14 @@ export default {
   // mounted () {},
   computed: {},
   components: {
-    likeScreen
+    LikeScreen
   },
   watch: {},
-  methods: {}
+  methods: {
+    goToCorpus() {
+      this.$parent.api.moveTo(2, 0);
+    }
+  }
 };
 </script>
 

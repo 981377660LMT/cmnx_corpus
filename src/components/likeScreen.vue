@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "likeScreen",
+  name: "LikeScreen",
   data() {
     return {};
   },

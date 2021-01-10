@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../components/home.vue'
-import Error404 from '../components/error404.vue'
+import Home from '../components/Home.vue'
+import Error404 from '../components/Error404.vue'
 
 
 Vue.use(VueRouter)
@@ -16,7 +16,8 @@ const router = new VueRouter({
       //   {}
       // ]
     },
-    { path: '*', redirect: '/404', component: Error404 }
+    { path: '/404', component: Error404 },
+    { path: '*', redirect: '/404' }
   ]
 })
 

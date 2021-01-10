@@ -37,6 +37,7 @@
             prefix-icon="el-icon-edit"
             size="large"
             clearable
+            autofocus="true"
           >
             <el-button slot="append" icon="el-icon-search"></el-button>
           </el-input>
@@ -100,7 +101,7 @@
 
 <script>
 export default {
-  name: "corpus",
+  name: "Corpus",
   data() {
     return {
       // 我打算前端分页还是后端分页？数据量大，肯定是后端分页
@@ -249,7 +250,12 @@ export default {
       switch_value: true
     };
   },
-  created() {},
+  created() {
+    window.addEventListener("click", () => {
+      console.log(1);
+      window.scrollTo(0, 0);
+    });
+  },
   mounted() {
     let corpus = document.querySelector(".el-table");
     // corpus.addEventListener("scroll", alert(1));
