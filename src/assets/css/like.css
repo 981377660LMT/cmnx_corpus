@@ -1,10 +1,8 @@
  #like {
+    position: relative;
     background-color: rgba(189, 182, 182, 0.1);
   }
   
-  #like {
-    position: relative;
-  }
   
   #like .arrow{
     position: absolute;

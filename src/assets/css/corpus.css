@@ -2,15 +2,15 @@
     position: relative;
     width: 100%;
     height: auto;
-    background-color:  #A3A3A3;  
+    background-color:  #A3A3A3; 
     /* background-image:url("../corpus_bg.jpg"); */
     /* transition: all 0.5s ease; */
   }
 
 
-  #corpus .box-card {
+   #corpus .box-card {
     position: relative;
-    width: 90%;
+    width: 1150px;
     margin:  90px auto 60px auto;
     text-align: center;
     background-color: rgba(255, 255, 255,0.65);
@@ -21,11 +21,12 @@
     /* transform: translate(0 60px); */
   }
 
+
   #corpus .el-switch{
     position: absolute;
     right:20px;
     top:20px;
-    z-index: 999;
+    z-index: 10;
 }
 
   #corpus #divider{
@@ -50,28 +51,29 @@
  #corpus .dividerline {
     display: inline-block;
     margin: 10px 15px;
-    width: 370px;
+    width: 500px;
     height: 2px;
     background-color: #000000;
   }
 
    #corpus #search{
     opacity: 0.7;
+   
     /* border-radius: 10px;  */
 }
 
 html /deep/ #corpus #search .el-input{
     font-size: 18px;
-    border-radius: 5px;
 }
+
 
 #corpus  .el-pagination{
     opacity: 0.7;
-   
 }
 
 
 html /deep/  #corpus .el-table{
+    opacity: 0.8;
     border-radius: 10px;
     border:1px solid rgb(146, 144, 144);
     font-weight: 700;
@@ -79,6 +81,26 @@ html /deep/  #corpus .el-table{
     -webkit-user-select: text;
 }
 
+#loading {
+  height:90px;
+  margin-bottom:45px;
+  /* z-index: 10; */
+}
+
+#corpus /deep/ .el-icon-loading{
+   font-size: 36px;
+   color:#42b983;
+   
+}
+
+#corpus /deep/ .el-loading-text{
+  font-size: 18px;
+  color:#42b983;
+}
+
+#corpus /deep/ .el-loading-mask{
+  background-color:  rgba(255, 255, 255,0.65);
+}
 
 .matched{
   color: #42b983;
@@ -86,15 +108,15 @@ html /deep/  #corpus .el-table{
 
 
 
-#corpus .el-input,.el-pagination,.el-table{
+#corpus /deep/ .el-input,.el-pagination,.el-table{
   margin-bottom: 30px;
 }
 
-html /deep/ .el-select-dropdown__item.selected{
+html /deep/ #corpus .el-select-dropdown__item.selected{
   color:#42b983 ;
 }
   
-html /deep/ .el-pagination__sizes .el-input .el-input__inner:hover{
+html /deep/ #corpus .el-pagination__sizes .el-input .el-input__inner:hover{
   border-color:#42b983 ;
 }
 
@@ -136,20 +158,21 @@ html /deep/ .el-pager li,html /deep/ .el-pagination__sizes .el-input .el-input__
     display: block;
     width: 100%;
     height: 60px;
+    font-size: 18px;
+    /* font-weight: 600; */
     font-family: "Microsoft YaHei";
 }
 
 
 #corpus .arrow{
-  position: absolute;
+  position: fixed;
   bottom: 50%;
-  right: 10px;
+  right: 30px;
   animation-name:arrow-twinkling-right;
   animation-duration: 1.5s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
-  cursor: pointer;
- 
+  cursor: pointer; 
 }
 
 @keyframes arrow-twinkling-right {
@@ -170,3 +193,15 @@ html /deep/ .el-pager li,html /deep/ .el-pagination__sizes .el-input .el-input__
 #corpus .arrow img{
     transform: rotate(-90deg);
 }
+
+.mask {
+  background-color: rgb(0, 0, 0);
+  opacity: 0.2;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3000;
+  pointer-events: none;
+ }

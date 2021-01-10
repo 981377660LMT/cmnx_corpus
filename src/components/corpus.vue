@@ -39,6 +39,9 @@
             clearable
             autofocus="true"
           >
+            <template slot="prepend">
+              输入变化时开始查找
+            </template>
             <el-button slot="append" icon="el-icon-search"></el-button>
           </el-input>
         </el-col>
@@ -56,8 +59,24 @@
         :total="totalNumber"
       >
       </el-pagination>
+      <!-- 加载 -->
+      <el-main
+        v-loading="showLoading"
+        v-if="showLoading"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="#DFDFDF"
+        element-loading-text="正在查找中，请稍等片刻......"
+        id="loading"
+      >
+      </el-main>
       <!-- 表格 -->
-      <el-table :data="tableData" stripe="true" border style="width: 100%">
+      <el-table
+        :data="tableData"
+        stripe="true"
+        border
+        style="width: 100%"
+        v-show="showTable"
+      >
         <el-table-column type="index" width="50" align="center">
         </el-table-column>
         <el-table-column prop="from" label="来源" width="150">
@@ -100,6 +119,8 @@
     <div class="arrow " @click="goToCorpus">
       <img src="../assets/arrow.png" />
     </div>
+    <!-- 遮罩层 -->
+    <div class="mask" v-if="showMask"></div>
   </div>
 </template>
 
@@ -138,37 +159,37 @@ export default {
           chinese: "变迁，沧海桑田，要怎样面对呢？",
           japanese: "どうなるものか、この天地の大きな動きが。",
           like: false
+        },
+        {
+          from: "Chusingura46+1 S",
+          chinese:
+            "「その傷は、我が亡き主君である浅野内匠頭が殿中、松の廊下で刃傷の際に切りつけた傷ではござらぬか？」",
+          japanese:
+            "「その傷は、我が亡き主君である浅野内匠頭が殿中、松の廊下で刃傷の際に切りつけた傷ではござらぬか？」",
+          like: false
+        },
+        {
+          from: "美少女万华镜1-4",
+          chinese:
+            "「分かっているんだろうな……帝大に合格できなければ、覡家の恥になるんだぞ……子供が二人もいて、どっちも帝大に入学できなかった、なんてことになれば、親戚中の笑いものだ……」",
+          japanese:
+            "「分かっているんだろうな……帝大に合格できなければ、覡家の恥になるんだぞ……子供が二人もいて、どっちも帝大に入学できなかった、なんてことになれば、親戚中の笑いものだ……」",
+          like: true
+        },
+        {
+          from: "FSN Saber线",
+          chinese:
+            "「真是的，又是这时间回来。因为冬天日落的很早，我有说过要早点回来的对吧。」",
+          japanese:
+            "「もう、またこんな時間に帰ってきて。冬は日が暮れるのが早いんだから、もっと早くに帰ってきなさいって言ったでしょ」",
+          like: false
+        },
+        {
+          from: "古今和歌集",
+          chinese: "今朝离别后，转瞬渡银河。未渡银河水，湿痕袖已多。",
+          japanese: "今はとて 別るる時は 天の河 渡らぬ先に 袖ぞひちぬる",
+          like: false
         }
-        // {
-        //   from: "Chusingura46+1 S",
-        //   chinese:
-        //     "「その傷は、我が亡き主君である浅野内匠頭が殿中、松の廊下で刃傷の際に切りつけた傷ではござらぬか？」",
-        //   japanese:
-        //     "「その傷は、我が亡き主君である浅野内匠頭が殿中、松の廊下で刃傷の際に切りつけた傷ではござらぬか？」",
-        //   like: false
-        // },
-        // {
-        //   from: "美少女万华镜1-4",
-        //   chinese:
-        //     "「分かっているんだろうな……帝大に合格できなければ、覡家の恥になるんだぞ……子供が二人もいて、どっちも帝大に入学できなかった、なんてことになれば、親戚中の笑いものだ……」",
-        //   japanese:
-        //     "「分かっているんだろうな……帝大に合格できなければ、覡家の恥になるんだぞ……子供が二人もいて、どっちも帝大に入学できなかった、なんてことになれば、親戚中の笑いものだ……」",
-        //   like: true
-        // },
-        // {
-        //   from: "FSN Saber线",
-        //   chinese:
-        //     "「真是的，又是这时间回来。因为冬天日落的很早，我有说过要早点回来的对吧。」",
-        //   japanese:
-        //     "「もう、またこんな時間に帰ってきて。冬は日が暮れるのが早いんだから、もっと早くに帰ってきなさいって言ったでしょ」",
-        //   like: false
-        // },
-        // {
-        //   from: "古今和歌集",
-        //   chinese: "今朝离别后，转瞬渡银河。未渡银河水，湿痕袖已多。",
-        //   japanese: "今はとて 別るる時は 天の河 渡らぬ先に 袖ぞひちぬる",
-        //   like: false
-        // },
         // {
         //   from: "鬼哭街",
         //   chinese:
@@ -251,22 +272,20 @@ export default {
       // 显示帮助
       showHelp: false,
       // 夜间模式
-      switch_value: true
+      switch_value: true,
+      showTable: true,
+      showLoading: false,
+      showMask: false
     };
   },
-  created() {
-    window.addEventListener("click", () => {
-      console.log(1);
-      window.scrollTo(0, 0);
-    });
-  },
-  mounted() {
-    let corpus = document.querySelector(".el-table");
-    // corpus.addEventListener("scroll", alert(1));
-    console.log(this.$parent);
-  },
+  created() {},
+  mounted() {},
   computed: {},
-  watch: {},
+  watch: {
+    input: function() {
+      this.doSearch();
+    }
+  },
   methods: {
     // 点击like按钮发生的改变操作
     changeLike() {
@@ -278,20 +297,16 @@ export default {
     // 换背景，参数是true和false
     switchChange($event) {
       if ($event) {
-        document.querySelector(".box-card").style.backgroundColor =
-          "rgba(255, 255, 255,0.65)";
-        document.querySelector("#search").style.opacity = "0.75";
-        document.querySelector(".paginationUp").style.opacity = "0.8";
-        document.querySelector(".paginationBottom").style.opacity = "0.8";
+        this.showMask = false;
       } else {
-        document.querySelector(".box-card").style.backgroundColor = "#A3A3A3";
-        document.querySelector("#search").style.opacity = "0.2";
-        document.querySelector(".paginationUp").style.opacity = "0.2";
-        document.querySelector(".paginationBottom").style.opacity = "0.2";
+        this.showMask = true;
       }
     },
+
     // 开始搜索
     doSearch() {
+      this.showTable = false;
+      this.showLoading = true;
       // 发送请求
       // this.totalNumber = 10;
       // this.tableData=

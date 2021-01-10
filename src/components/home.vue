@@ -9,6 +9,7 @@
       @close="closeDialog"
       custom-class="el-opacity"
     >
+      <about @shut="childShutDialog"></about>
     </el-dialog>
     <!-- 登陆的drawer -->
     <el-drawer
@@ -16,7 +17,7 @@
       :visible="drawerVisible"
       custom-class="el-opacity"
       @close="closeDrawer"
-      size="20%"
+      size="24%"
     >
       <login></login>
       <signUp v-if="isSignUp"></signUp>
@@ -197,6 +198,7 @@ import arknights8 from "../assets/arknights8.jpg";
 import arknights9 from "../assets/arknights9.jpg";
 
 import Corpus from "./Corpus";
+import About from "./About";
 import Like from "./Like";
 import Login from "../components/beforeEnter/Login";
 import SignUp from "../components/beforeEnter/SignUp";
@@ -210,6 +212,7 @@ export default {
         navigation: false,
         keyboardScrolling: false,
         controlArrows: false,
+        normalScrollElements: ".el-drawer,.nav",
         navigationTooltips: ["Home", "Corpus"],
         // anchors: ["firstPage", "secondPage", "thirdPage"],
         // 内容超过满屏时是否显示滚动条，需要jquery.slimscroll插件
@@ -280,7 +283,8 @@ export default {
     Corpus,
     Like,
     Login,
-    SignUp
+    SignUp,
+    About
   },
   methods: {
     test() {
@@ -335,6 +339,9 @@ export default {
     },
     closeDrawer() {
       this.drawerVisible = false;
+    },
+    childShutDialog(value) {
+      this.centerDialogVisible = value;
     },
     //表单提交
     login() {},
