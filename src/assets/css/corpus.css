@@ -58,8 +58,21 @@
 
    #corpus #search{
     opacity: 0.7;
-   
     /* border-radius: 10px;  */
+}
+
+
+#corpus /deep/  .el-input-group__prepend{
+    cursor: pointer !important;
+}
+
+#corpus /deep/  .el-dropdown-link{
+  font-size: 18px;
+}
+
+#corpus /deep/ .el-dropdown-menu__item:focus, .el-dropdown-menu__item:not(.is-disabled):hover{
+  background-color:rgba(206, 250, 202,0.5) !important;
+  color:green !important;
 }
 
 html /deep/ #corpus #search .el-input{
@@ -104,6 +117,8 @@ html /deep/  #corpus .el-table{
 
 .matched{
   color: #42b983;
+  font-weight: 800 !important;
+  font-size: 20px;
 }
 
 
@@ -202,6 +217,6 @@ html /deep/ .el-pager li,html /deep/ .el-pagination__sizes .el-input .el-input__
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 3000;
+  z-index: 6000;
   pointer-events: none;
  }

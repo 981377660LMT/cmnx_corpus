@@ -17,7 +17,7 @@
       :visible="drawerVisible"
       custom-class="el-opacity"
       @close="closeDrawer"
-      size="24%"
+      size="20%"
     >
       <login></login>
       <signUp v-if="isSignUp"></signUp>
@@ -213,12 +213,8 @@ export default {
         keyboardScrolling: false,
         controlArrows: false,
         normalScrollElements: ".el-drawer,.nav",
-        navigationTooltips: ["Home", "Corpus"],
-        // anchors: ["firstPage", "secondPage", "thirdPage"],
-        // 内容超过满屏时是否显示滚动条，需要jquery.slimscroll插件
+        // 内容超过满屏时是否显示滚动条
         scrollOverflow: true,
-        // 是否显示横向幻灯片的导航
-        slidesNavigation: false,
         //Section滚动前的回调函数onLeave (index, nextIndex, direction),从0开始计算
         onLeave: (index, nextIndex, direction) => {
           // console.log(this);
@@ -268,7 +264,9 @@ export default {
       isTransparent: 0,
       currentSlide: 0,
       centerDialogVisible: false,
-      drawerVisible: false
+      drawerVisible: false,
+      //是否显示注册组件
+      isSignUp: false
     };
   },
 
@@ -287,9 +285,6 @@ export default {
     About
   },
   methods: {
-    test() {
-      console.log("1");
-    },
     set_bgimg_interval() {
       this.bg_img_interval = window.setInterval(() => {
         this.random_home_img_index =
@@ -342,11 +337,7 @@ export default {
     },
     childShutDialog(value) {
       this.centerDialogVisible = value;
-    },
-    //表单提交
-    login() {},
-    // 重置表单
-    resetLoginForm() {}
+    }
   }
 };
 </script>

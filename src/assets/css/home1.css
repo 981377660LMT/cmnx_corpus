@@ -71,7 +71,7 @@
 .el-drawer{
   overflow: auto;
   height: 500px;
-  min-width: 340px;
+  min-width: 330px;
   line-height: 80px;
 }
 

@@ -19,6 +19,7 @@ import 'nprogress/nprogress.css'
 import axios from 'axios'
 Vue.prototype.$http = axios    //将$http属性挂载到Vue原型上，每个Vue对象都能this.$http访问axios
 Vue.prototype.Lodash = Lodash
+
 Vue.use(VueFullPage)
 import TreeTable from 'vue-table-with-tree-grid'
 //注册为全局组件

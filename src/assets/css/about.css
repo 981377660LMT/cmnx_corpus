@@ -4,13 +4,13 @@
     user-select: none;
 }
 
-#About /deep/ .el-dialog__title{
-    font-size: 30px;
+#home /deep/ .el-dialog__title{
+    font-size: 30px ;
     line-height: 30px;
     font-weight: 600;
 }
 
-#About /deep/ .el-dialog__body{
+#home /deep/ .el-dialog__body{
     font-size: 16px;
     padding:0 25px 50px !important;
 }
@@ -21,16 +21,17 @@
     bottom:20px
 }
 
-h2 {
+#About h2 {
     font-size: 24px;
 }
 
-p{
+#About p{
+    margin: 0;
     text-indent: 2em;
     font-size: 16px;
 }
 
-a{
+#About a{
     color:#71C49E;
     cursor:pointer;
     

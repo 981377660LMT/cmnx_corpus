@@ -37,7 +37,7 @@
                 ></el-input>
               </el-form-item>
               <!-- 表单按钮 -->
-              <el-row :gutter="0" class="loginButton">
+              <el-row :gutter="20" class="loginButton">
                 <el-form-item style="margin-top:20px">
                   <el-col>
                     <el-button type="primary" @click="resetLoginForm" round
@@ -113,7 +113,12 @@ export default {
   // mounted () {},
   computed: {},
   watch: {},
-  methods: {}
+  methods: {
+    //表单提交
+    login() {},
+    // 重置表单
+    resetLoginForm() {}
+  }
 };
 </script>
 

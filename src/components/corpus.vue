@@ -4,7 +4,7 @@
       <!-- 卡片的头部 -->
       <!-- 固定的switch开关 -->
       <el-switch
-        v-model="switch_value"
+        v-model="switchValue"
         active-color="#13ce66"
         inactive-color="grey"
         @change="switchChange($event)"
@@ -34,13 +34,36 @@
           <el-input
             v-model="input"
             placeholder="请输入中文/日文开始搜索"
-            prefix-icon="el-icon-edit"
-            size="large"
+            prefix-icon="el-icon-edit-outline"
+            size="medium"
             clearable
             autofocus="true"
           >
             <template slot="prepend">
-              输入变化时开始查找
+              <el-dropdown
+                trigger="hover"
+                @command="handleMatchCommand"
+                show-timeout="100"
+                hide-timeout="100"
+              >
+                <span class="el-dropdown-link">
+                  选择匹配程度<i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu
+                  slot="dropdown"
+                  :style="{ backgroundColor: dropDownItemBackground }"
+                >
+                  <el-dropdown-item icon="el-icon-bicycle" command="低">
+                    低：>30%</el-dropdown-item
+                  >
+                  <el-dropdown-item icon="el-icon-ship" command="中">
+                    中：>60%</el-dropdown-item
+                  >
+                  <el-dropdown-item icon="el-icon-truck" command="高">
+                    高：>90%</el-dropdown-item
+                  >
+                </el-dropdown-menu>
+              </el-dropdown>
             </template>
             <el-button slot="append" icon="el-icon-search"></el-button>
           </el-input>
@@ -53,7 +76,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage"
-        :page-sizes="[3, 5, 10, 20]"
+        :page-sizes="[3, 5, 7, 10]"
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="totalNumber"
@@ -72,7 +95,7 @@
       <!-- 表格 -->
       <el-table
         :data="tableData"
-        stripe="true"
+        stripe
         border
         style="width: 100%"
         v-show="showTable"
@@ -81,8 +104,16 @@
         </el-table-column>
         <el-table-column prop="from" label="来源" width="150">
         </el-table-column>
-        <el-table-column prop="chinese" label="中文"> </el-table-column>
-        <el-table-column prop="japanese" label="日文"> </el-table-column>
+        <el-table-column prop="chinese" label="中文">
+          <template slot-scope="scope">
+            <span v-html="inputMatch(scope.row.chinese)"></span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="japanese" label="日文">
+          <template slot-scope="scope">
+            <span v-html="inputMatch(scope.row.japanese)"></span>
+          </template>
+        </el-table-column>
         <el-table-column label="收藏" width="56">
           <!-- 模板插槽like -->
           <template slot-scope="scope">
@@ -108,7 +139,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage"
-        :page-sizes="[3, 5, 10, 20]"
+        :page-sizes="[3, 5, 7, 10]"
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="totalNumber"
@@ -125,17 +156,15 @@
 </template>
 
 <script>
+import Lodash from "lodash";
 export default {
   name: "Corpus",
   data() {
     return {
-      // 我打算前端分页还是后端分页？数据量大，肯定是后端分页
       // 向后台发送currentPage,pageSize,input三个参数，全部查询排序取一部分后返回到tableData里
       //查询到的词条数
       totalNumber: 10,
-      //当前的页数,默认1
       currentPage: 1,
-      //当前的页数size，默认3
       pageSize: 3,
       //绑定表格数据
       tableData: [
@@ -272,7 +301,7 @@ export default {
       // 显示帮助
       showHelp: false,
       // 夜间模式
-      switch_value: true,
+      switchValue: true,
       showTable: true,
       showLoading: false,
       showMask: false
@@ -280,20 +309,22 @@ export default {
   },
   created() {},
   mounted() {},
-  computed: {},
+  computed: {
+    dropDownItemBackground: function() {
+      if (this.showMask) {
+        return "#b0b0b0";
+      }
+      return "#FFF";
+    }
+  },
   watch: {
     input: function() {
-      this.doSearch();
+      this.doDebounceSearch();
     }
   },
   methods: {
     // 点击like按钮发生的改变操作
-    changeLike() {
-      // alert(1);
-      console.log(this.$parent);
-      // console.log(this.$refs.fullpage.api);
-      // this.$refs.fullpage.api.moveTo(1, 0);
-    },
+    changeLike() {},
     // 换背景，参数是true和false
     switchChange($event) {
       if ($event) {
@@ -302,27 +333,72 @@ export default {
         this.showMask = true;
       }
     },
-
-    // 开始搜索
-    doSearch() {
+    // 有防抖的搜索
+    doDebounceSearch: Lodash.debounce(function() {
       this.showTable = false;
       this.showLoading = true;
+      console.log(1);
+      setTimeout(() => {
+        this.showLoading = false;
+        this.showTable = true;
+        this.inputMatch();
+      }, 500);
       // 发送请求
       // this.totalNumber = 10;
       // this.tableData=
+    }, 500),
+    //无防抖的搜索
+    doNoDebounceSearch: Lodash.debounce(function() {
+      this.showTable = false;
+      this.showLoading = true;
+      console.log(1);
+      setTimeout(() => {
+        this.showLoading = false;
+        this.showTable = true;
+        this.inputMatch();
+      }, 500);
+      // 发送请求
+      // this.totalNumber = 10;
+      // this.tableData=
+    }, 0),
+    // 匹配字符
+    inputMatch(data) {
+      let matchResultData = "";
+      let matchInput = this.input.trim();
+      for (let char of data) {
+        if (this.input.includes(char)) {
+          char = '<span class="matched">' + char + "</span>";
+        }
+        matchResultData += char;
+      }
+      return matchResultData;
     },
     // 页码size变化
     handleSizeChange(newSize) {
       this.pageSize = newSize;
-      // this.doSearch();
+      this.doNoDebounceSearch();
     },
     // 当前页码数变化
     handleCurrentChange(newPage) {
       this.currentPage = newPage;
-      // this.doSearch();
+      this.doNoDebounceSearch();
     },
     goToCorpus() {
       this.$parent.api.moveTo(2, 1);
+    },
+    // 选择匹配程度后的回调函数
+    handleMatchCommand(value) {
+      this.$message.success({
+        showClose: true,
+        message: `当前匹配程度：${value}`,
+        duration: 1500
+      });
+      this.doNoDebounceSearch();
+    },
+    changeDropDownBackground() {
+      if (this.showMask == true) {
+        document.querySelector(".");
+      }
     }
   }
 };
