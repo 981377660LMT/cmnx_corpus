@@ -7,7 +7,7 @@
   >
     <!-- 屏幕头部 -->
     <div id="nav">
-      <el-row :gutter="0">
+      <el-row :gutter="20">
         <el-col :span="8" :offset="0">
           <!-- 前 -->
           <div class="navHead">
@@ -24,7 +24,7 @@
           ><div class="navCenter">{{ timeNow }}</div></el-col
         >
         <!-- 后 -->
-        <el-col :span="5" :offset="0"
+        <el-col :span="5" :offset="1"
           ><div class="navTail">
             <div class="iconfont icon-lanya"></div>
             <span>100%</span>
@@ -32,8 +32,31 @@
         ></el-col>
       </el-row>
     </div>
+
+    <div id="mainScreen">
+      <el-row :gutter="0">
+        <el-col :span="20" :offset="1">
+          <el-badge :value="200" :max="99" class="markBadge" type="danger">
+            <img src="../assets/mark.png" alt="" />
+          </el-badge>
+        </el-col>
+      </el-row>
+    </div>
     <!-- 右侧抽屉 -->
-    <div id="aside"></div>
+    <div id="aside">
+      <div class="asideItem">
+        <img src="../assets/file.png" alt="svgImg" />
+      </div>
+      <div class="asideItem">
+        <img src="../assets/game.png" alt="" />
+      </div>
+      <div class="asideItem">
+        <img src="../assets/cat.png" alt="" />
+      </div>
+      <div class="asideItem">
+        <img src="../assets/music.png" alt="" />
+      </div>
+    </div>
   </div>
 </template>
 
