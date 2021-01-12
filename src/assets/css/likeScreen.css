@@ -69,6 +69,20 @@
     background: rgb(255,255,255);
 }
 
+#likeScreen #aside{
+    position: relative;
+}
+
+#likeScreen #aside {
+    position: absolute;
+    top:0px;
+    right: 0px;
+    opacity: 1;
+    height: 588px;
+    width:190px;
+    background-color: rgba(255,255,255,0.3);
+}
+
 
 
 
