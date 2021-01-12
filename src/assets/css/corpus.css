@@ -11,7 +11,7 @@
    #corpus .box-card {
     position: relative;
     width: 1150px;
-    margin:  90px auto 60px auto;
+    margin:  100px auto 150px auto;
     text-align: center;
     background-color: rgba(255, 255, 255,0.65);
     border:4px solid;
@@ -38,7 +38,7 @@
   #corpus #help{
       font-size: 52px;
       font-family: "Microsoft Yahei";
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       cursor: pointer;
       transition: all 0.4s ease-in-out;
   }
@@ -50,10 +50,14 @@
 
  #corpus .dividerline {
     display: inline-block;
-    margin: 10px 15px;
+    margin: 19px 15px 15px;
     width: 500px;
     height: 2px;
     background-color: #000000;
+  }
+
+  #corpus /deep/ .el-dropdown-menu__item{
+    font-family:"Microsoft YaHei";
   }
 
    #corpus #search{
@@ -75,7 +79,9 @@
   color:green !important;
 }
 
-html /deep/ #corpus #search .el-input{
+
+
+#corpus /deep/ #corpus #search .el-input{
     font-size: 18px;
 }
 
@@ -89,7 +95,7 @@ html /deep/  #corpus .el-table{
     opacity: 0.8;
     border-radius: 10px;
     border:1px solid rgb(146, 144, 144);
-    font-weight: 700;
+    font-weight: 500;
     font-size: 16px;
     -webkit-user-select: text;
 }
@@ -220,3 +226,8 @@ html /deep/ .el-pager li,html /deep/ .el-pagination__sizes .el-input .el-input__
   z-index: 6000;
   pointer-events: none;
  }
+
+ #corpus .stylus{
+   text-align: center;
+ }
+

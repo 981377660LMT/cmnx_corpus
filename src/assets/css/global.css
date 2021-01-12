@@ -6,14 +6,10 @@ body,
   padding: 0;
   box-sizing: border-box;
   /* 最小屏幕宽度 */
-  min-width:990px ; 
+  min-width:1180px ; 
   /* user-select: none; */
 }
 
-::-webkit-scrollbar {
-  /*隐藏滚轮*/
-  /* display: none; */
-  }
 
 h1, h2, h3, h4, h5, h6 {
   clear: both;

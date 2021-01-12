@@ -5,11 +5,35 @@
       backgroundImage: 'url(' + randomScreen[0] + ')'
     }"
   >
-    <!-- likeScreen -->
-    <el-row :gutter="0">
-      <el-col :span="12" :offset="0"><div class="">11</div></el-col>
-      <el-col :span="12" :offset="0"><div class="">22</div></el-col>
-    </el-row>
+    <!-- 屏幕头部 -->
+    <div id="nav">
+      <el-row :gutter="0">
+        <el-col :span="8" :offset="0">
+          <!-- 前 -->
+          <div class="navHead">
+            <div class="ball"></div>
+            <div class="ball"></div>
+            <div class="ball"></div>
+            <div class="ball"></div>
+            <div class="ball"></div>
+            <div id="wifi">Wi-Fi</div>
+            <div class="iconfont icon-Wi-Fi"></div></div
+        ></el-col>
+        <!-- 中 -->
+        <el-col :span="7" :offset="1"
+          ><div class="navCenter">{{ timeNow }}</div></el-col
+        >
+        <!-- 后 -->
+        <el-col :span="5" :offset="0"
+          ><div class="navTail">
+            <div class="iconfont icon-lanya"></div>
+            <span>100%</span>
+            <div class="battery"></div></div
+        ></el-col>
+      </el-row>
+    </div>
+    <!-- 右侧抽屉 -->
+    <div id="aside"></div>
   </div>
 </template>
 
@@ -44,15 +68,31 @@ export default {
         arknights9
       ])
     };
+    // iconFont:{
+    //   '125': 'iconfont icon-yonghuguanli',
+    // },
   },
-  created() {},
+  created() {
+    document.querySelector("#like .home").addEventListener("click", () => {
+      alert(1);
+    });
+  },
   // mounted () {},
-  computed: {},
+  computed: {
+    timeNow: function() {
+      let date = new Date();
+      let hour = date.getHours();
+      let minute = (date.getMinutes() + "").padStart(2, "0");
+      let ampm = hour >= 12 ? "PM" : "AM";
+      return (hour % 12) + ":" + minute + " " + ampm;
+    }
+  },
   watch: {},
   methods: {}
 };
 </script>
 
 <style lang="less" scoped>
+@import "../assets/font_ij1ydyo2e3/iconfont.css";
 @import "../assets/css/likeScreen.css";
 </style>

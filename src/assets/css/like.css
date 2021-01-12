@@ -2,6 +2,10 @@
     position: relative;
     background-color: rgba(189, 182, 182, 0.1);
   }
+
+  #like .home{
+    cursor: pointer;
+}
   
   
   #like .arrow{
@@ -46,3 +50,4 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
+

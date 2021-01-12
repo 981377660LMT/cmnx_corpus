@@ -49,10 +49,7 @@
                 <span class="el-dropdown-link">
                   选择匹配程度<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
-                <el-dropdown-menu
-                  slot="dropdown"
-                  :style="{ backgroundColor: dropDownItemBackground }"
-                >
+                <el-dropdown-menu slot="dropdown" :class="maskDropDown">
                   <el-dropdown-item icon="el-icon-bicycle" command="低">
                     低：>30%</el-dropdown-item
                   >
@@ -70,18 +67,20 @@
         </el-col>
       </el-row>
 
-      <!-- 分页上 -->
-      <el-pagination
-        class="paginationUp"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage"
-        :page-sizes="[3, 5, 7, 10]"
-        :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="totalNumber"
-      >
-      </el-pagination>
+      <!-- 分页上
+      <div>
+        <el-pagination
+          class="paginationUp"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage"
+          :page-sizes="[3, 5, 7, 10]"
+          :page-size="pageSize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="totalNumber"
+        >
+        </el-pagination>
+      </div> -->
       <!-- 加载 -->
       <el-main
         v-loading="showLoading"
@@ -121,13 +120,13 @@
               style="font-size:32px;cursor:pointer"
               class="el-icon-star-on"
               v-if="scope.row.like == true"
-              @click="changeLike"
+              @click="deleteLike"
             ></i>
             <i
               style="font-size:28px;cursor:pointer"
               class="el-icon-star-off"
               v-if="scope.row.like == false"
-              @click="changeLike"
+              @click="addLike"
             ></i>
           </template>
         </el-table-column>
@@ -143,6 +142,7 @@
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="totalNumber"
+        :popper-append-to-body="false"
       >
       </el-pagination>
     </el-card>
@@ -165,9 +165,10 @@ export default {
       //查询到的词条数
       totalNumber: 10,
       currentPage: 1,
-      pageSize: 3,
+      pageSize: 5,
       //绑定表格数据
-      tableData: [
+      tableData: [],
+      fakeData: [
         {
           from: "FateZero",
           chinese:
@@ -309,14 +310,7 @@ export default {
   },
   created() {},
   mounted() {},
-  computed: {
-    dropDownItemBackground: function() {
-      if (this.showMask) {
-        return "#b0b0b0";
-      }
-      return "#FFF";
-    }
-  },
+  computed: {},
   watch: {
     input: function() {
       this.doDebounceSearch();
@@ -324,7 +318,20 @@ export default {
   },
   methods: {
     // 点击like按钮发生的改变操作
-    changeLike() {},
+    addLike() {
+      this.$message.success({
+        showClose: true,
+        message: `添加收藏成功！`,
+        duration: 1500
+      });
+    },
+    deleteLike() {
+      this.$message.success({
+        showClose: true,
+        message: `删除收藏成功！`,
+        duration: 1500
+      });
+    },
     // 换背景，参数是true和false
     switchChange($event) {
       if ($event) {
@@ -337,10 +344,11 @@ export default {
     doDebounceSearch: Lodash.debounce(function() {
       this.showTable = false;
       this.showLoading = true;
-      console.log(1);
       setTimeout(() => {
+        this.tableData = this.fakeData;
         this.showLoading = false;
         this.showTable = true;
+        this.$parent.api.reBuild();
         this.inputMatch();
       }, 500);
       // 发送请求
@@ -351,10 +359,11 @@ export default {
     doNoDebounceSearch: Lodash.debounce(function() {
       this.showTable = false;
       this.showLoading = true;
-      console.log(1);
       setTimeout(() => {
+        this.tableData = [];
         this.showLoading = false;
         this.showTable = true;
+        this.$parent.api.reBuild();
         this.inputMatch();
       }, 500);
       // 发送请求
