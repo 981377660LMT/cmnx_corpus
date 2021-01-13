@@ -1,19 +1,17 @@
 <template>
-  <div id="SmallGame" class="screenContainer">
-    <iframe :src="src" frameborder="0" ref="iframe"> </iframe>
+  <div id="StudySite" class="screenContainer">
+    <iframe src="https://resx.cf/" frameborder="0"></iframe>
   </div>
 </template>
 
 <script>
 export default {
-  name: "SmallGame",
+  name: "StudySite",
   data() {
-    return {
-      src: "https://www.hhtjim.com/wp-content/uploads/2017/02/T-RexGame.html"
-    };
+    return {};
   },
   created() {},
-  mounted() {},
+  // mounted () {},
   computed: {},
   watch: {},
   methods: {}

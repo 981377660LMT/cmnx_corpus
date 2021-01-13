@@ -5,6 +5,7 @@
     background-image: url(../arknights1.jpg);
     background-repeat: no-repeat;
     background-size: cover;
+    overflow: hidden !important; 
 } 
 
 
@@ -72,15 +73,24 @@
 }
 
 #likeScreen #mainScreen .markBadge{
+    position: fixed;
     text-align: center;
     margin-top: 28px;
     margin-left: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+#likeScreen #mainScreen .markBadge:hover{
+    transform: scale(1.1);
 }
 
 #likeScreen #mainScreen .markBadge img{
     width: 76px;
     height: 76px;
 }
+
+
 
 #likeScreen #mainScreen .el-badge__content{
     top:2px;
@@ -109,6 +119,12 @@
 
 #likeScreen .asideItem{
     text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+#likeScreen .asideItem:hover {
+   transform: scale(1.1);
 }
 
 #likeScreen .asideItem img{

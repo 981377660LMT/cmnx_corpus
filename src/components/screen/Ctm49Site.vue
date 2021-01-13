@@ -1,19 +1,17 @@
 <template>
-  <div id="SmallGame" class="screenContainer">
-    <iframe :src="src" frameborder="0" ref="iframe"> </iframe>
+  <div id="Ctm49Site" class="screenContainer">
+    <iframe src="https://m.ctm49.com" frameborder="0"></iframe>
   </div>
 </template>
 
 <script>
 export default {
-  name: "SmallGame",
+  name: "Ctm49Site",
   data() {
-    return {
-      src: "https://www.hhtjim.com/wp-content/uploads/2017/02/T-RexGame.html"
-    };
+    return {};
   },
   created() {},
-  mounted() {},
+  // mounted () {},
   computed: {},
   watch: {},
   methods: {}

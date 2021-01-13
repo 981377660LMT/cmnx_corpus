@@ -12,9 +12,10 @@
       <div class="sensor"></div>
       <div class="speaker"></div>
       <div class="screen">
+        <!-- 默认屏幕 -->
         <likeScreen></likeScreen>
       </div>
-      <div class="home"></div>
+      <div class="home" @click="goBackHome"></div>
       <div class="bottom-bar"></div>
     </div>
   </div>
@@ -28,7 +29,7 @@ export default {
     return {};
   },
   created() {},
-  // mounted () {},
+  mounted() {},
   computed: {},
   components: {
     LikeScreen
@@ -37,6 +38,9 @@ export default {
   methods: {
     goToCorpus() {
       this.$parent.api.moveTo(2, 0);
+    },
+    goBackHome() {
+      this.$router.push("/home");
     }
   }
 };
@@ -45,4 +49,7 @@ export default {
 <style lang="less" scoped>
 @import "../assets/css/devices.min.css";
 @import "../assets/css/like.css";
+.landscape {
+  overflow: hidden;
+}
 </style>
