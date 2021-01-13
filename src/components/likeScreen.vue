@@ -7,7 +7,7 @@
   >
     <!-- 屏幕头部 -->
     <div id="nav">
-      <el-row :gutter="20">
+      <el-row :gutter="50">
         <el-col :span="8" :offset="0">
           <!-- 前 -->
           <div class="navHead">
@@ -36,8 +36,14 @@
     <div id="mainScreen">
       <el-row :gutter="0">
         <el-col :span="20" :offset="1">
-          <el-badge :value="200" :max="99" class="markBadge" type="danger">
+          <el-badge
+            :value="likeNumber"
+            :max="99"
+            class="markBadge"
+            type="danger"
+          >
             <img src="../assets/mark.png" alt="" />
+            <div class="intro">学习资料</div>
           </el-badge>
         </el-col>
       </el-row>
@@ -46,15 +52,19 @@
     <div id="aside">
       <div class="asideItem">
         <img src="../assets/file.png" alt="svgImg" />
+        <div class="intro">学习资料</div>
       </div>
       <div class="asideItem">
         <img src="../assets/game.png" alt="" />
+        <div class="intro">小游戏</div>
       </div>
       <div class="asideItem">
         <img src="../assets/cat.png" alt="" />
+        <div class="intro">ctm49</div>
       </div>
       <div class="asideItem">
         <img src="../assets/music.png" alt="" />
+        <div class="intro">音乐</div>
       </div>
     </div>
   </div>
@@ -89,7 +99,8 @@ export default {
         arknights7,
         arknights8,
         arknights9
-      ])
+      ]),
+      likeNumber: 66
     };
     // iconFont:{
     //   '125': 'iconfont icon-yonghuguanli',
