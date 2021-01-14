@@ -5,12 +5,6 @@
       backgroundImage: 'url(' + randomScreen[0] + ')'
     }"
   >
-    <!-- 路由 -->
-    <transition>
-      <keep-alive>
-        <router-view></router-view>
-      </keep-alive>
-    </transition>
     <!-- 默认屏幕 -->
     <div v-show="showLikeScreen">
       <!-- 屏幕头部 -->
@@ -45,15 +39,18 @@
         <el-row :gutter="0">
           <el-col :span="20" :offset="1">
             <router-link to="/MyLike">
-              <el-badge
-                :value="likeNumber"
-                :max="99"
-                class="markBadge"
-                type="danger"
-              >
-                <img src="../assets/mark.png" alt="" />
-                <div class="intro">我的收藏</div>
-              </el-badge>
+              <div @mousedown="scaleDown(0)" @mouseup="scaleUp(0)">
+                <el-badge
+                  :value="likeNumber"
+                  :max="99"
+                  class="markBadge"
+                  type="danger"
+                  :class="{ mouseDown: mouseDown['mouseDown_1'] }"
+                >
+                  <img src="../assets/mark.png" alt="" />
+                  <div class="intro">我的收藏</div>
+                </el-badge>
+              </div>
             </router-link>
           </el-col>
         </el-row>
@@ -61,31 +58,57 @@
       <!-- 右侧抽屉 -->
       <div id="aside">
         <router-link to="/StudySite"
-          ><div class="asideItem">
+          ><div
+            class="asideItem"
+            @mousedown="scaleDown(1)"
+            @mouseup="scaleUp(1)"
+            :class="{ mouseDown: mouseDown['mouseDown_2'] }"
+          >
             <img src="../assets/file.png" alt="svgImg" />
             <div class="intro">学习资料</div>
           </div></router-link
         >
         <router-link to="/SmallGame">
-          <div class="asideItem">
+          <div
+            class="asideItem"
+            @mousedown="scaleDown(2)"
+            @mouseup="scaleUp(2)"
+            :class="{ mouseDown: mouseDown['mouseDown_3'] }"
+          >
             <img src="../assets/game.png" alt="" />
             <div class="intro">小游戏</div>
           </div></router-link
         >
         <router-link to="/Ctm49Site"
-          ><div class="asideItem">
+          ><div
+            class="asideItem"
+            @mousedown="scaleDown(3)"
+            @mouseup="scaleUp(3)"
+            :class="{ mouseDown: mouseDown['mouseDown_4'] }"
+          >
             <img src="../assets/cat.png" alt="" />
             <div class="intro">ctm49</div>
           </div></router-link
         >
         <router-link to="/Music">
-          <div class="asideItem">
+          <div
+            class="asideItem"
+            @mousedown="scaleDown(4)"
+            @mouseup="scaleUp(4)"
+            :class="{ mouseDown: mouseDown['mouseDown_5'] }"
+          >
             <img src="../assets/music.png" alt="" />
             <div class="intro">音乐</div>
           </div></router-link
         >
       </div>
     </div>
+    <!-- 路由 -->
+    <transition name="slide">
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
+    </transition>
   </div>
 </template>
 
@@ -119,7 +142,14 @@ export default {
       ]),
       likeNumber: 66,
       timeNow: "",
-      timer: ""
+      timer: "",
+      mouseDown: {
+        mouseDown_1: false,
+        mouseDown_2: false,
+        mouseDown_3: false,
+        mouseDown_4: false,
+        mouseDown_5: false
+      }
     };
   },
   created() {
@@ -142,6 +172,17 @@ export default {
       let minute = (date.getMinutes() + "").padStart(2, "0");
       let ampm = hour >= 12 ? "PM" : "AM";
       this.timeNow = (hour % 12) + ":" + minute + " " + ampm;
+    },
+    scaleDown(index) {
+      console.log(Object.keys(this.mouseDown)[index]);
+      this.mouseDown[
+        (this.mouseDown, Object.keys(this.mouseDown)[index])
+      ] = true;
+    },
+    scaleUp(index) {
+      this.mouseDown[
+        (this.mouseDown, Object.keys(this.mouseDown)[index])
+      ] = false;
     }
   },
   beforeDestroy() {
@@ -155,4 +196,27 @@ export default {
 <style lang="less" scoped>
 @import "../assets/font_ij1ydyo2e3/iconfont.css";
 @import "../assets/css/likeScreen.css";
+.slide-enter {
+  transform: scale(0.2);
+}
+.slide-enter-active {
+  transition: all cubic-bezier(0.215, 0.61, 0.355, 1) 0.35s;
+}
+.slide-enter-to {
+  transform: translateX(0);
+  opacity: 1;
+}
+.slide-leave {
+  transform: scale(0.9);
+  max-height: 100px;
+  opacity: 0.3;
+}
+.slide-leave-active {
+  transition: all cubic-bezier(0.215, 0.61, 0.355, 1) 0.4s;
+}
+.slide-leave-to {
+  transform: scale(0);
+  opacity: 0.1;
+  z-index: -100;
+}
 </style>

@@ -49,7 +49,7 @@
                 <span class="el-dropdown-link">
                   选择匹配程度<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
-                <el-dropdown-menu slot="dropdown" :class="maskDropDown">
+                <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item icon="el-icon-bicycle" command="低">
                     低：>30%</el-dropdown-item
                   >
@@ -66,21 +66,6 @@
           </el-input>
         </el-col>
       </el-row>
-
-      <!-- 分页上
-      <div>
-        <el-pagination
-          class="paginationUp"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="currentPage"
-          :page-sizes="[3, 5, 7, 10]"
-          :page-size="pageSize"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="totalNumber"
-        >
-        </el-pagination>
-      </div> -->
       <!-- 加载 -->
       <el-main
         v-loading="showLoading"
@@ -415,4 +400,24 @@ export default {
 
 <style lang="less" scoped>
 @import "../assets/css/corpus.css";
+.loop(@n) when (@n < 20) {
+  #corpus /deep/ .el-table__body {
+    .el-table__row:nth-child(@{n}) {
+      opacity: 0;
+      animation: table-show 300ms @n * 20ms forwards ease-out;
+    }
+  }
+  .loop((@n + 1));
+}
+.loop(0);
+@keyframes table-show {
+  0% {
+    transform: translateY(30px);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
 </style>

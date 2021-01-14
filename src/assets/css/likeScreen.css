@@ -78,12 +78,18 @@
     margin-top: 28px;
     margin-left: 15px;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
 #likeScreen #mainScreen .markBadge:hover{
     transform: scale(1.1);
 }
+
+#likeScreen #mainScreen .markBadge .mouseDown{
+    transform: scale(0.9) !important;
+}
+
+
 
 #likeScreen #mainScreen .markBadge img{
     width: 76px;
@@ -120,12 +126,17 @@
 #likeScreen .asideItem{
     text-align: center;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
+    transition:  0.2s ease-in-out;
 }
 
 #likeScreen .asideItem:hover {
    transform: scale(1.1);
 }
+
+#likeScreen .mouseDown{
+    transform: scale(0.9) !important;
+}
+
 
 #likeScreen .asideItem img{
     flex: 1;

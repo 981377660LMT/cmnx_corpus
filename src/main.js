@@ -6,7 +6,6 @@ import './plugins/element.js'
 import 'fullpage.js/vendors/scrolloverflow';
 import VueFullPage from 'vue-fullpage.js'
 import Lodash from 'lodash'
-import Aplayer from 'vue-aplayer'
 
 
 
@@ -20,7 +19,7 @@ import 'nprogress/nprogress.css'
 import axios from 'axios'
 Vue.prototype.$http = axios    //将$http属性挂载到Vue原型上，每个Vue对象都能this.$http访问axios
 Vue.prototype.Lodash = Lodash
-Vue.use(Aplayer)
+
 
 Vue.use(VueFullPage)
 import TreeTable from 'vue-table-with-tree-grid'
