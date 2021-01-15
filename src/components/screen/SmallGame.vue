@@ -79,7 +79,7 @@ iframe {
 }
 
 .maskDisappear-leave-active {
-  transition: all cubic-bezier(0.215, 0.61, 0.355, 1) 1s;
+  transition: all cubic-bezier(0.215, 0.61, 0.355, 1) 1.2s;
 }
 
 .maskDisappear-leave-to {

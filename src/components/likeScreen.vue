@@ -212,7 +212,7 @@ export default {
   opacity: 0.3;
 }
 .slide-leave-active {
-  transition: all cubic-bezier(0.215, 0.61, 0.355, 1) 0.4s;
+  transition: all cubic-bezier(0.215, 0.61, 0.355, 1) 0.3s;
 }
 .slide-leave-to {
   transform: scale(0);
@@ -220,3 +220,8 @@ export default {
   z-index: -100;
 }
 </style>
+
+
+
+
+

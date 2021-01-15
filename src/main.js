@@ -1,6 +1,7 @@
 // Vue 应用的入口
 import Vue from 'vue'
 import App from './App.vue'
+import store from './store'
 import router from './router'
 import './plugins/element.js'
 import 'fullpage.js/vendors/scrolloverflow';
@@ -28,6 +29,7 @@ Vue.component('tree-table', TreeTable)
 Vue.config.productionTip = false
 
 new Vue({
+  store,
   router,
   render: h => h(App)
 }).$mount('#app')

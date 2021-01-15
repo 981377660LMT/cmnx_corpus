@@ -9,7 +9,7 @@
       @close="closeDialog"
       custom-class="el-opacity"
     >
-      <about @shut="childShutDialog"></about>
+      <about @shut="childShutDialog" @open="childOpenDrawer"></about>
     </el-dialog>
     <!-- 登陆的drawer -->
     <el-drawer
@@ -337,6 +337,9 @@ export default {
     },
     childShutDialog(value) {
       this.centerDialogVisible = value;
+    },
+    childOpenDrawer(value) {
+      this.drawerVisible = value;
     }
   }
 };
