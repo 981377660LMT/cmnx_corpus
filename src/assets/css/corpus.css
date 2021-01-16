@@ -70,7 +70,7 @@
 }
 
 #corpus /deep/  .el-dropdown-link{
-  font-size: 18px;
+  font-size: 19px;
 }
 
 #corpus /deep/ .el-dropdown-menu__item:focus, .el-dropdown-menu__item:not(.is-disabled):hover{
@@ -78,10 +78,13 @@
   color:green !important;
 }
 
+#corpus /deep/ .el-input__inner{
+  padding-left: 25px;
+}
 
 
 #corpus /deep/ #corpus #search .el-input{
-    font-size: 18px;
+    font-size: 19px;
 }
 
 

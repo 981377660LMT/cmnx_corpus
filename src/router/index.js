@@ -12,9 +12,8 @@ const router = new VueRouter({
       component: () => import('../components/Home.vue'),
       children: [
         { path: '/Ctm49Site', component: () => import('../components/screen/Ctm49Site.vue'), name: "Yitx's Blog" },
-        { path: '/Music', component: () => import('../components/screen/Music.vue'), name: 'CMNX_CORPUS_Music', },
-        { path: '/MyLike', component: () => import('../components/screen/MyLike.vue'), name: 'CMNX_CORPUS_MyLike', },
-        { path: '/SmallGame', component: () => import('../components/screen/SmallGame.vue'), name: 'CMNX_CORPUS_SmallGame', },
+        { path: '/MyLike', component: () => import('../components/screen/MyLike.vue'), name: 'MyLike', },
+        { path: '/SmallGame', component: () => import('../components/screen/SmallGame.vue'), name: 'SmallGame', },
         { path: '/StudySite', component: () => import('../components/screen/StudySite.vue'), name: 'Resx.Cf 资源站' },
       ]
     },

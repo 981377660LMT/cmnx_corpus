@@ -3,25 +3,18 @@
     <el-card class="box-card">
       <!-- 卡片的头部 -->
       <!-- 固定的switch开关 -->
-      <el-switch
-        v-model="switchValue"
-        active-color="#13ce66"
-        inactive-color="grey"
-        @change="switchChange($event)"
-      >
+      <el-switch v-model="switchValue" active-color="#13ce66" inactive-color="grey" @change="switchChange($event)">
       </el-switch>
       <!-- 卡片里放东西 -->
 
       <el-row :gutter="20">
-        <el-col :span="12" :offset="6" id="help" @click="showHelp = true"
-          >需要一些帮助?</el-col
-        >
+        <el-col :span="12" :offset="6" id="help" @click="showHelp = true">需要一些帮助?</el-col>
       </el-row>
       <!-- 分割线 -->
       <div id="divider">
         <el-row :gutter="20">
-          <el-col :span="24"
-            ><div class="dividerline"></div>
+          <el-col :span="24">
+            <div class="dividerline"></div>
             <div class="el-icon-reading" style="font-size:40px"></div>
             <div class="dividerline"></div>
           </el-col>
@@ -31,34 +24,19 @@
       <!-- 搜索框 -->
       <el-row :gutter="20" id="search">
         <el-col :span="18" :offset="3">
-          <el-input
-            v-model="input"
-            placeholder="请输入中文/日文开始搜索"
-            prefix-icon="el-icon-edit-outline"
-            size="medium"
-            clearable
-            autofocus="true"
-          >
+          <el-input v-model="input" placeholder="请输入中文/日文开始搜索" prefix-icon="el-icon-edit-outline" size="medium" clearable autofocus="true">
             <template slot="prepend">
-              <el-dropdown
-                trigger="hover"
-                @command="handleMatchCommand"
-                show-timeout="100"
-                hide-timeout="100"
-              >
+              <el-dropdown trigger="hover" @command="handleMatchCommand" show-timeout="100" hide-timeout="100">
                 <span class="el-dropdown-link">
                   选择匹配程度<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item icon="el-icon-bicycle" command="低">
-                    低：>30%</el-dropdown-item
-                  >
+                    低：>30%</el-dropdown-item>
                   <el-dropdown-item icon="el-icon-ship" command="中">
-                    中：>60%</el-dropdown-item
-                  >
+                    中：>60%</el-dropdown-item>
                   <el-dropdown-item icon="el-icon-truck" command="高">
-                    高：>90%</el-dropdown-item
-                  >
+                    高：>90%</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </template>
@@ -67,23 +45,10 @@
         </el-col>
       </el-row>
       <!-- 加载 -->
-      <el-main
-        v-loading="showLoading"
-        v-if="showLoading"
-        element-loading-spinner="el-icon-loading"
-        element-loading-background="#DFDFDF"
-        element-loading-text="正在查找中，请稍等片刻......"
-        id="loading"
-      >
+      <el-main v-loading="showLoading" v-if="showLoading" element-loading-spinner="el-icon-loading" element-loading-background="#DFDFDF" element-loading-text="正在查找中，请稍等片刻......" id="loading">
       </el-main>
       <!-- 表格 -->
-      <el-table
-        :data="tableData"
-        stripe
-        border
-        style="width: 100%"
-        v-show="showTable"
-      >
+      <el-table :data="tableData" stripe border style="width: 100%" v-show="showTable">
         <el-table-column type="index" width="50" align="center">
         </el-table-column>
         <el-table-column prop="from" label="来源" width="150">
@@ -101,35 +66,17 @@
         <el-table-column label="收藏" width="56">
           <!-- 模板插槽like -->
           <template slot-scope="scope">
-            <i
-              style="font-size:32px;cursor:pointer"
-              class="el-icon-star-on"
-              v-if="scope.row.like == true"
-              @click="deleteLike"
-            ></i>
-            <i
-              style="font-size:28px;cursor:pointer"
-              class="el-icon-star-off"
-              v-if="scope.row.like == false"
-              @click="addLike"
-            ></i>
+            <i style="font-size:32px;cursor:pointer" class="el-icon-star-on" v-if="scope.row.like == true" @click="deleteLike"></i>
+            <i style="font-size:28px;cursor:pointer" class="el-icon-star-off" v-if="scope.row.like == false" @click="addLike"></i>
           </template>
         </el-table-column>
       </el-table>
 
       <!-- 分页下 -->
-      <el-pagination
-        class="paginationBottom"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage"
-        :page-sizes="[3, 5, 7, 10]"
-        :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="totalNumber"
-        :popper-append-to-body="false"
-      >
+      <el-pagination class="paginationBottom" @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[3, 5, 7, 10]" :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper" :total="totalNumber" :popper-append-to-body="false">
       </el-pagination>
+
     </el-card>
     <!-- 右箭头 -->
     <div class="arrow " @click="goToCorpus">
@@ -141,68 +88,68 @@
 </template>
 
 <script>
-import Lodash from "lodash";
+import Lodash from 'lodash'
 export default {
-  name: "Corpus",
+  name: 'Corpus',
   data() {
     return {
       // 向后台发送currentPage,pageSize,input三个参数，全部查询排序取一部分后返回到tableData里
       //查询到的词条数
-      totalNumber: 10,
+      totalNumber: 0,
       currentPage: 1,
       pageSize: 5,
       //绑定表格数据
       tableData: [],
       fakeData: [
         {
-          from: "FateZero",
+          from: 'FateZero',
           chinese:
-            "如果他能早点将这一条铁则铭记在心的话，或许还有办法获得救赎。",
+            '如果他能早点将这一条铁则铭记在心的话，或许还有办法获得救赎。',
           japanese:
-            "そんな鉄則を、もっと早くから肝きもに銘めいじておいたなら、まだ彼には救いがあった。",
+            'そんな鉄則を、もっと早くから肝きもに銘めいじておいたなら、まだ彼には救いがあった。',
           like: true
         },
         {
-          from: "FGO",
-          chinese: "御主，旅途总是伴随着危险。当然，从者就是为此而存在的……",
+          from: 'FGO',
+          chinese: '御主，旅途总是伴随着危险。当然，从者就是为此而存在的……',
           japanese:
-            "マスター、旅には常に危険が伴います。もちろん、その為にサーヴァントがいるのですが……。",
+            'マスター、旅には常に危険が伴います。もちろん、その為にサーヴァントがいるのですが……。',
           like: false
         },
         {
-          from: "宫本武藏",
-          chinese: "变迁，沧海桑田，要怎样面对呢？",
-          japanese: "どうなるものか、この天地の大きな動きが。",
+          from: '宫本武藏',
+          chinese: '变迁，沧海桑田，要怎样面对呢？',
+          japanese: 'どうなるものか、この天地の大きな動きが。',
           like: false
         },
         {
-          from: "Chusingura46+1 S",
+          from: 'Chusingura46+1 S',
           chinese:
-            "「その傷は、我が亡き主君である浅野内匠頭が殿中、松の廊下で刃傷の際に切りつけた傷ではござらぬか？」",
+            '「その傷は、我が亡き主君である浅野内匠頭が殿中、松の廊下で刃傷の際に切りつけた傷ではござらぬか？」',
           japanese:
-            "「その傷は、我が亡き主君である浅野内匠頭が殿中、松の廊下で刃傷の際に切りつけた傷ではござらぬか？」",
+            '「その傷は、我が亡き主君である浅野内匠頭が殿中、松の廊下で刃傷の際に切りつけた傷ではござらぬか？」',
           like: false
         },
         {
-          from: "美少女万华镜1-4",
+          from: '美少女万华镜1-4',
           chinese:
-            "「分かっているんだろうな……帝大に合格できなければ、覡家の恥になるんだぞ……子供が二人もいて、どっちも帝大に入学できなかった、なんてことになれば、親戚中の笑いものだ……」",
+            '「分かっているんだろうな……帝大に合格できなければ、覡家の恥になるんだぞ……子供が二人もいて、どっちも帝大に入学できなかった、なんてことになれば、親戚中の笑いものだ……」',
           japanese:
-            "「分かっているんだろうな……帝大に合格できなければ、覡家の恥になるんだぞ……子供が二人もいて、どっちも帝大に入学できなかった、なんてことになれば、親戚中の笑いものだ……」",
+            '「分かっているんだろうな……帝大に合格できなければ、覡家の恥になるんだぞ……子供が二人もいて、どっちも帝大に入学できなかった、なんてことになれば、親戚中の笑いものだ……」',
           like: true
         },
         {
-          from: "FSN Saber线",
+          from: 'FSN Saber线',
           chinese:
-            "「真是的，又是这时间回来。因为冬天日落的很早，我有说过要早点回来的对吧。」",
+            '「真是的，又是这时间回来。因为冬天日落的很早，我有说过要早点回来的对吧。」',
           japanese:
-            "「もう、またこんな時間に帰ってきて。冬は日が暮れるのが早いんだから、もっと早くに帰ってきなさいって言ったでしょ」",
+            '「もう、またこんな時間に帰ってきて。冬は日が暮れるのが早いんだから、もっと早くに帰ってきなさいって言ったでしょ」',
           like: false
         },
         {
-          from: "古今和歌集",
-          chinese: "今朝离别后，转瞬渡银河。未渡银河水，湿痕袖已多。",
-          japanese: "今はとて 別るる時は 天の河 渡らぬ先に 袖ぞひちぬる",
+          from: '古今和歌集',
+          chinese: '今朝离别后，转瞬渡银河。未渡银河水，湿痕袖已多。',
+          japanese: '今はとて 別るる時は 天の河 渡らぬ先に 袖ぞひちぬる',
           like: false
         }
         // {
@@ -283,7 +230,7 @@ export default {
         // }
       ],
       // input里的输入
-      input: "",
+      input: '',
       // 显示帮助
       showHelp: false,
       // 夜间模式
@@ -291,16 +238,17 @@ export default {
       showTable: true,
       showLoading: false,
       showMask: false
-    };
+    }
   },
   created() {},
   mounted() {},
   computed: {},
   watch: {
     input: function() {
-      this.doDebounceSearch();
+      this.doDebounceSearch()
     }
   },
+  components: {},
   methods: {
     // 点击like按钮发生的改变操作
     addLike() {
@@ -308,77 +256,77 @@ export default {
         showClose: true,
         message: `添加收藏成功！`,
         duration: 1500
-      });
+      })
     },
     deleteLike() {
       this.$message.success({
         showClose: true,
         message: `删除收藏成功！`,
         duration: 1500
-      });
+      })
     },
     // 换背景，参数是true和false
     switchChange($event) {
       if ($event) {
-        this.showMask = false;
+        this.showMask = false
       } else {
-        this.showMask = true;
+        this.showMask = true
       }
     },
     // 有防抖的搜索
     doDebounceSearch: Lodash.debounce(function() {
-      this.showTable = false;
-      this.showLoading = true;
+      this.showTable = false
+      this.showLoading = true
       setTimeout(() => {
-        this.tableData = this.fakeData;
-        this.showLoading = false;
-        this.showTable = true;
-        this.$parent.api.reBuild();
-        this.inputMatch();
-      }, 500);
+        this.tableData = this.fakeData
+        this.showLoading = false
+        this.showTable = true
+        this.$parent.api.reBuild()
+        this.inputMatch()
+      }, 500)
       // 发送请求
       // this.totalNumber = 10;
       // this.tableData=
     }, 500),
     //无防抖的搜索
     doNoDebounceSearch: Lodash.debounce(function() {
-      this.showTable = false;
-      this.showLoading = true;
+      this.showTable = false
+      this.showLoading = true
       setTimeout(() => {
-        this.tableData = [];
-        this.showLoading = false;
-        this.showTable = true;
-        this.$parent.api.reBuild();
-        this.inputMatch();
-      }, 500);
+        this.tableData = []
+        this.showLoading = false
+        this.showTable = true
+        this.$parent.api.reBuild()
+        this.inputMatch()
+      }, 500)
       // 发送请求
       // this.totalNumber = 10;
       // this.tableData=
     }, 0),
     // 匹配字符
     inputMatch(data) {
-      let matchResultData = "";
-      let matchInput = this.input.trim();
+      let matchResultData = ''
+      let matchInput = this.input.trim()
       for (let char of data) {
         if (this.input.includes(char)) {
-          char = '<span class="matched">' + char + "</span>";
+          char = '<span class="matched">' + char + '</span>'
         }
-        matchResultData += char;
+        matchResultData += char
       }
-      return matchResultData;
+      return matchResultData
     },
     // 页码size变化
     handleSizeChange(newSize) {
-      this.pageSize = newSize;
-      this.doNoDebounceSearch();
+      this.pageSize = newSize
+      this.doNoDebounceSearch()
     },
     // 当前页码数变化
     handleCurrentChange(newPage) {
-      this.currentPage = newPage;
-      this.doNoDebounceSearch();
+      this.currentPage = newPage
+      this.doNoDebounceSearch()
     },
     goToCorpus() {
-      this.$parent.api.moveTo(2, 1);
+      this.$parent.api.moveTo(2, 1)
     },
     // 选择匹配程度后的回调函数
     handleMatchCommand(value) {
@@ -386,20 +334,20 @@ export default {
         showClose: true,
         message: `当前匹配程度：${value}`,
         duration: 1500
-      });
-      this.doNoDebounceSearch();
+      })
+      this.doNoDebounceSearch()
     },
     changeDropDownBackground() {
       if (this.showMask == true) {
-        document.querySelector(".");
+        document.querySelector('.')
       }
     }
   }
-};
+}
 </script>
 
 <style lang="less" scoped>
-@import "../assets/css/corpus.css";
+@import '../assets/css/corpus.css';
 .loop(@n) when (@n < 20) {
   #corpus /deep/ .el-table__body {
     .el-table__row:nth-child(@{n}) {
