@@ -154,7 +154,7 @@ export default {
         navigation: false,
         keyboardScrolling: false,
         controlArrows: false,
-        normalScrollElements: '.el-drawer,.nav,.aplayer',
+        normalScrollElements: '.el-drawer,.nav,.aplayer,#myLikeCard',
         // 内容超过满屏时是否显示滚动条
         scrollOverflow: true,
         //Section滚动前的回调函数onLeave (index, nextIndex, direction),从0开始计算

@@ -22,11 +22,11 @@
 </template>
 
 <script>
-import LikeScreen from "./LikeScreen";
+import LikeScreen from './LikeScreen'
 export default {
-  name: "Like",
+  name: 'Like',
   data() {
-    return {};
+    return {}
   },
   created() {},
   mounted() {},
@@ -37,18 +37,19 @@ export default {
   watch: {},
   methods: {
     goToCorpus() {
-      this.$parent.api.moveTo(2, 0);
+      this.$parent.api.moveTo(2, 0)
     },
     goBackHome() {
-      this.$router.push("/home");
+      this.$store.commit('hiddenMusic')
+      this.$router.push('/home')
     }
   }
-};
+}
 </script>
 
 <style lang="less" scoped>
-@import "../assets/css/devices.min.css";
-@import "../assets/css/like.css";
+@import '../assets/css/devices.min.css';
+@import '../assets/css/like.css';
 .landscape {
   overflow: hidden;
 }

@@ -10,11 +10,7 @@
         <div></div>
       </div>
     </div>
-    <iframe
-      src="https://www.hhtjim.com/wp-content/uploads/2017/02/T-RexGame.html"
-      frameborder="0"
-      ref="iframe"
-    >
+    <iframe src="https://www.hhtjim.com/wp-content/uploads/2017/02/T-RexGame.html" frameborder="0" ref="iframe">
     </iframe>
     <transition name="maskDisappear">
       <div id="mask" v-if="showLoading"></div>
@@ -24,11 +20,11 @@
 
 <script>
 export default {
-  name: "SmallGame",
+  name: 'SmallGame',
   data() {
     return {
       showLoading: true
-    };
+    }
   },
   created() {},
   mounted() {},
@@ -39,16 +35,16 @@ export default {
     // 这里还无法访问到组件实例，this === undefined
     //要在next里访问vue实例
     next(function(vm) {
-      vm.showLoading = true;
+      vm.showLoading = true
       var listener = window.setInterval(function() {
         if (!vm.$refs.iframe.contentDocument) {
-          vm.showLoading = false;
-          clearInterval(listener);
+          vm.showLoading = false
+          clearInterval(listener)
         }
-      }, 300);
-    });
+      }, 300)
+    })
   }
-};
+}
 </script>
 
 <style lang="less" scoped>
@@ -64,8 +60,8 @@ iframe {
 }
 
 #mask {
-  width: 6000px;
-  height: 5000px;
+  width: 100%;
+  height: 100%;
   top: 50%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);

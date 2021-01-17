@@ -1,6 +1,6 @@
 <template>
   <div id="Music">
-    <aplayer :audio="audio" :lrcType="1" listMaxHeight=120 />
+    <aplayer mutex="true" :audio="audio" :lrcType="1" listMaxHeight=120 />
   </div>
 </template>
 

@@ -68,21 +68,21 @@
             <div class="intro">ctm49</div>
           </div>
         </router-link>
-        <div class="asideItem" @mousedown="scaleDown(4)" @mouseup="scaleUp(4)" @click="showMusic=!showMusic" :class="{ mouseDown: mouseDown['mouseDown_5'] }">
+        <div class="asideItem" @mousedown="scaleDown(4)" @mouseup="scaleUp(4)" @click="$store.commit('toggleMusic')" :class="{ mouseDown: mouseDown['mouseDown_5'] }">
           <img src="../assets/music.png" alt="" />
-          <div class="intro">音乐</div>
+          <div class="intro" style="font-size:16px">故障的播放器</div>
         </div>
       </div>
     </div>
-    <!-- 音乐播放器 -->
-    <transition name="slideAppear">
-      <music v-show="showMusic"></music>
-    </transition>
     <!-- 路由 -->
     <transition :name="transitionName">
       <keep-alive>
         <router-view></router-view>
       </keep-alive>
+    </transition>
+    <!-- 音乐播放器 -->
+    <transition name="slideAppear">
+      <music v-show="showMusic"></music>
     </transition>
 
   </div>
@@ -126,8 +126,7 @@ export default {
         mouseDown_4: false,
         mouseDown_5: false
       },
-      transitionName: 'centerAppear',
-      showMusic: false
+      transitionName: 'centerAppear'
     }
   },
   created() {
@@ -137,13 +136,15 @@ export default {
   computed: {
     showLikeScreen: function() {
       return this.$route.path == '/home'
+    },
+    showMusic() {
+      return this.$store.state.showMusic
     }
   },
   watch: {
     $route(to, from) {
-      this.showMusic = false
-      this.transitionName =
-        to.path == '/Mylike' ? 'slideAppear' : 'centerAppear'
+      this.$store.commit('hiddenMusic')
+      this.transitionName = to.path == '/MyLike' ? 'toMyLike' : 'centerAppear'
     }
   },
   methods: {
@@ -183,25 +184,36 @@ export default {
 <style lang="less" scoped>
 @import '../assets/font_ij1ydyo2e3/iconfont.css';
 @import '../assets/css/likeScreen.css';
-.centerAppear-enter {
+.centerAppear-enter,
+.toMyLike-enter {
   transform: scale(0.2);
 }
-.centerAppear-enter-active {
+.centerAppear-enter-active,
+.toMyLike-enter-active {
   transition: all cubic-bezier(0.215, 0.61, 0.355, 1) 0.35s;
 }
 .centerAppear-enter-to {
   transform: translateX(0);
   opacity: 1;
 }
-.centerAppear-leave {
+
+.toMyliker-enter-to {
+  transform: translateX(0);
+  opacity: 0.9;
+}
+
+.centerAppear-leave,
+.toMyLike-leave {
   transform: scale(0.9);
   max-height: 100px;
   opacity: 0.3;
 }
-.centerAppear-leave-active {
+.centerAppear-leave-active,
+.toMyLike-leave-active {
   transition: all cubic-bezier(0.215, 0.61, 0.355, 1) 0.3s;
 }
-.centerAppear-leave-to {
+.centerAppear-leave-to,
+.toMyLike-leave-to {
   transform: scale(0);
   opacity: 0.1;
   z-index: -100;
@@ -214,7 +226,7 @@ export default {
 
 .slideAppear-enter-active,
 .slideAppear-leave-active {
-  transition: all ease-in-out 0.4s;
+  transition: all ease-in-out 0.2s;
 }
 
 .slideAppear-leave {

@@ -8,10 +8,14 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         loadingTips,
+        showMusic: false
     },
     mutations: {
-        changeState(state, args) {
-            return
+        toggleMusic(state) {
+            state.showMusic = !state.showMusic
+        },
+        hiddenMusic(state) {
+            state.showMusic = false
         }
     },
     actions: {
