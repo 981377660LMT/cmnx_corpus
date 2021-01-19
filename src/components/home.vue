@@ -139,11 +139,9 @@ import arknights7 from '../assets/arknights7.jpg'
 import arknights8 from '../assets/arknights8.jpg'
 import arknights9 from '../assets/arknights9.jpg'
 
-import Corpus from './Corpus'
-import About from './About'
-import Like from './Like'
-import Login from '../components/beforeEnter/Login'
-import SignUp from '../components/beforeEnter/SignUp'
+import Corpus from '../components/Corpus'
+import Like from '../components/Like'
+import About from '../components/About'
 
 export default {
   data() {
@@ -222,8 +220,8 @@ export default {
   components: {
     Corpus,
     Like,
-    Login,
-    SignUp,
+    Login: () => import('../components/beforeEnter/Login'),
+    SignUp: () => import('../components/beforeEnter/SignUp'),
     About
   },
   methods: {

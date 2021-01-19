@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import LikeScreen from './LikeScreen'
 export default {
   name: 'Like',
   data() {
@@ -32,7 +31,7 @@ export default {
   mounted() {},
   computed: {},
   components: {
-    LikeScreen
+    LikeScreen: () => import('./LikeScreen')
   },
   watch: {},
   methods: {

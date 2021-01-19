@@ -414,9 +414,17 @@ export default {
       })
       // 重新发起请求，过渡动画
     }
+  },
+  beforeRouteEnter: (to, from, next) => {
+    const token = window.sessionStorage.getItem('token')
+    if (!token) {
+      return next('/home')
+    }
+    next()
   }
 }
 </script>
+
 
 <style lang="less" scoped>
 .screenContainer {

@@ -23,10 +23,12 @@ const router = new VueRouter({
 })
 
 // //挂载路由导航守卫
-// router.beforeEach((to, from, next) => {//to:将要访问的路径；from:从哪个路径来；next:放行
-//   if (to.path == '/Mylike') return next()
+// router.beforeEach(function (to, from, next) {//to:将要访问的路径；from:从哪个路径来；next:放行
+//   if (to.path == '/home') return next()
 //   const tokenStr = window.sessionStorage.getItem('token')
-//   if (!tokenStr) return next('/home')
+//   if (!tokenStr) {
+//     return next('/home')
+//   }
 //   next()
 // })
 

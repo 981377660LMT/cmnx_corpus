@@ -1,4 +1,3 @@
-// Vue 应用的入口
 import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
@@ -11,9 +10,10 @@ import './assets/css/global.css'
 import './assets/css/fullpage.min.css'
 import axios from 'axios'
 import APlayer from '@moefe/vue-aplayer';
+import './axiosConfig'
 
 
-Vue.prototype.axios = axios
+Vue.prototype.$axios = axios
 Vue.prototype.Lodash = Lodash
 Vue.use(VueFullPage)
 Vue.use(APlayer, {
@@ -23,6 +23,7 @@ Vue.use(APlayer, {
 
 
 Vue.config.productionTip = false
+
 
 
 new Vue({

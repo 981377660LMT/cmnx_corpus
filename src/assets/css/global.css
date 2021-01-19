@@ -47,5 +47,14 @@ a{
   font-family: "Microsoft Yahei" !important;
 }
 
+.el-message{
+  font-size: 20px;
+}
+
+.el-message__content{
+  font-size: 18px;
+  font-family:'Arial', '华文细黑';
+}
+
 
 
