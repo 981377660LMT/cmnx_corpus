@@ -9,16 +9,16 @@
 
 <script>
 export default {
-  name: 'Error404',
+  name: "Error404",
   data() {
-    return {}
+    return {};
   },
   created() {},
   // mounted () {},
   computed: {},
   watch: {},
   methods: {}
-}
+};
 </script>
 
 <style lang="less" scoped>
@@ -29,8 +29,7 @@ export default {
   transform: translate(-50%, -50%);
   background-color: black;
   color: white;
-  font-family: -apple-system, BlinkMacSystemFont, Roboto, 'Segoe UI',
-    'Fira Sans', Avenir, 'Helvetica Neue', 'Lucida Grande', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Roboto, "Segoe UI", "Fira Sans", Avenir, "Helvetica Neue", "Lucida Grande", sans-serif;
 }
 
 #head {

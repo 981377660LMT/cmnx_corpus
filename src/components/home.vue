@@ -4,10 +4,15 @@
     <el-dialog title="关于本站" width="60%" center :visible.sync="centerDialogVisible" @close="closeDialog" custom-class="el-opacity">
       <about @shut="childShutDialog" @open="childOpenDrawer"></about>
     </el-dialog>
-    <!-- 登陆的drawer -->
-    <el-drawer direction="ltr" :visible="drawerVisible" custom-class="el-opacity" @close="closeDrawer" size="20%">
-      <login></login>
-      <signUp v-if="isSignUp"></signUp>
+    <!-- drawer -->
+    <el-drawer :title="drawerTitle" direction="ltr" :visible="drawerVisible" custom-class="el-opacity" @close="closeDrawer" size="20%">
+      <transition name="drawerComponent" mode="out-in">
+        <keep-alive>
+          <login v-if="loginState==1&&!token"></login>
+          <signUp v-else-if="loginState==2&&!token"></signUp>
+          <afterLogin v-else-if="loginState==3||token"></afterLogin>
+        </keep-alive>
+      </transition>
     </el-drawer>
     <!-- 导航nav -->
     <el-header class="nav " ref="nav" :class="{ navShow: isnavShow }">
@@ -130,18 +135,18 @@
 
 <script>
 // 改变图片的方式：import图片存入数组，style绑定
-import steins0 from '../assets/steins0.jpg'
-import lovelive0 from '../assets/lovelive0.jpg'
-import arknights2 from '../assets/arknights2.jpg'
-import arknights3 from '../assets/arknights3.jpg'
-import arknights4 from '../assets/arknights4.jpg'
-import arknights7 from '../assets/arknights7.jpg'
-import arknights8 from '../assets/arknights8.jpg'
-import arknights9 from '../assets/arknights9.jpg'
+import steins0 from "../assets/steins0.jpg";
+import lovelive0 from "../assets/lovelive0.jpg";
+import arknights2 from "../assets/arknights2.jpg";
+import arknights3 from "../assets/arknights3.jpg";
+import arknights4 from "../assets/arknights4.jpg";
+import arknights7 from "../assets/arknights7.jpg";
+import arknights8 from "../assets/arknights8.jpg";
+import arknights9 from "../assets/arknights9.jpg";
 
-import Corpus from '../components/Corpus'
-import Like from '../components/Like'
-import About from '../components/About'
+import Corpus from "../components/Corpus";
+import Like from "../components/Like";
+import About from "../components/About";
 
 export default {
   data() {
@@ -152,48 +157,33 @@ export default {
         navigation: false,
         keyboardScrolling: false,
         controlArrows: false,
-        normalScrollElements: '.el-drawer,.nav,.aplayer,#myLikeCard',
+        normalScrollElements: ".el-drawer,.nav,.aplayer,#myLikeCard",
         // 内容超过满屏时是否显示滚动条
         scrollOverflow: true,
         //Section滚动前的回调函数onLeave (index, nextIndex, direction),从0开始计算
         onLeave: (index, nextIndex, direction) => {
           // console.log(this);
           if (nextIndex.index == 0) {
-            this.currentSlide = this.$refs.fullpage.api.getActiveSlide().index
-            this.isnavShow = false
+            this.currentSlide = this.$refs.fullpage.api.getActiveSlide().index;
+            this.isnavShow = false;
           } else {
             if (this.currentSlide == 0) {
-              this.isnavShow = true
+              this.isnavShow = true;
             }
           }
         },
         // 某一水平滑块滚动前的回调函数，从0开始算起
-        onSlideLeave: (
-          anchorLink,
-          index,
-          slideIndex,
-          direction,
-          nextSlideIndex
-        ) => {
+        onSlideLeave: (anchorLink, index, slideIndex, direction, nextSlideIndex) => {
           // console.log(index.index, slideIndex.index, nextSlideIndex);
           if (slideIndex.index == 1) {
-            this.isnavShow = false
+            this.isnavShow = false;
           } else {
-            this.isnavShow = true
+            this.isnavShow = true;
           }
         }
       },
       //主页面图片
-      random_arr: this.Lodash.shuffle([
-        steins0,
-        lovelive0,
-        arknights2,
-        arknights3,
-        arknights4,
-        arknights7,
-        arknights8,
-        arknights9
-      ]),
+      random_arr: this.Lodash.shuffle([steins0, lovelive0, arknights2, arknights3, arknights4, arknights7, arknights8, arknights9]),
       random_home_img_index: 0,
       //防止切换图片过快
       isclick1: true,
@@ -207,85 +197,113 @@ export default {
       drawerVisible: false,
       //是否显示注册组件
       isSignUp: false
-    }
+    };
   },
 
   created() {
-    this.set_bgimg_interval()
+    this.set_bgimg_interval();
   },
 
   mounted() {},
-  computed: {},
+  computed: {
+    loginState: function() {
+      return this.$store.state.loginState;
+    },
+    drawerTitle: function() {
+      switch (this.$store.state.token || this.loginState) {
+        case 1:
+          return "登录";
+          break;
+        case 2:
+          return "注册";
+          break;
+        default:
+          return "我";
+          break;
+      }
+    },
+    token: function() {
+      return this.$store.state.token;
+    }
+  },
   watch: {},
   components: {
     Corpus,
     Like,
-    Login: () => import('../components/beforeEnter/Login'),
-    SignUp: () => import('../components/beforeEnter/SignUp'),
-    About
+    About,
+    Login: () => import("../components/beforeEnter/Login"),
+    SignUp: () => import("../components/beforeEnter/SignUp"),
+    AfterLogin: () => import("../components/beforeEnter/AfterLogin")
   },
   methods: {
     set_bgimg_interval() {
       this.bg_img_interval = window.setInterval(() => {
-        this.random_home_img_index =
-          this.random_home_img_index == this.random_arr.length - 1
-            ? 0
-            : this.random_home_img_index + 1
-      }, 10000)
+        this.random_home_img_index = this.random_home_img_index == this.random_arr.length - 1 ? 0 : this.random_home_img_index + 1;
+      }, 10000);
     },
     image_index_plus() {
       if (this.isclick1) {
-        this.isclick1 = false
-        this.isclick2 = false
-        this.random_home_img_index =
-          this.random_home_img_index == this.random_arr.length - 1
-            ? 0
-            : this.random_home_img_index + 1
-        clearInterval(this.bg_img_interval)
-        this.set_bgimg_interval()
+        this.isclick1 = false;
+        this.isclick2 = false;
+        this.random_home_img_index = this.random_home_img_index == this.random_arr.length - 1 ? 0 : this.random_home_img_index + 1;
+        clearInterval(this.bg_img_interval);
+        this.set_bgimg_interval();
         setTimeout(() => {
-          this.isclick1 = true
-          this.isclick2 = true
-        }, 1000)
+          this.isclick1 = true;
+          this.isclick2 = true;
+        }, 1000);
       }
     },
     image_index_minus() {
       if (this.isclick2) {
-        this.isclick2 = false
-        this.isclick1 = false
-        this.random_home_img_index =
-          this.random_home_img_index == 0
-            ? this.random_arr.length - 1
-            : this.random_home_img_index - 1
-        clearInterval(this.bg_img_interval)
-        this.set_bgimg_interval()
+        this.isclick2 = false;
+        this.isclick1 = false;
+        this.random_home_img_index = this.random_home_img_index == 0 ? this.random_arr.length - 1 : this.random_home_img_index - 1;
+        clearInterval(this.bg_img_interval);
+        this.set_bgimg_interval();
         setTimeout(() => {
-          this.isclick2 = true
-          this.isclick1 = true
-        }, 1000)
+          this.isclick2 = true;
+          this.isclick1 = true;
+        }, 1000);
       }
     },
     //滚动到第几页，第几个幻灯片；页面从1计算，幻灯片从0计算;
     moveTo(section, slide) {
-      this.$refs.fullpage.api.moveTo(section, slide)
+      this.$refs.fullpage.api.moveTo(section, slide);
     },
     closeDialog() {
-      this.centerDialogVisible = false
+      this.centerDialogVisible = false;
     },
     closeDrawer() {
-      this.drawerVisible = false
+      this.drawerVisible = false;
     },
     childShutDialog(value) {
-      this.centerDialogVisible = value
+      this.centerDialogVisible = value;
     },
     childOpenDrawer(value) {
-      this.drawerVisible = value
+      this.drawerVisible = value;
     }
   }
-}
+};
 </script>
 
 <style  lang='less' scoped >
-@import '../assets/css/glitch.css';
-@import '../assets/css/home1.css';
+@import "../assets/css/glitch.css";
+@import "../assets/css/home1.css";
+.drawerComponent-enter,
+.drawerComponent-leave-to {
+  transform: translateX(-50px);
+  opacity: 0;
+}
+
+.drawerComponent-enter-to,
+.drawerComponent-leave {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.drawerComponent-enter-active,
+.drawerComponent-leave-active {
+  transition: all ease-in-out 0.2s;
+}
 </style>

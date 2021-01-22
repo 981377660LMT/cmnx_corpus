@@ -89,36 +89,24 @@
 </template>
 
 <script>
-import lovelive0 from '../assets/lovelive0.jpg'
-import arknights1 from '../assets/arknights1.jpg'
-import arknights2 from '../assets/arknights2.jpg'
-import arknights3 from '../assets/arknights3.jpg'
-import arknights4 from '../assets/arknights4.jpg'
-import arknights5 from '../assets/arknights5.jpg'
-import arknights6 from '../assets/arknights6.jpg'
-import arknights7 from '../assets/arknights7.jpg'
-import arknights8 from '../assets/arknights8.jpg'
-import arknights9 from '../assets/arknights9.jpg'
+import lovelive0 from "../assets/lovelive0.jpg";
+import arknights1 from "../assets/arknights1.jpg";
+import arknights2 from "../assets/arknights2.jpg";
+import arknights3 from "../assets/arknights3.jpg";
+import arknights4 from "../assets/arknights4.jpg";
+import arknights5 from "../assets/arknights5.jpg";
+import arknights6 from "../assets/arknights6.jpg";
+import arknights7 from "../assets/arknights7.jpg";
+import arknights8 from "../assets/arknights8.jpg";
+import arknights9 from "../assets/arknights9.jpg";
 
 export default {
-  name: 'LikeScreen',
+  name: "LikeScreen",
   data() {
     return {
-      randomScreen: this.Lodash.shuffle([
-        lovelive0,
-        arknights1,
-        arknights2,
-        arknights3,
-        arknights4,
-        arknights5,
-        arknights6,
-        arknights7,
-        arknights8,
-        arknights9
-      ]),
-      likeNumber: 66,
-      timeNow: '',
-      timer: '',
+      randomScreen: this.Lodash.shuffle([lovelive0, arknights1, arknights2, arknights3, arknights4, arknights5, arknights6, arknights7, arknights8, arknights9]),
+      timeNow: "",
+      timer: "",
       mouseDown: {
         mouseDown_1: false,
         mouseDown_2: false,
@@ -126,64 +114,71 @@ export default {
         mouseDown_4: false,
         mouseDown_5: false
       },
-      transitionName: 'centerAppear'
-    }
+      transitionName: "centerAppear"
+    };
   },
   created() {
-    this.timer = this.getTimeNowInterval()
+    this.timer = this.getTimeNowInterval();
+    if (this.$store.state.token) {
+      this.getLike();
+    }
   },
   // mounted () {},
   computed: {
     showLikeScreen: function() {
-      return this.$route.path == '/home'
+      return this.$route.path == "/home";
     },
     showMusic() {
-      return this.$store.state.showMusic
+      return this.$store.state.showMusic;
+    },
+    likeNumber: function() {
+      return this.$store.state.likeNumber;
     }
   },
   watch: {
     $route(to, from) {
-      this.$store.commit('hiddenMusic')
-      this.transitionName = to.path == '/MyLike' ? 'toMyLike' : 'centerAppear'
+      this.$store.commit("hiddenMusic");
+      this.transitionName = to.path == "/MyLike" ? "toMyLike" : "centerAppear";
     }
   },
   methods: {
+    async getLike() {
+      const { data, status } = await this.$axios.get("/getLike");
+      if (status !== 200) return this.$message.error("(◎-◎;)!!  获取收藏失败了...?");
+      this.$store.commit("changeLikeNumber", data.likeNumber);
+    },
     getTimeNowInterval() {
-      setInterval(this.getTimeNow, 500)
+      setInterval(this.getTimeNow, 500);
     },
     getTimeNow() {
-      let date = new Date()
-      let hour = date.getHours()
-      let minute = (date.getMinutes() + '').padStart(2, '0')
-      let ampm = hour >= 12 ? 'PM' : 'AM'
-      this.timeNow = (hour % 12) + ':' + minute + ' ' + ampm
+      let date = new Date();
+      let hour = date.getHours();
+      let minute = (date.getMinutes() + "").padStart(2, "0");
+      let ampm = hour >= 12 ? "PM" : "AM";
+      this.timeNow = (hour % 12) + ":" + minute + " " + ampm;
     },
     scaleDown(index) {
-      console.log(Object.keys(this.mouseDown)[index])
-      this.mouseDown[
-        (this.mouseDown, Object.keys(this.mouseDown)[index])
-      ] = true
+      console.log(Object.keys(this.mouseDown)[index]);
+      this.mouseDown[(this.mouseDown, Object.keys(this.mouseDown)[index])] = true;
     },
     scaleUp(index) {
-      this.mouseDown[
-        (this.mouseDown, Object.keys(this.mouseDown)[index])
-      ] = false
+      this.mouseDown[(this.mouseDown, Object.keys(this.mouseDown)[index])] = false;
     }
   },
   beforeDestroy() {
     if (this.timer) {
-      clearInterval(this.timer)
+      clearInterval(this.timer);
     }
   },
   components: {
-    Music: () => import('../components/screen/Music.vue')
+    Music: () => import("../components/screen/Music.vue")
   }
-}
+};
 </script>
 
 <style lang="less" scoped>
-@import '../assets/font_ij1ydyo2e3/iconfont.css';
-@import '../assets/css/likeScreen.css';
+@import "../assets/font_ij1ydyo2e3/iconfont.css";
+@import "../assets/css/likeScreen.css";
 .centerAppear-enter,
 .toMyLike-enter {
   transform: scale(0.2);

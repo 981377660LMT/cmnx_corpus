@@ -15,6 +15,8 @@ import './axiosConfig'
 
 Vue.prototype.$axios = axios
 Vue.prototype.Lodash = Lodash
+
+
 Vue.use(VueFullPage)
 Vue.use(APlayer, {
   defaultCover: 'https://github.com/u3u.png', // 设置播放器默认封面图片

@@ -20,11 +20,11 @@
 
 <script>
 export default {
-  name: 'SmallGame',
+  name: "SmallGame",
   data() {
     return {
       showLoading: true
-    }
+    };
   },
   created() {},
   mounted() {},
@@ -35,16 +35,16 @@ export default {
     // 这里还无法访问到组件实例，this === undefined
     //要在next里访问vue实例
     next(function(vm) {
-      vm.showLoading = true
+      vm.showLoading = true;
       var listener = window.setInterval(function() {
         if (!vm.$refs.iframe.contentDocument) {
-          vm.showLoading = false
-          clearInterval(listener)
+          vm.showLoading = false;
+          clearInterval(listener);
         }
-      }, 300)
-    })
+      }, 300);
+    });
   }
-}
+};
 </script>
 
 <style lang="less" scoped>

@@ -51,23 +51,23 @@
       <el-table :data="tableData" stripe border style="width: 100%" v-show="showTable">
         <el-table-column type="index" width="50" align="center">
         </el-table-column>
-        <el-table-column prop="from" label="来源" width="150">
+        <el-table-column prop="from" label="来源" width="160">
         </el-table-column>
         <el-table-column prop="chinese" label="中文">
           <template slot-scope="scope">
-            <span v-html="inputMatch(scope.row.chinese)"></span>
+            <span v-html="scope.row.chinese"></span>
           </template>
         </el-table-column>
         <el-table-column prop="japanese" label="日文">
           <template slot-scope="scope">
-            <span v-html="inputMatch(scope.row.japanese)"></span>
+            <span v-html="scope.row.japanese"></span>
           </template>
         </el-table-column>
         <el-table-column label="收藏" width="56">
           <!-- 模板插槽like -->
           <template slot-scope="scope">
-            <i style="font-size:32px;cursor:pointer" class="el-icon-star-on" v-if="scope.row.like == true" @click="deleteLike"></i>
-            <i style="font-size:28px;cursor:pointer" class="el-icon-star-off" v-if="scope.row.like == false" @click="addLike"></i>
+            <i style="font-size:28px;cursor:pointer" class="el-icon-star-on" v-if="scope.row.like==true" @click="toggleLike(scope.row.corpusId,scope.row.like)"></i>
+            <i style="font-size:28px;cursor:pointer" class="el-icon-star-off" v-if="scope.row.like==false" @click="toggleLike(scope.row.corpusId,scope.row.like)"></i>
           </template>
         </el-table-column>
       </el-table>
@@ -88,283 +88,145 @@
 </template>
 
 <script>
-import Lodash from 'lodash'
+import Lodash from "lodash";
 export default {
-  name: 'Corpus',
+  name: "Corpus",
   data() {
     return {
-      // 向后台发送currentPage,pageSize,input三个参数，全部查询排序取一部分后返回到tableData里
+      // 向后台发送currentPage,pageSize,input三个参数
       //查询到的词条数
       totalNumber: 0,
       currentPage: 1,
       pageSize: 5,
       //绑定表格数据
       tableData: [],
-      fakeData: [
-        {
-          id: 0,
-          from: 'FateZero',
-          chinese:
-            '如果他能早点将这一条铁则铭记在心的话，或许还有办法获得救赎。',
-          japanese:
-            'そんな鉄則を、もっと早くから肝きもに銘めいじておいたなら、まだ彼には救いがあった。',
-          like: true
-        },
-        {
-          id: 1,
-          from: 'FGO',
-          chinese: '御主，旅途总是伴随着危险。当然，从者就是为此而存在的……',
-          japanese:
-            'マスター、旅には常に危険が伴います。もちろん、その為にサーヴァントがいるのですが……。',
-          like: false
-        },
-        {
-          id: 2,
-          from: '宫本武藏',
-          chinese: '变迁，沧海桑田，要怎样面对呢？',
-          japanese: 'どうなるものか、この天地の大きな動きが。',
-          like: false
-        },
-        {
-          id: 3,
-          from: 'Chusingura46+1 S',
-          chinese:
-            '「その傷は、我が亡き主君である浅野内匠頭が殿中、松の廊下で刃傷の際に切りつけた傷ではござらぬか？」',
-          japanese:
-            '「その傷は、我が亡き主君である浅野内匠頭が殿中、松の廊下で刃傷の際に切りつけた傷ではござらぬか？」',
-          like: false
-        },
-        {
-          id: 4,
-          from: '美少女万华镜1-4',
-          chinese:
-            '「分かっているんだろうな……帝大に合格できなければ、覡家の恥になるんだぞ……子供が二人もいて、どっちも帝大に入学できなかった、なんてことになれば、親戚中の笑いものだ……」',
-          japanese:
-            '「分かっているんだろうな……帝大に合格できなければ、覡家の恥になるんだぞ……子供が二人もいて、どっちも帝大に入学できなかった、なんてことになれば、親戚中の笑いものだ……」',
-          like: true
-        },
-        {
-          id: 5,
-          from: 'FSN Saber线',
-          chinese:
-            '「真是的，又是这时间回来。因为冬天日落的很早，我有说过要早点回来的对吧。」',
-          japanese:
-            '「もう、またこんな時間に帰ってきて。冬は日が暮れるのが早いんだから、もっと早くに帰ってきなさいって言ったでしょ」',
-          like: false
-        },
-        {
-          id: 6,
-          from: '古今和歌集',
-          chinese: '今朝离别后，转瞬渡银河。未渡银河水，湿痕袖已多。',
-          japanese: '今はとて 別るる時は 天の河 渡らぬ先に 袖ぞひちぬる',
-          like: false
-        },
-        {
-          id: 7,
-          from: '鬼哭街',
-          chinese:
-            '嗜虐血腥的笑容浮在朱的唇边，像是在炫耀自己的破坏力一般，在自身周围挥舞鞭子张开结界。',
-          japanese:
-            '不敵な含笑に嗜虐の色さえ滲ませながら、｜朱《チュウ》はその破壊力を見せつけるかのように、おのれの周囲に鞭を振り巡らせて結界を張った。',
-          like: true
-        },
-        {
-          id: 8,
-          from: '罗生门',
-          chinese:
-            '凝神一看，道士吕翁仍然坐在他的枕边，主人煮的黄米饭，似乎还没有熟。卢生从青瓷枕上抬起头，揉着眼睛，打了一个大呵欠。邯郸的秋日午后，虽有阳光照在落叶的树木梢头，仍令人感到些许寒意。',
-          japanese:
-            'すると枕もとには依然として、道士どうしの呂翁ろおうが坐っている。主人の炊かしいでいた黍きびも、未いまだに熟さないらしい。盧生は青磁の枕から頭をあげると、眼をこすりながら大きな欠伸あくびをした。邯鄲かんたんの秋の午後は、落葉おちばした木々の梢こずえを照らす日の光があってもうすら寒い。',
-          like: false
-        },
-        {
-          id: 9,
-          from: '美少女万华镜5',
-          chinese:
-            '在树木丛生的山中小道上独行的少女，她的身影也同样被穿过树叶的斑驳月光所映现。',
-          japanese:
-            '鬱蒼とした山の中の道を一人歩く少女の姿も同様に、木の葉の陰から届く月光に映し出される。',
-          like: false
-        },
-        {
-          id: 10,
-          from: '明日方舟语音集',
-          chinese: '过道内严禁烟火，请各位干员不要在走道吸烟，谢谢配合！',
-          japanese:
-            '通路内は火気厳禁ですオペレーターのみなさんここでの喫煙は控えてくださいご協力ありがとうございます！',
-          like: false
-        },
-        {
-          id: 11,
-          from: '起风了',
-          chinese:
-            '在那些夏日里，在弥望著茂密芒草的草原中，当你站在那里专心致志地作画的时候，我总是躺在旁边一株白桦的树荫下。',
-          japanese:
-            'それらの夏の日々、一面に薄の生い茂った草原の中で、お前が立ったまま热心に絵を描いていると、私はいつもその傍らの一本の白桦の木荫に身を横たえていたものだった。',
-          like: false
-        },
-        {
-          id: 12,
-          from: '沙耶之歌',
-          chinese:
-            '这些东西间在随意地谈论时，我是可以不理睬的。但是，到该我与他们说话的时候，也不能无视。',
-          japanese:
-            'こいつらが勝手に話し合っているうちは放っておけばいいが、こちらに話しかけてきたときまで無視するわけにもいかない。',
-          like: true
-        },
-        {
-          id: 13,
-          from: '虞美人草',
-          chinese:
-            '“真是一座顽固的山。”男人挺起方形的胸膛，身子微微靠在樱木拐杖上，随即又以蔑视比睿山的口吻道，“既然能看得那么清楚，爬上去应该是小事一桩。',
-          japanese:
-            '「恐ろしい頑固な山だなあ」と四角な胸を突き出して、ちょっと桜の杖に身を倚たせていたが、「あんなに見えるんだから、訳はない」と今度は叡山を軽蔑したような事を云う。',
-          like: false
-        },
-        {
-          id: 14,
-          from: '知网',
-          chinese:
-            '“天下真有这样标致人物，我今儿才算 见了！况且这通身的气派，竟不象老祖宗的外孙女 儿，竟是个嫡亲的孙女，怨不得老祖宗天天口头心 头一时不忘。只可怜我这妹妹这样命苦，怎么姑妈 偏就去世了！',
-          japanese:
-            '広い世間には本当にこん な器量よしもいらっしゃったのですわ ね。わたくし、今日初めてこの目で実物 を見られたというものです。それに、こ の全身からにおうようなご気品は、どう 見てもお祖母さまの外孫でいらっしゃる とはうけとれません。内孫の姫さんとし か見えませんものね。これならお祖母さ まが毎日のようにお噂もされ、お心にも かけていらっしゃいましたのもごもっと も。それにつけてもお可哀想なのはこの 方、こうまでご運がわるいとは。なぜに まあ叔母さまったら、あの世へいってお しまいになったのかしら……」',
-          like: false
-        },
-        {
-          id: 15,
-          from: '山月记',
-          chinese: '令子路吃惊的是孔子之阔达自在，竟全然没有一丝道学家的腐气。',
-          japanese: '闊達自在、いささかの道学者臭も無いのに子路は驚く。',
-          like: false
-        },
-        {
-          id: 16,
-          from: '忠臣藏剧本节选',
-          chinese: '浅野内匠头大人的家臣片冈源五卫门求见',
-          japanese:
-            '只今玄関先に　浅野内匠头様家臣　片冈源五卫门なる者　おとないに来たり',
-          like: false
-        }
-      ],
       // input里的输入
-      input: '',
+      input: "",
       // 显示帮助
       showHelp: false,
       // 夜间模式
       switchValue: true,
       showTable: true,
       showLoading: false,
-      showMask: false
-    }
+      showMask: false,
+      matchMode: ""
+    };
   },
   created() {},
   mounted() {},
   computed: {},
   watch: {
     input: function() {
-      this.doDebounceSearch()
+      this.doDebounceSearch();
     }
   },
   components: {},
   methods: {
-    // 点击like按钮发生的改变操作
-    addLike() {
+    toggleLike(corpusId, like) {
+      console.log(corpusId, like);
+      if (!like) {
+        this.addLike(corpusId);
+      } else {
+        this.deleteLike(corpusId);
+      }
+      if (!this.$store.state.token) return;
+      for (let item of this.tableData) {
+        if (item.corpusId == corpusId) {
+          item.like = !item.like;
+        }
+      }
+    },
+    async addLike(corpusId) {
+      const { data, status } = await this.$axios.put("/putLike", { corpusId: corpusId });
+      if (status != 200) return this.$message.error("(◎-◎;)!!  添加收藏失败了...?");
       this.$message.success({
         showClose: true,
         message: `添加收藏成功！`,
         duration: 1500
-      })
+      });
+      this.$store.commit("changeLikeNumber", data.likeNumber);
     },
-    deleteLike() {
+    async deleteLike(corpusId) {
+      const { data, status } = await this.$axios.delete("/deleteLike", { data: { corpusId: corpusId } });
+      if (status != 200) return this.$message.error("(◎-◎;)!!  删除收藏失败了...?");
       this.$message.success({
         showClose: true,
         message: `删除收藏成功！`,
         duration: 1500
-      })
+      });
+      console.log(data.likeNumber);
+      this.$store.commit("changeLikeNumber", data.likeNumber);
     },
     // 换背景，参数是true和false
     switchChange($event) {
       if ($event) {
-        this.showMask = false
+        this.showMask = false;
       } else {
-        this.showMask = true
+        this.showMask = true;
       }
+    },
+    async doSearch() {
+      this.showTable = false;
+      this.showLoading = true;
+      const { data, status } = await this.$axios.get("/doSearch", {
+        params: {
+          matchMode: this.matchMode,
+          searchInput: this.input,
+          searchPage: this.currentPage,
+          searchPageSize: this.pageSize
+        }
+      });
+      if (status !== 200) return this.$message.error("(◎-◎;)!!  搜索失败了...?");
+      console.log(data.searchResultstatus);
+      this.tableData = data.searchResult;
+      this.totalNumber = data.totalNumber;
+      this.showLoading = false;
+      this.showTable = true;
+      this.$parent.api.reBuild();
     },
     // 有防抖的搜索
-    doDebounceSearch: Lodash.debounce(function() {
-      this.showTable = false
-      this.showLoading = true
-      setTimeout(() => {
-        this.tableData = this.fakeData
-        this.showLoading = false
-        this.showTable = true
-        this.$parent.api.reBuild()
-        this.inputMatch()
-      }, 500)
-      // 发送请求
-      // this.totalNumber = 10;
-      // this.tableData=
+    doDebounceSearch: Lodash.debounce(async function() {
+      console.log(this);
+      this.doSearch();
     }, 500),
     //无防抖的搜索
-    doNoDebounceSearch: Lodash.debounce(function() {
-      this.showTable = false
-      this.showLoading = true
-      setTimeout(() => {
-        this.tableData = []
-        this.showLoading = false
-        this.showTable = true
-        this.$parent.api.reBuild()
-        this.inputMatch()
-      }, 500)
-      // 发送请求
-      // this.totalNumber = 10;
-      // this.tableData=
+    doNoDebounceSearch: Lodash.debounce(async function() {
+      this.doSearch();
     }, 0),
-    // 匹配字符
-    inputMatch(data) {
-      let matchResultData = ''
-      let matchInput = this.input.trim()
-      for (let char of data) {
-        if (this.input.includes(char)) {
-          char = '<span class="matched">' + char + '</span>'
-        }
-        matchResultData += char
-      }
-      return matchResultData
-    },
     // 页码size变化
     handleSizeChange(newSize) {
-      this.pageSize = newSize
-      this.doNoDebounceSearch()
+      this.pageSize = newSize;
+      this.doNoDebounceSearch();
     },
     // 当前页码数变化
     handleCurrentChange(newPage) {
-      this.currentPage = newPage
-      this.doNoDebounceSearch()
+      this.currentPage = newPage;
+      this.doNoDebounceSearch();
     },
     goToCorpus() {
-      this.$parent.api.moveTo(2, 1)
+      this.$parent.api.moveTo(2, 1);
     },
     // 选择匹配程度后的回调函数
     handleMatchCommand(value) {
+      this.matchMode = value;
       this.$message.success({
         showClose: true,
         message: `当前匹配程度：${value}`,
         duration: 1500
-      })
-      this.doNoDebounceSearch()
+      });
+      this.doNoDebounceSearch();
     },
     changeDropDownBackground() {
       if (this.showMask == true) {
-        document.querySelector('.')
+        document.querySelector(".");
       }
     }
   }
-}
+};
 </script>
 
 <style lang="less" scoped>
-@import '../assets/css/corpus.css';
+@import "../assets/css/corpus.css";
 .loop(@n) when (@n < 20) {
   #corpus /deep/ .el-table__body {
     .el-table__row:nth-child(@{n}) {

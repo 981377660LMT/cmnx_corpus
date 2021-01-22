@@ -75,6 +75,14 @@
   line-height: 80px;
 }
 
+ 
+#home /deep/ #el-drawer__title{
+  text-align: center;
+  padding: 0 20px 0 50px;
+  font-size: 30px;
+  font-family: "华文细黑";
+}
+
 
 
 #home1 {

@@ -6,86 +6,85 @@
 
 
 <script>
-import test from '../../assets/茅野愛衣,戸松遥,早見沙織 - secret base ~君がくれたもの~ (10 years after Ver.).mp3'
+import test from "../../assets/茅野愛衣,戸松遥,早見沙織 - secret base ~君がくれたもの~ (10 years after Ver.).mp3";
 
 export default {
-  name: 'Music',
+  name: "Music",
   data() {
     return {
       audio: [
         {
           id: 0,
-          name: '东西（Cover：林俊呈）',
-          artist: '纳豆',
+          name: "东西（Cover：林俊呈）",
+          artist: "纳豆",
           url: test,
           cover: 'https://p1.music.126.net/5zs7IvmLv7KahY3BFzUmrg==/109951163635241613.jpg?param=300y300', // prettier-ignore
-          lrc: '[00:00.00]lrc here[00:01.00]aplayer'
+          lrc: "[00:00.00]lrc here[00:01.00]aplayer"
         },
         {
           id: 1,
-          name: '东西（Cover：林俊呈）',
-          artist: '纳豆',
+          name: "东西（Cover：林俊呈）",
+          artist: "纳豆",
           url: test,
           cover: 'https://p1.music.126.net/5zs7IvmLv7KahY3BFzUmrg==/109951163635241613.jpg?param=300y300', // prettier-ignore
-          lrc: '[00:00.00]lrc here[00:01.00]aplayer'
+          lrc: "[00:00.00]lrc here[00:01.00]aplayer"
         },
         {
           id: 2,
-          name: '东西（Cover：林俊呈）',
-          artist: '纳豆',
+          name: "东西（Cover：林俊呈）",
+          artist: "纳豆",
           url: test,
           cover: 'https://p1.music.126.net/5zs7IvmLv7KahY3BFzUmrg==/109951163635241613.jpg?param=300y300', // prettier-ignore
-          lrc: '[00:00.00]lrc here[00:01.00]aplayer'
+          lrc: "[00:00.00]lrc here[00:01.00]aplayer"
         },
         {
           id: 3,
-          name: '东西（Cover：林俊呈）',
-          artist: '纳豆',
+          name: "东西（Cover：林俊呈）",
+          artist: "纳豆",
           url: test,
           cover: 'https://p1.music.126.net/5zs7IvmLv7KahY3BFzUmrg==/109951163635241613.jpg?param=300y300', // prettier-ignore
-          lrc: 'lrc here[00:01.00]aplayer'
+          lrc: "lrc here[00:01.00]aplayer"
         },
         {
           id: 4,
-          name: '东西（Cover：林俊呈）',
-          artist: '纳豆',
+          name: "东西（Cover：林俊呈）",
+          artist: "纳豆",
           url: test,
           cover: 'https://p1.music.126.net/5zs7IvmLv7KahY3BFzUmrg==/109951163635241613.jpg?param=300y300', // prettier-ignore
-          lrc: '[00:00.00]lrc here[00:01.00]aplayer'
+          lrc: "[00:00.00]lrc here[00:01.00]aplayer"
         },
         {
           id: 5,
-          name: '东西（Cover：林俊呈）',
-          artist: '纳豆',
+          name: "东西（Cover：林俊呈）",
+          artist: "纳豆",
           url: test,
           cover: 'https://p1.music.126.net/5zs7IvmLv7KahY3BFzUmrg==/109951163635241613.jpg?param=300y300', // prettier-ignore
-          lrc: '[00:00.00]lrc here[00:01.00]aplayer'
+          lrc: "[00:00.00]lrc here[00:01.00]aplayer"
         },
         {
           id: 6,
-          name: '东西（Cover：林俊呈）',
-          artist: '纳豆',
+          name: "东西（Cover：林俊呈）",
+          artist: "纳豆",
           url: test,
           cover: 'https://p1.music.126.net/5zs7IvmLv7KahY3BFzUmrg==/109951163635241613.jpg?param=300y300', // prettier-ignore
-          lrc: '[00:00.00]lrc here[00:01.00]aplayer'
+          lrc: "[00:00.00]lrc here[00:01.00]aplayer"
         }
       ]
-    }
+    };
   },
   created() {},
   mounted() {
     //自动改变主题颜色
-    const link = document.createElement('script')
-    link.type = 'text/javascript'
-    link.src =
-      'https://cdn.jsdelivr.net/npm/colorthief@2.0.2/dist/color-thief.min.js'
-    document.body.appendChild(link)
+    const link = document.createElement("script");
+    link.type = "text/javascript";
+    link.src = "https://cdn.jsdelivr.net/npm/colorthief@2.0.2/dist/color-thief.min.js";
+    document.body.appendChild(link);
   },
   computed: {},
   watch: {},
   components: {},
   methods: {}
-}
+};
 </script>
 
 <style lang="less" scoped>

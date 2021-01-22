@@ -19,12 +19,12 @@
 
 <script>
 export default {
-  name: 'Ctm49Site',
+  name: "Ctm49Site",
   data() {
     return {
       showLoading: true,
       randomIndex: 0
-    }
+    };
   },
   created() {},
   mounted() {},
@@ -35,17 +35,17 @@ export default {
     // 这里还无法访问到组件实例，this === undefined
     //要在next里访问vue实例
     next(function(vm) {
-      vm.showLoading = true
-      vm.randomIndex = Math.floor(Math.random() * 50)
+      vm.showLoading = true;
+      vm.randomIndex = Math.floor(Math.random() * 50);
       var listener = window.setInterval(function() {
         if (!vm.$refs.iframe.contentDocument) {
-          vm.showLoading = false
-          clearInterval(listener)
+          vm.showLoading = false;
+          clearInterval(listener);
         }
-      }, 300)
-    })
+      }, 300);
+    });
   }
-}
+};
 </script>
 
 <style lang="less" scoped>
@@ -70,12 +70,12 @@ export default {
   color: white;
   text-align: center;
   font-size: 20px;
-  font-family: 'pixChar';
+  font-family: "pixChar";
   z-index: 100;
 }
 
 @font-face {
-  font-family: 'pixChar';
-  src: url('../../assets/pixChar.ttf');
+  font-family: "pixChar";
+  src: url("../../assets/pixChar.ttf");
 }
 </style>
