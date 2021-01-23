@@ -97,6 +97,6 @@ export default {
 .el-main {
   font-size: 24px;
   font-family: "Arial", "Microsoft YaHei";
-  margin-bottom: 30px;
+  margin-bottom: 110px;
 }
 </style>

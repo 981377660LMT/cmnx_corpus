@@ -178,6 +178,14 @@ html /deep/ .el-pager li,html /deep/ .el-pagination__sizes .el-input .el-input__
 
 }
 
+#corpus /deep/ .el-select .el-input__inner{
+  padding:0;
+}
+
+#corpus /deep/ .el-pagination__jump .el-input__inner{
+  padding:0;
+}
+
   #corpus .box-card::after {
     content: "© 2021 by CMNX";
     display: block;
