@@ -1,5 +1,13 @@
 <template>
   <div id="corpus">
+    <!-- 帮助对话框 -->
+    <el-dialog title="提示" :visible.sync="showHelp" width="30%" center close-on-click-modal="true">
+      <span>需要注意的是内容是默认不居中的</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="centerDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
     <el-card class="box-card">
       <!-- 卡片的头部 -->
       <!-- 固定的switch开关 -->
@@ -8,7 +16,8 @@
       <!-- 卡片里放东西 -->
 
       <el-row :gutter="20">
-        <el-col :span="12" :offset="6" id="help" @click="showHelp = true">需要一些帮助?</el-col>
+        <el-col :span="12" :offset="6" id="help" @click.native="showHelp=true">需要一些帮助?
+        </el-col>
       </el-row>
       <!-- 分割线 -->
       <div id="divider">
@@ -28,15 +37,15 @@
             <template slot="prepend">
               <el-dropdown trigger="hover" @command="handleMatchCommand" show-timeout="100" hide-timeout="100">
                 <span class="el-dropdown-link">
-                  选择匹配程度<i class="el-icon-arrow-down el-icon--right"></i>
+                  选择搜索模式<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item icon="el-icon-bicycle" command="低">
-                    低：>30%</el-dropdown-item>
-                  <el-dropdown-item icon="el-icon-ship" command="中">
-                    中：>60%</el-dropdown-item>
-                  <el-dropdown-item icon="el-icon-truck" command="高">
-                    高：>90%</el-dropdown-item>
+                  <el-dropdown-item icon="el-icon-bicycle" command="1">
+                    在中文与日文中搜索</el-dropdown-item>
+                  <el-dropdown-item icon="el-icon-ship" command="2">
+                    仅在中文中搜索</el-dropdown-item>
+                  <el-dropdown-item icon="el-icon-truck" command="3">
+                    仅在日文中搜索</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </template>
@@ -88,7 +97,9 @@
 </template>
 
 <script>
-import Lodash from "lodash";
+import Lodash from "lodash"
+import Help from "./tips/Help"
+
 export default {
   name: "Corpus",
   data() {
@@ -110,64 +121,80 @@ export default {
       showLoading: false,
       showMask: false,
       matchMode: ""
-    };
+    }
   },
   created() {},
   mounted() {},
-  computed: {},
-  watch: {
-    input: function() {
-      this.doDebounceSearch();
+  computed: {
+    //在手机界面被删除的语料id
+    corpusId: function() {
+      return this.$store.state.corpusId
     }
   },
-  components: {},
+  watch: {
+    input: function() {
+      this.doDebounceSearch()
+    },
+    //手机界面的收藏被删除时，对应的收藏星星变色
+    corpusId: function(corpusId) {
+      for (let corpus of this.tableData) {
+        let { corpusId: shouldChangedCorpusId } = corpus
+        if (shouldChangedCorpusId === corpusId) {
+          return (corpus.like = !corpus.like)
+        }
+      }
+    }
+  },
+  components: {
+    Help
+  },
   methods: {
     toggleLike(corpusId, like) {
-      console.log(corpusId, like);
+      console.log(corpusId, like)
       if (!like) {
-        this.addLike(corpusId);
+        this.addLike(corpusId)
       } else {
-        this.deleteLike(corpusId);
+        this.deleteLike(corpusId)
       }
-      if (!this.$store.state.token) return;
+      if (!this.$store.state.token) return
       for (let item of this.tableData) {
         if (item.corpusId == corpusId) {
-          item.like = !item.like;
+          item.like = !item.like
         }
       }
     },
     async addLike(corpusId) {
-      const { data, status } = await this.$axios.put("/putLike", { corpusId: corpusId });
-      if (status != 200) return this.$message.error("(◎-◎;)!!  添加收藏失败了...?");
+      const { data, status } = await this.$axios.put("/putLike", { corpusId: corpusId })
+      if (status != 200) return this.$message.error("(◎-◎;)!!  添加收藏失败了...?")
       this.$message.success({
         showClose: true,
         message: `添加收藏成功！`,
         duration: 1500
-      });
-      this.$store.commit("changeLikeNumber", data.likeNumber);
+      })
+      this.$store.commit("changeLikeNumber", data.likeNumber)
     },
     async deleteLike(corpusId) {
-      const { data, status } = await this.$axios.delete("/deleteLike", { data: { corpusId: corpusId } });
-      if (status != 200) return this.$message.error("(◎-◎;)!!  删除收藏失败了...?");
+      const { data, status } = await this.$axios.delete("/deleteLike", { data: { corpusId: corpusId } })
+      if (status != 200) return this.$message.error("(◎-◎;)!!  删除收藏失败了...?")
       this.$message.success({
         showClose: true,
         message: `删除收藏成功！`,
         duration: 1500
-      });
-      console.log(data.likeNumber);
-      this.$store.commit("changeLikeNumber", data.likeNumber);
+      })
+      console.log(data.likeNumber)
+      this.$store.commit("changeLikeNumber", data.likeNumber)
     },
     // 换背景，参数是true和false
     switchChange($event) {
       if ($event) {
-        this.showMask = false;
+        this.showMask = false
       } else {
-        this.showMask = true;
+        this.showMask = true
       }
     },
     async doSearch() {
-      this.showTable = false;
-      this.showLoading = true;
+      this.showTable = false
+      this.showLoading = true
       const { data, status } = await this.$axios.get("/doSearch", {
         params: {
           matchMode: this.matchMode,
@@ -175,54 +202,44 @@ export default {
           searchPage: this.currentPage,
           searchPageSize: this.pageSize
         }
-      });
-      if (status !== 200) return this.$message.error("(◎-◎;)!!  搜索失败了...?");
-      console.log(data.searchResultstatus);
-      this.tableData = data.searchResult;
-      this.totalNumber = data.totalNumber;
-      this.showLoading = false;
-      this.showTable = true;
-      this.$parent.api.reBuild();
+      })
+      if (status !== 200) return this.$message.error("(◎-◎;)!!  搜索失败了...?")
+      console.log(data.searchResultstatus)
+      this.tableData = data.searchResult
+      this.totalNumber = data.totalNumber
+      this.showLoading = false
+      this.showTable = true
+      this.$parent.api.reBuild()
     },
     // 有防抖的搜索
     doDebounceSearch: Lodash.debounce(async function() {
-      console.log(this);
-      this.doSearch();
+      console.log(this)
+      this.doSearch()
     }, 500),
     //无防抖的搜索
     doNoDebounceSearch: Lodash.debounce(async function() {
-      this.doSearch();
+      this.doSearch()
     }, 0),
     // 页码size变化
     handleSizeChange(newSize) {
-      this.pageSize = newSize;
-      this.doNoDebounceSearch();
+      this.pageSize = newSize
+      this.doNoDebounceSearch()
     },
     // 当前页码数变化
     handleCurrentChange(newPage) {
-      this.currentPage = newPage;
-      this.doNoDebounceSearch();
+      this.currentPage = newPage
+      this.doNoDebounceSearch()
     },
     goToCorpus() {
-      this.$parent.api.moveTo(2, 1);
+      this.$parent.api.moveTo(2, 1)
     },
     // 选择匹配程度后的回调函数
     handleMatchCommand(value) {
-      this.matchMode = value;
-      this.$message.success({
-        showClose: true,
-        message: `当前匹配程度：${value}`,
-        duration: 1500
-      });
-      this.doNoDebounceSearch();
-    },
-    changeDropDownBackground() {
-      if (this.showMask == true) {
-        document.querySelector(".");
-      }
+      this.matchMode = value
+      this.doNoDebounceSearch()
     }
   }
-};
+}
 </script>
 
 <style lang="less" scoped>

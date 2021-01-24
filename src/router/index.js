@@ -17,7 +17,7 @@ const router = new VueRouter({
         { path: '/StudySite', component: () => import('../components/screen/StudySite.vue'), name: 'Resx.Cf 资源站' },
       ]
     },
-    { path: '/404', component: () => import('../components/Error404.vue'), name: '404 (*°∀°)=3' },
+    { path: '/404', component: () => import('../components/tips/Error404.vue'), name: '404 (*°∀°)=3' },
     { path: '*', redirect: '/404' }
   ]
 })

@@ -33,34 +33,34 @@ export default {
   data() {
     return {
       total: 0
-    };
+    }
   },
   async created() {
-    let { data } = await this.$axios.get("/getCorpusData");
-    this.total = data.total;
+    let { data } = await this.$axios.get("/getCorpusData")
+    this.total = data.total
   },
   mounted() {},
   computed: {
     timeNow: function() {
-      let date = new Date();
-      let year = date.getFullYear();
-      let month = date.getMonth() + 1;
-      let day = date.getDate();
-      return year + "年" + month + "月" + day + "日";
+      let date = new Date()
+      let year = date.getFullYear()
+      let month = date.getMonth() + 1
+      let day = date.getDate()
+      return year + "年" + month + "月" + day + "日"
     }
   },
   watch: {},
   methods: {
     shutDialog() {
-      this.$emit("shut", false);
+      this.$emit("shut", false)
     },
     openDialog() {
-      this.$emit("open", true);
+      this.$emit("open", true)
     }
   }
-};
+}
 </script>
 
 <style lang="less" scoped>
-@import "../assets/css/about.css";
+@import "../../assets/css/about.css";
 </style>

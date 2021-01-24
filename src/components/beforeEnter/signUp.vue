@@ -51,23 +51,23 @@ export default {
     //表单验证密码相同
     var validatePass = (rule, value, callback) => {
       if (value === "") {
-        callback(new Error("请输入密码"));
+        callback(new Error("请输入密码"))
       } else {
         if (this.signUpForm.checkPass !== "") {
-          this.$refs.signUpForm.validateField("checkPass");
+          this.$refs.signUpForm.validateField("checkPass")
         }
-        callback();
+        callback()
       }
-    };
+    }
     var validatePass2 = (rule, value, callback) => {
       if (value === "") {
-        callback(new Error("请再次输入密码"));
+        callback(new Error("请再次输入密码"))
       } else if (value !== this.signUpForm.password) {
-        callback(new Error("两次输入密码不一致!"));
+        callback(new Error("两次输入密码不一致!"))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     return {
       // 登陆表单绑定
       signUpForm: {
@@ -88,7 +88,7 @@ export default {
         ],
         checkPass: [{ validator: validatePass2, trigger: "blur" }]
       }
-    };
+    }
   },
   created() {},
   // mounted () {},
@@ -97,19 +97,19 @@ export default {
   methods: {
     signUp() {
       this.$refs.signUpForm.validate(async valid => {
-        if (!valid) return;
-        const { status, data } = await this.$axios.post("signUp", this.signUpForm);
-        console.log(status, data); //data里面有token
-        if (status == 422) return this.$message.error("(◎-◎;)!!  注册失败,要不换个名字试试...?");
-        this.$message.success("v(｡・ω・｡)ｨｪｨ♪　注册成功！");
-        this.toLogin();
-      });
+        if (!valid) return
+        const { status, data } = await this.$axios.post("signUp", this.signUpForm)
+        console.log(status, data) //data里面有token
+        if (status == 422) return this.$message.error("(◎-◎;)!!  注册失败,要不换个名字试试...?")
+        this.$message.success("v(｡・ω・｡)ｨｪｨ♪　注册成功！")
+        this.toLogin()
+      })
     },
     toLogin() {
-      this.$store.commit("changeLoginState", 1);
+      this.$store.commit("changeLoginState", 1)
     }
   }
-};
+}
 </script>
 
 <style lang="less" scoped>

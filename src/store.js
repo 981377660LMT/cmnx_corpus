@@ -11,6 +11,8 @@ export default new Vuex.Store({
         showMusic: false,
         //用户收藏词条数
         likeNumber: 0,
+        //在手机界面被删除的语料id
+        corpusId: '',
         //1是登录，2是注册，3是登陆完之后
         loginState: 1,
         token: sessionStorage.getItem('token') ? sessionStorage.getItem('token') : ''
@@ -30,12 +32,15 @@ export default new Vuex.Store({
         },
         changeLikeNumber(state, value) {
             state.likeNumber = value
+        },
+        changeCorpusId(state, value) {
+            state.corpusId = value
         }
     },
     actions: {
-        asyncTrigMutation(context, args) {
-            context.commit('changeState', args)
-        }
+        // actionChangeCorpusId(context, value) {
+        //     context.commit('changeState', value)
+        // }
     },
     getters: {
         getLoadingTips(state) {

@@ -51,23 +51,23 @@ export default {
     //表单验证密码相同
     var validatePass = (rule, value, callback) => {
       if (value === "") {
-        callback(new Error("请输入密码"));
+        callback(new Error("请输入密码"))
       } else {
         if (this.loginForm.checkPass !== "") {
-          this.$refs.loginForm.validateField("checkPass");
+          this.$refs.loginForm.validateField("checkPass")
         }
-        callback();
+        callback()
       }
-    };
+    }
     var validatePass2 = (rule, value, callback) => {
       if (value === "") {
-        callback(new Error("请再次输入密码"));
+        callback(new Error("请再次输入密码"))
       } else if (value !== this.loginForm.password) {
-        callback(new Error("两次输入密码不一致!"));
+        callback(new Error("两次输入密码不一致!"))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     return {
       // 登陆表单绑定
       loginForm: {
@@ -88,7 +88,7 @@ export default {
         ],
         checkPass: [{ validator: validatePass2, trigger: "blur" }]
       }
-    };
+    }
   },
   created() {},
   // mounted () {},
@@ -97,29 +97,29 @@ export default {
   methods: {
     login() {
       this.$refs.loginForm.validate(async valid => {
-        if (!valid) return;
-        const { status, data } = await this.$axios.post("login", this.loginForm);
-        console.log(status, data);
-        if (status == 422) return this.$message.error("(◎-◎;)!!  用户名或密码错误...?");
-        this.$message.success("v(｡・ω・｡)ｨｪｨ♪　登录成功！");
-        window.sessionStorage.setItem("token", "Bearer " + data.token);
+        if (!valid) return
+        const { status, data } = await this.$axios.post("login", this.loginForm)
+        console.log(status, data)
+        if (status == 422) return this.$message.error("(◎-◎;)!!  用户名或密码错误...?")
+        this.$message.success("v(｡・ω・｡)ｨｪｨ♪　登录成功！")
+        window.sessionStorage.setItem("token", "Bearer " + data.token)
         // 将用户token保存到vuex中
-        this.$store.commit("setToken", "Bearer " + data.token);
-        this.$store.commit("changeLoginState", "3");
+        this.$store.commit("setToken", "Bearer " + data.token)
+        this.$store.commit("changeLoginState", "3")
         //获取用户的收藏
-        this.getLike();
-      });
+        this.getLike()
+      })
     },
     goTosignUp() {
-      this.$store.commit("changeLoginState", 2);
+      this.$store.commit("changeLoginState", 2)
     },
     async getLike() {
-      const { data, status } = await this.$axios.get("/getLike");
-      if (status !== 200) return this.$message.error("(◎-◎;)!!  获取收藏失败了...?");
-      this.$store.commit("changeLikeNumber", data.likeNumber);
+      const { data, status } = await this.$axios.get("/getLike")
+      if (status !== 200) return this.$message.error("(◎-◎;)!!  获取收藏失败了...?")
+      this.$store.commit("changeLikeNumber", data.likeNumber)
     }
   }
-};
+}
 </script>
 
 <style lang="less" scoped>

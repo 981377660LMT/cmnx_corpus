@@ -41,6 +41,10 @@
 	background-blend-mode: var(--blend-mode-1);
 	transition: background-image 1s ease-in-out;
 	z-index: 2;
+	-webkit-transition: background-image 1s ease-in-out;
+	-moz-transition: background-image 1s ease-in-out;
+	-ms-transition: background-image 1s ease-in-out;
+	-o-transition: background-image 1s ease-in-out;
 }
 
 .glitch_img:nth-child(n+2) {

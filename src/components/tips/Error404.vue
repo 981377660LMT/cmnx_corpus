@@ -11,14 +11,14 @@
 export default {
   name: "Error404",
   data() {
-    return {};
+    return {}
   },
   created() {},
   // mounted () {},
   computed: {},
   watch: {},
   methods: {}
-};
+}
 </script>
 
 <style lang="less" scoped>
