@@ -26,6 +26,12 @@
               <el-form-item label="确认密码" prop="checkPass" id="check">
                 <el-input type="password" v-model="signUpForm.checkPass" autocomplete="off" clearable></el-input>
               </el-form-item>
+              <el-form-item label="验证码" prop="verifyNumber">
+                <span id="getVerifyNumber" @click="getVerifyNumber">获取验证码</span>
+                <el-input v-model="signUpForm.verifyNumber" autocomplete="off"></el-input>
+                <div v-html="svgData" id="verifySvg"></div>
+              </el-form-item>
+
               <!-- 表单按钮 -->
               <el-row :gutter="20" class="signUpButton">
                 <el-form-item style="margin-top:20px">
@@ -73,7 +79,8 @@ export default {
       signUpForm: {
         name: "test",
         password: "123456",
-        checkPass: "123456"
+        checkPass: "123456",
+        verifyNumber: 6666
       },
       //登录表单验证规则
       rules: {
@@ -86,20 +93,42 @@ export default {
           { min: 3, message: "长度至少为3个字符", trigger: "blur" },
           { validator: validatePass, trigger: "blur" }
         ],
-        checkPass: [{ validator: validatePass2, trigger: "blur" }]
-      }
+        checkPass: [{ validator: validatePass2, trigger: "blur" }],
+        verifyNumber: { required: true, message: "请输入验证码", trigger: "blur" }
+      },
+      svgData: null
     }
   },
   created() {},
   // mounted () {},
-  computed: {},
-  watch: {},
+  computed: {
+    loginState: function() {
+      return this.$store.state.loginState
+    }
+  },
+  watch: {
+    loginState: function() {
+      return (this.svgData = null)
+    }
+  },
   methods: {
+    async getVerifyNumber() {
+      const { status, data } = await this.$axios.get("sendVerifyNumber")
+      if (status == 400) return this.$message.error("(◎-◎;)!!  获取验证码失败...?")
+      this.svgData = data.img
+      window.sessionStorage.setItem("secretVerifyNumber", data.secretVerifyNumber)
+    },
     signUp() {
       this.$refs.signUpForm.validate(async valid => {
         if (!valid) return
-        const { status, data } = await this.$axios.post("signUp", this.signUpForm)
+        const { status, data } = await this.$axios.post("signUp", {
+          name: this.signUpForm.name,
+          password: this.signUpForm.password,
+          verifyNumber: this.signUpForm.verifyNumber,
+          secretVerifyNumber: window.sessionStorage.getItem("secretVerifyNumber")
+        })
         console.log(status, data) //data里面有token
+        if (status == 410) return this.$message.error("(◎-◎;)!!  验证码错误...?")
         if (status == 422) return this.$message.error("(◎-◎;)!!  注册失败,要不换个名字试试...?")
         this.$message.success("v(｡・ω・｡)ｨｪｨ♪　注册成功！")
         this.toLogin()
@@ -108,7 +137,8 @@ export default {
     toLogin() {
       this.$store.commit("changeLoginState", 1)
     }
-  }
+  },
+  beforeDestroy() {}
 }
 </script>
 

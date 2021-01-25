@@ -1,22 +1,14 @@
 <template>
   <div id="corpus">
-    <!-- 帮助对话框 -->
-    <el-dialog title="提示" :visible.sync="showHelp" width="30%" center close-on-click-modal="true">
-      <span>需要注意的是内容是默认不居中的</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="centerDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
-      </span>
-    </el-dialog>
     <el-card class="box-card">
       <!-- 卡片的头部 -->
       <!-- 固定的switch开关 -->
       <el-switch v-model="switchValue" active-color="#13ce66" inactive-color="grey" @change="switchChange($event)">
       </el-switch>
-      <!-- 卡片里放东西 -->
-
+      <!-- 卡片里 -->
       <el-row :gutter="20">
-        <el-col :span="12" :offset="6" id="help" @click.native="showHelp=true">需要一些帮助?
+        <el-col :span="12" :offset="6" @click.native="openTips">
+          <div id="help"> 需要一些帮助?</div>
         </el-col>
       </el-row>
       <!-- 分割线 -->
@@ -40,11 +32,11 @@
                   选择搜索模式<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item icon="el-icon-bicycle" command="1">
+                  <el-dropdown-item command="1">
                     在中文与日文中搜索</el-dropdown-item>
-                  <el-dropdown-item icon="el-icon-ship" command="2">
+                  <el-dropdown-item command="2">
                     仅在中文中搜索</el-dropdown-item>
-                  <el-dropdown-item icon="el-icon-truck" command="3">
+                  <el-dropdown-item command="3">
                     仅在日文中搜索</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
@@ -81,7 +73,7 @@
         </el-table-column>
       </el-table>
 
-      <!-- 分页下 -->
+      <!-- 分页 -->
       <el-pagination class="paginationBottom" @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[3, 5, 7, 10]" :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper" :total="totalNumber" :popper-append-to-body="false">
       </el-pagination>
@@ -98,7 +90,6 @@
 
 <script>
 import Lodash from "lodash"
-import Help from "./tips/Help"
 
 export default {
   name: "Corpus",
@@ -113,14 +104,15 @@ export default {
       tableData: [],
       // input里的输入
       input: "",
-      // 显示帮助
-      showHelp: false,
       // 夜间模式
       switchValue: true,
       showTable: true,
       showLoading: false,
       showMask: false,
-      matchMode: ""
+      matchMode: "",
+      //提示显示状态
+      isNotification: false,
+      isMouseDown: false
     }
   },
   created() {},
@@ -145,9 +137,7 @@ export default {
       }
     }
   },
-  components: {
-    Help
-  },
+  components: {},
   methods: {
     toggleLike(corpusId, like) {
       console.log(corpusId, like)
@@ -237,6 +227,26 @@ export default {
     handleMatchCommand(value) {
       this.matchMode = value
       this.doNoDebounceSearch()
+    },
+    openTips() {
+      if (this.isNotification) return
+      this.isNotification = true
+      this.$notify.info({
+        title: "Tips",
+        dangerouslyUseHTMLString: true,
+        message: `
+        <p style="margin-top:5px;"><strong>1.&nbsp使用<span class="matched">空格</span>作为分隔符来匹配多个输入</strong></p>
+        <p style="margin-top:5px;"><strong>2.&nbsp使用<span class="matched">英文双引号""</span>包围精确匹配的内容</strong></p>
+        <p style="margin-top:5px;"><strong>3.&nbsp切换<span class="matched">搜索模式</span>在不同范围内搜索</strong></p>
+        
+        `,
+        position: "top-left",
+        duration: 0,
+        offset: 60,
+        onClose: () => {
+          this.isNotification = false
+        }
+      })
     }
   }
 }

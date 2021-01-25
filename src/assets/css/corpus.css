@@ -40,6 +40,10 @@
       margin-bottom: 20px;
       cursor: pointer;
       transition: all 0.4s ease-in-out;
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -ms-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
   }
 
   #corpus #help:hover{
@@ -243,3 +247,4 @@ html /deep/ .el-pager li,html /deep/ .el-pagination__sizes .el-input .el-input__
    text-align: center;
  }
 
+ 

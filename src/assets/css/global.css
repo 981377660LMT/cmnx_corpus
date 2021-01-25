@@ -56,5 +56,9 @@ a{
   font-family:'Arial', '华文细黑';
 }
 
-
+.el-notification{
+  opacity: 0.85;
+  width: 350px;
+  font-family: "Arial";
+}
 

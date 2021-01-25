@@ -15,6 +15,8 @@ else if (process.env.NODE_ENV == 'production') {
 
 axios.defaults.timeout = 5000;
 
+// axios.defaults.withCredentials = true
+
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {
     config.headers['X-Requested-With'] = 'XMLHttpRequest'

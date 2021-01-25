@@ -64,6 +64,17 @@ html /deep/  .el-button{
     margin: 10px 10px 0px 10px;
 }
 
+#getVerifyNumber{
+    display: inline-block;
+    font-size: 15px;
+    margin: 2px 0 0 100px;
+    font-family: "华文细黑";
+    cursor: pointer;
+}
 
+#verifySvg{
+    padding: 0;
+    margin: 10px 0 0 0;
+}
 
   

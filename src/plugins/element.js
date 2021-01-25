@@ -1,9 +1,8 @@
 import Vue from 'vue'
-import { Button, Message, Avatar, Select, TableColumn, Input, Drawer, Form, FormItem, Card, Header, Icon, Loading, Table, Popover, Row, Col, Dialog, Pagination, Switch, Main, Backtop, DropdownMenu, DropdownItem, Dropdown, Badge, Tabs, TabPane } from 'element-ui'
+import { Button, Message, Avatar, Select, TableColumn, Input, Drawer, Form, FormItem, Card, Header, Icon, Loading, Table, Popover, Row, Col, Dialog, Pagination, Switch, Main, Backtop, DropdownMenu, DropdownItem, Dropdown, Badge, Tabs, TabPane, Notification } from 'element-ui'
 
 
 Vue.use(Dialog)
-Vue.component(Message.name, Message)
 Vue.use(Backtop)
 Vue.use(Drawer)
 Vue.use(Button)
@@ -32,3 +31,6 @@ Vue.use(Tabs)
 Vue.use(TabPane)
 //弹框组件挂载到vue原型对象上
 Vue.prototype.$message = Message
+Vue.prototype.$notify = Notification
+
+
