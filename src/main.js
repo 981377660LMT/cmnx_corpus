@@ -12,21 +12,21 @@ import axios from 'axios'
 import APlayer from '@moefe/vue-aplayer';
 import './axiosConfig'
 
-
 Vue.prototype.$axios = axios
 Vue.prototype.Lodash = Lodash
 
-
 Vue.use(VueFullPage)
 Vue.use(APlayer, {
-  defaultCover: 'https://github.com/u3u.png', // 设置播放器默认封面图片
+  defaultCover: '../src/assets/musicJpg_0.jpg', // 设置播放器默认封面图片
   productionTip: false, // 是否在控制台输出版本信息
 });
 
-
-Vue.config.productionTip = false
-
-
+if (process.env.NODE_ENV == 'development') {
+  Vue.config.productionTip = false
+}
+else if (process.env.NODE_ENV == 'production') {
+  Vue.config.productionTip = true
+}
 
 new Vue({
   store,

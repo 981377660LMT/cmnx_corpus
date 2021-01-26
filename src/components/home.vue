@@ -78,7 +78,7 @@
               </li>
               <li class="wechat">
                 <a href="javaScript:void(0)" title="wechat">
-                  <el-popover placement="bottom" trigger="hover" close-delay="0">
+                  <el-popover placement="bottom" trigger="hover" :close-delay="0">
                     <img src="../assets/myWechat.jpg" style="width:100px;height:100px" />
                     <img slot="reference" src="../assets/wechat.png" />
                   </el-popover>

@@ -70,7 +70,7 @@
         </router-link>
         <div class="asideItem" @mousedown="scaleDown(4)" @mouseup="scaleUp(4)" @click="$store.commit('toggleMusic')" :class="{ mouseDown: mouseDown['mouseDown_5'] }">
           <img src="../assets/music.png" alt="" />
-          <div class="intro" style="font-size:16px">故障的播放器</div>
+          <div class="intro">音乐</div>
         </div>
       </div>
     </div>

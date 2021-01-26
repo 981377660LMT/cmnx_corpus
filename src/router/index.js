@@ -22,21 +22,9 @@ const router = new VueRouter({
   ]
 })
 
-// //挂载路由导航守卫
-// router.beforeEach(function (to, from, next) {//to:将要访问的路径；from:从哪个路径来；next:放行
-//   if (to.path == '/home') return next()
-//   const tokenStr = window.sessionStorage.getItem('token')
-//   if (!tokenStr) {
-//     return next('/home')
-//   }
-//   next()
-// })
-
-
 // 设置afterEach钩子函数改变标题
 router.afterEach((to, from, next) => {
   document.title = to.name;
-  next();
 })
 
 export default router

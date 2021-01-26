@@ -3,14 +3,11 @@ import router from './router'
 import { Message } from 'element-ui'
 import store from './store'
 
-
-
-
 if (process.env.NODE_ENV == 'development') {
-    axios.defaults.baseURL = 'http://127.0.0.1:8888/api';
+    axios.defaults.baseURL = 'http://127.0.0.1:80/api';
 }
 else if (process.env.NODE_ENV == 'production') {
-    axios.defaults.baseURL = 'http://cmnx.me:8888/api';
+    axios.defaults.baseURL = 'http://139.59.246.237:80/api';
 }
 
 axios.defaults.timeout = 5000;

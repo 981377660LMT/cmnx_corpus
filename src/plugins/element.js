@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import { Button, Message, Avatar, Select, TableColumn, Input, Drawer, Form, FormItem, Card, Header, Icon, Loading, Table, Popover, Row, Col, Dialog, Pagination, Switch, Main, Backtop, DropdownMenu, DropdownItem, Dropdown, Badge, Tabs, TabPane, Notification } from 'element-ui'
 
-
 Vue.use(Dialog)
 Vue.use(Backtop)
 Vue.use(Drawer)
