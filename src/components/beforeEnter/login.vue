@@ -71,9 +71,9 @@ export default {
     return {
       // 登陆表单绑定
       loginForm: {
-        name: "test",
-        password: "123456",
-        checkPass: "123456"
+        name: "",
+        password: "",
+        checkPass: ""
       },
       //登录表单验证规则
       rules: {
@@ -99,7 +99,7 @@ export default {
       this.$refs.loginForm.validate(async valid => {
         if (!valid) return
         const { status, data } = await this.$axios.post("login", this.loginForm)
-        console.log(status, data)
+        // console.log(status, data)
         if (status == 422) return this.$message.error("(◎-◎;)!!  用户名或密码错误...?")
         this.$message.success("v(｡・ω・｡)ｨｪｨ♪　登录成功！")
         window.sessionStorage.setItem("token", "Bearer " + data.token)

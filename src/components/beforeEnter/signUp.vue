@@ -77,10 +77,10 @@ export default {
     return {
       // 登陆表单绑定
       signUpForm: {
-        name: "test",
-        password: "123456",
-        checkPass: "123456",
-        verifyNumber: 6666
+        name: "",
+        password: "",
+        checkPass: "",
+        verifyNumber: null
       },
       //登录表单验证规则
       rules: {
@@ -127,7 +127,7 @@ export default {
           verifyNumber: this.signUpForm.verifyNumber,
           secretVerifyNumber: window.sessionStorage.getItem("secretVerifyNumber")
         })
-        console.log(status, data) //data里面有token
+        // console.log(status, data) //data里面有token
         if (status == 410) return this.$message.error("(◎-◎;)!!  验证码错误...?")
         if (status == 422) return this.$message.error("(◎-◎;)!!  注册失败,要不换个名字试试...?")
         this.$message.success("v(｡・ω・｡)ｨｪｨ♪　注册成功！")

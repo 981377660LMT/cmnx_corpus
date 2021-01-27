@@ -149,6 +149,8 @@ import Corpus from "../components/Corpus"
 import Like from "../components/Like"
 import About from "../components/tips/About"
 
+import { shuffle } from "lodash"
+
 export default {
   data() {
     return {
@@ -184,7 +186,7 @@ export default {
         }
       },
       //主页面图片
-      random_arr: this.Lodash.shuffle([steins0, lovelive0, arknights2, arknights3, arknights4, arknights6, arknights7, arknights8, arknights9]),
+      random_arr: shuffle([steins0, lovelive0, arknights2, arknights3, arknights4, arknights6, arknights7, arknights8, arknights9]),
       random_home_img_index: 0,
       //防止切换图片过快
       isclick1: true,

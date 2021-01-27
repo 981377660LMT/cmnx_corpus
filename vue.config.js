@@ -6,5 +6,4 @@ module.exports = {
     },
     // 项目中的所有资源指定一个基础路径
     publicPath: './'
-
 }

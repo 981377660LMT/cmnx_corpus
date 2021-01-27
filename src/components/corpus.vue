@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import Lodash from "lodash"
+import { debounce } from "lodash"
 
 export default {
   name: "Corpus",
@@ -140,7 +140,7 @@ export default {
   components: {},
   methods: {
     toggleLike(corpusId, like) {
-      console.log(corpusId, like)
+      // console.log(corpusId, like)
       if (!like) {
         this.addLike(corpusId)
       } else {
@@ -171,7 +171,7 @@ export default {
         message: `删除收藏成功！`,
         duration: 1500
       })
-      console.log(data.likeNumber)
+      // console.log(data.likeNumber)
       this.$store.commit("changeLikeNumber", data.likeNumber)
     },
     // 换背景，参数是true和false
@@ -194,7 +194,7 @@ export default {
         }
       })
       if (status !== 200) return this.$message.error("(◎-◎;)!!  搜索失败了...?")
-      console.log(data.searchResultstatus)
+      // console.log(data.searchResultstatus)
       this.tableData = data.searchResult
       this.totalNumber = data.totalNumber
       this.showLoading = false
@@ -202,12 +202,12 @@ export default {
       this.$parent.api.reBuild()
     },
     // 有防抖的搜索
-    doDebounceSearch: Lodash.debounce(async function() {
-      console.log(this)
+    doDebounceSearch: debounce(async function() {
+      // console.log(this)
       this.doSearch()
     }, 500),
     //无防抖的搜索
-    doNoDebounceSearch: Lodash.debounce(async function() {
+    doNoDebounceSearch: debounce(async function() {
       this.doSearch()
     }, 0),
     // 页码size变化

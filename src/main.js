@@ -5,7 +5,6 @@ import router from './router'
 import './plugins/element.js'
 import 'fullpage.js/vendors/scrolloverflow';
 import VueFullPage from 'vue-fullpage.js'
-import Lodash from 'lodash'
 import './assets/css/global.css'
 import './assets/css/fullpage.min.css'
 import axios from 'axios'
@@ -13,7 +12,6 @@ import APlayer from '@moefe/vue-aplayer';
 import './axiosConfig'
 
 Vue.prototype.$axios = axios
-Vue.prototype.Lodash = Lodash
 
 Vue.use(VueFullPage)
 Vue.use(APlayer, {

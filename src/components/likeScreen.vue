@@ -100,11 +100,13 @@ import arknights7 from "../assets/arknights7.jpg"
 import arknights8 from "../assets/arknights8.jpg"
 import arknights9 from "../assets/arknights9.jpg"
 
+import { shuffle } from "lodash"
+
 export default {
   name: "LikeScreen",
   data() {
     return {
-      randomScreen: this.Lodash.shuffle([lovelive0, arknights1, arknights2, arknights3, arknights4, arknights5, arknights6, arknights7, arknights8, arknights9]),
+      randomScreen: shuffle([lovelive0, arknights1, arknights2, arknights3, arknights4, arknights5, arknights6, arknights7, arknights8, arknights9]),
       timeNow: "",
       timer: "",
       mouseDown: {
@@ -158,7 +160,7 @@ export default {
       this.timeNow = (hour % 12) + ":" + minute + " " + ampm
     },
     scaleDown(index) {
-      console.log(Object.keys(this.mouseDown)[index])
+      // console.log(Object.keys(this.mouseDown)[index])
       this.mouseDown[(this.mouseDown, Object.keys(this.mouseDown)[index])] = true
     },
     scaleUp(index) {
