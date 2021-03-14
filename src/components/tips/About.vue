@@ -32,14 +32,13 @@ export default {
   name: "About",
   data() {
     return {
-      total: 0
+      total: "许多"
     }
   },
   async created() {
     let { data } = await this.$axios.get("/getCorpusData")
     this.total = data.total
   },
-  mounted() {},
   computed: {
     timeNow: function() {
       let date = new Date()
@@ -49,7 +48,6 @@ export default {
       return year + "年" + month + "月" + day + "日"
     }
   },
-  watch: {},
   methods: {
     shutDialog() {
       this.$emit("shut", false)

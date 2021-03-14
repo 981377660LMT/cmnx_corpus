@@ -203,9 +203,7 @@ export default {
     }
   },
 
-  created() {
-    this.set_bgimg_interval()
-  },
+  created() {},
 
   mounted() {},
   computed: {
@@ -239,18 +237,12 @@ export default {
     AfterLogin: () => import("../components/beforeEnter/AfterLogin")
   },
   methods: {
-    set_bgimg_interval() {
-      this.bg_img_interval = window.setInterval(() => {
-        this.random_home_img_index = this.random_home_img_index == this.random_arr.length - 1 ? 0 : this.random_home_img_index + 1
-      }, 10000)
-    },
     image_index_plus() {
       if (this.isclick1) {
         this.isclick1 = false
         this.isclick2 = false
         this.random_home_img_index = this.random_home_img_index == this.random_arr.length - 1 ? 0 : this.random_home_img_index + 1
-        clearInterval(this.bg_img_interval)
-        this.set_bgimg_interval()
+
         setTimeout(() => {
           this.isclick1 = true
           this.isclick2 = true
@@ -262,8 +254,6 @@ export default {
         this.isclick2 = false
         this.isclick1 = false
         this.random_home_img_index = this.random_home_img_index == 0 ? this.random_arr.length - 1 : this.random_home_img_index - 1
-        clearInterval(this.bg_img_interval)
-        this.set_bgimg_interval()
         setTimeout(() => {
           this.isclick2 = true
           this.isclick1 = true

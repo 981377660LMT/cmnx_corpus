@@ -43,7 +43,6 @@ export default {
     this.getLike()
   },
   //用户的收藏数目有变动时，马上更新myData
-  // mounted () {},
   computed: {
     //没有预料时提示添加语料
     showInfo: function() {

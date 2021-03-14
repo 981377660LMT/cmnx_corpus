@@ -9,15 +9,7 @@
 
 <script>
 export default {
-  name: "Error404",
-  data() {
-    return {}
-  },
-  created() {},
-  // mounted () {},
-  computed: {},
-  watch: {},
-  methods: {}
+  name: "Error404"
 }
 </script>
 

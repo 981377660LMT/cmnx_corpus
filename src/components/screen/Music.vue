@@ -55,18 +55,13 @@ export default {
       ]
     }
   },
-  created() {},
   mounted() {
     //自动改变主题颜色
-    const link = document.createElement("script")
-    link.type = "text/javascript"
-    link.src = "https://cdn.jsdelivr.net/npm/colorthief@2.0.2/dist/color-thief.min.js"
-    document.body.appendChild(link)
-  },
-  computed: {},
-  watch: {},
-  components: {},
-  methods: {}
+    // const link = document.createElement("script")
+    // link.type = "text/javascript"
+    // link.src = "https://cdn.jsdelivr.net/npm/colorthief@2.0.2/dist/color-thief.min.js"
+    // document.body.appendChild(link)
+  }
 }
 </script>
 

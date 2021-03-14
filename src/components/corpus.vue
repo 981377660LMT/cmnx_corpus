@@ -74,7 +74,7 @@
       </el-table>
 
       <!-- 分页 -->
-      <el-pagination class="paginationBottom" @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[3, 5, 7, 10]" :page-size="pageSize"
+      <el-pagination class="paginationBottom" @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[5, 10, 15, 20]" :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper" :total="totalNumber" :popper-append-to-body="false">
       </el-pagination>
 
@@ -102,6 +102,8 @@ export default {
       pageSize: 5,
       //绑定表格数据
       tableData: [],
+      // 存储100条数据
+      allData: [],
       // input里的输入
       input: "",
       // 夜间模式
@@ -125,7 +127,9 @@ export default {
   },
   watch: {
     input: function() {
-      this.doDebounceSearch()
+      if (this.input.trim().length > 0) {
+        this.doDebounceSearch()
+      }
     },
     //手机界面的收藏被删除时，对应的收藏星星变色
     corpusId: function(corpusId) {
@@ -185,6 +189,7 @@ export default {
     async doSearch() {
       this.showTable = false
       this.showLoading = true
+
       const { data, status } = await this.$axios.get("/doSearch", {
         params: {
           matchMode: this.matchMode,
@@ -193,9 +198,14 @@ export default {
           searchPageSize: this.pageSize
         }
       })
+
       if (status !== 200) return this.$message.error("(◎-◎;)!!  搜索失败了...?")
-      // console.log(data.searchResultstatus)
-      this.tableData = data.searchResult
+      if ((this.currentPage - 1) * this.pageSize >= 120) {
+        this.tableData = data.searchResult
+      } else {
+        this.allData = data.searchResult
+        this.tableData = this.allData.slice(this.pageSize * (this.currentPage - 1), this.currentPage * this.pageSize)
+      }
       this.totalNumber = data.totalNumber
       this.showLoading = false
       this.showTable = true
@@ -213,11 +223,17 @@ export default {
     // 页码size变化
     handleSizeChange(newSize) {
       this.pageSize = newSize
+      if ((this.currentPage - 1) * this.pageSize < 120) {
+        return (this.tableData = this.allData.slice(this.pageSize * (this.currentPage - 1), this.currentPage * this.pageSize))
+      }
       this.doNoDebounceSearch()
     },
     // 当前页码数变化
     handleCurrentChange(newPage) {
       this.currentPage = newPage
+      if ((this.currentPage - 1) * this.pageSize < 120) {
+        return (this.tableData = this.allData.slice(this.pageSize * (this.currentPage - 1), this.currentPage * this.pageSize))
+      }
       this.doNoDebounceSearch()
     },
     goToCorpus() {
@@ -254,7 +270,7 @@ export default {
 
 <style lang="less" scoped>
 @import "../assets/css/corpus.css";
-.loop(@n) when (@n < 20) {
+.loop(@n) when (@n < 21) {
   #corpus /deep/ .el-table__body {
     .el-table__row:nth-child(@{n}) {
       opacity: 0;

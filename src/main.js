@@ -11,6 +11,7 @@ import axios from 'axios'
 import APlayer from '@moefe/vue-aplayer';
 import './axiosConfig'
 
+
 Vue.prototype.$axios = axios
 
 Vue.use(VueFullPage)
@@ -19,12 +20,12 @@ Vue.use(APlayer, {
   productionTip: false, // 是否在控制台输出版本信息
 });
 
-if (process.env.NODE_ENV == 'development') {
-  Vue.config.productionTip = false
-}
-else if (process.env.NODE_ENV == 'production') {
-  Vue.config.productionTip = true
-}
+// if (process.env.NODE_ENV == 'development') {
+//   Vue.config.productionTip = false
+// }
+// else if (process.env.NODE_ENV == 'production') {
+Vue.config.productionTip = true
+// }
 
 new Vue({
   store,

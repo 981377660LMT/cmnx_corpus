@@ -8,7 +8,6 @@ const router = new VueRouter({
     {
       path: '/home',
       name: 'CMNX_CORPUS',
-      // meta: { index: 0 },
       component: () => import('../components/Home.vue'),
       children: [
         { path: '/Ctm49Site', component: () => import('../components/screen/Ctm49Site.vue'), name: "Yitx's Blog" },

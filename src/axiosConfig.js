@@ -4,13 +4,13 @@ import { Message } from 'element-ui'
 import store from './store'
 
 // if (process.env.NODE_ENV == 'development') {
-//     axios.defaults.baseURL = 'http://127.0.0.1:80/api';
+// axios.defaults.baseURL = 'http://127.0.0.1:80/api';
 // }
 // else if (process.env.NODE_ENV == 'production') {
-axios.defaults.baseURL = 'http://104.248.10.134:80/api';
+axios.defaults.baseURL = 'http://cmnx.me:80/api';
 // }
 
-axios.defaults.timeout = 5000;
+axios.defaults.timeout = 8000;
 
 // axios.defaults.withCredentials = true
 
