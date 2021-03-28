@@ -316,8 +316,8 @@ export default {
 }
 </script>
 
-<style src="../assets/css/corpus.css"></style>
 <style lang="less" scoped>
+@import '../assets/css/corpus.css';
 /deep/ .el-dropdown-menu__item {
   font-family: 'Microsoft YaHei';
 }

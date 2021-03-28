@@ -1,7 +1,7 @@
 <template>
   <div id="Ctm49Site" class="screenContainer">
     <div id="loadingTips" v-if="showLoading">
-      {{ this.$store.getters.getLoadingTips[this.randomIndex]["content"] }}
+      {{ this.$store.getters.getLoadingTips[this.randomIndex]['content'] }}
     </div>
     <div id="Loading" v-if="showLoading">
       <div class="ball-beat">
@@ -19,18 +19,13 @@
 
 <script>
 export default {
-  name: "Ctm49Site",
+  name: 'Ctm49Site',
   data() {
     return {
       showLoading: true,
-      randomIndex: 0
+      randomIndex: 0,
     }
   },
-  created() {},
-  mounted() {},
-  computed: {},
-  watch: {},
-  methods: {},
   beforeRouteEnter(to, from, next) {
     // 这里还无法访问到组件实例，this === undefined
     //要在next里访问vue实例
@@ -44,7 +39,7 @@ export default {
         }
       }, 300)
     })
-  }
+  },
 }
 </script>
 
@@ -70,12 +65,12 @@ export default {
   color: white;
   text-align: center;
   font-size: 20px;
-  font-family: "pixChar";
+  font-family: 'pixChar';
   z-index: 100;
 }
 
 @font-face {
-  font-family: "pixChar";
-  src: url("../../assets/pixChar.ttf");
+  font-family: 'pixChar';
+  src: url('../../assets/pixChar.ttf');
 }
 </style>

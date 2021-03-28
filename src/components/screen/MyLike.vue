@@ -1,7 +1,7 @@
 <template>
   <div id="MyLike" class="screenContainer">
     <!-- 收藏为空的背景 -->
-    <div id="empty" v-if="likeNumber===0">
+    <div id="empty" v-if="likeNumber === 0">
       <img src="../../assets/empty.png" />
       <div>这里有一个...空的收藏夹</div>
     </div>
@@ -11,31 +11,30 @@
       <el-tabs tab-position="left">
         <el-tab-pane v-for="item in myData" :key="item.from" :label="item.from">
           <!-- 右侧卡片 -->
-          <el-card v-for="(data,dataIndex) in item.data" :key="data.corpusId">
+          <el-card v-for="(data, dataIndex) in item.data" :key="data.corpusId">
             <div slot="header">
-              <span class="dataIndex">{{dataIndex+1}}</span>
+              <span class="dataIndex">{{ dataIndex + 1 }}</span>
               <div class="el-icon-delete-solid" @click="deleteLike(data.corpusId)">删除收藏</div>
             </div>
             <div>
-              <p>中文：{{data.chinese}}</p>
-              <p>日文：{{data.japanese}}</p>
+              <p>中文：{{ data.chinese }}</p>
+              <p>日文：{{ data.japanese }}</p>
             </div>
           </el-card>
         </el-tab-pane>
       </el-tabs>
     </el-card>
-
   </div>
 </template>
 
 <script>
-import { Message } from "element-ui"
+import { Message } from 'element-ui'
 
 export default {
-  name: "MyLike",
+  name: 'MyLike',
   data() {
     return {
-      myData: []
+      myData: [],
     }
   },
   created() {
@@ -53,7 +52,7 @@ export default {
     },
     token: function() {
       return this.$store.state.token
-    }
+    },
   },
   watch: {
     likeNumber: function() {
@@ -63,42 +62,43 @@ export default {
     },
     token: function(token) {
       if (!token) {
-        this.$router.push("/home")
+        this.$router.push('/home')
       }
-    }
+    },
   },
   methods: {
     async getLike() {
-      const { data, status } = await this.$axios.get("/getLike")
-      if (status !== 200) return this.$message.error("(◎-◎;)!!  获取收藏失败了...?")
+      const { data, status } = await this.$axios.get('/getLike')
+      if (status !== 200) return this.$message.error('(◎-◎;)!!  获取收藏失败了...?')
       this.myData = data.myLikeResult
     },
     async deleteLike(corpusId) {
-      this.$store.commit("changeCorpusId", corpusId)
-      const { data, status } = await this.$axios.delete("/deleteLike", { data: { corpusId: corpusId } })
-      if (status != 200) return this.$message.error("(◎-◎;)!!  删除收藏失败了...?")
+      this.$store.commit('changeCorpusId', corpusId)
+      const { data, status } = await this.$axios.delete('/deleteLike', {
+        data: { corpusId: corpusId },
+      })
+      if (status != 200) return this.$message.error('(◎-◎;)!!  删除收藏失败了...?')
       this.$message.success({
         showClose: true,
         message: `删除收藏成功！`,
-        duration: 1000
+        duration: 1000,
       })
       this.getLike()
-      this.$store.commit("changeLikeNumber", data.likeNumber)
-    }
+      this.$store.commit('changeLikeNumber', data.likeNumber)
+    },
   },
   beforeRouteEnter: (to, from, next) => {
-    const token = window.sessionStorage.getItem("token")
+    const token = window.sessionStorage.getItem('token')
     if (!token) {
-      Message.error("(◎-◎;)!!   请先进行登录!")
-      return next("/home")
+      Message.error('(◎-◎;)!!   请先进行登录!')
+      return next('/home')
     }
     next(vm => {
       return vm.getLike()
     })
-  }
+  },
 }
 </script>
-
 
 <style lang="less" scoped>
 .screenContainer {
@@ -130,7 +130,7 @@ export default {
 
 #MyLike /deep/ .el-tabs__nav {
   height: 533px;
-  font-family: "Arial", "华文细黑";
+  font-family: 'Arial', '华文细黑';
   overflow-y: scroll;
 }
 
@@ -138,7 +138,7 @@ export default {
   height: 533px;
   font-weight: 500;
   overflow-y: scroll;
-  font-family: "游明朝体";
+  font-family: '游明朝体';
 }
 
 #MyLike /deep/ .el-tabs__content .el-card__body {
@@ -148,7 +148,7 @@ export default {
 .dataIndex {
   font-size: 20px;
   font-weight: 600;
-  font-family: "Arial";
+  font-family: 'Arial';
 }
 
 .el-icon-delete-solid {
@@ -170,7 +170,7 @@ export default {
   }
   font-size: 40px;
   font-weight: 600;
-  font-family: "华文细黑";
+  font-family: '华文细黑';
   z-index: 100;
 }
 </style>
