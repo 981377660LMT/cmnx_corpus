@@ -1,37 +1,14 @@
-#About /deep/ .el-dialog{
-    font-family: "Microsoft Yahei";
-    user-select: none;
-}
-
-#home /deep/ .el-dialog__title{
-    font-size: 30px ;
-    line-height: 30px;
-    font-weight: 600;
-}
-
-#home /deep/ .el-dialog__body{
-    font-size: 16px;
-    padding:0 25px 50px !important;
-}
-
-#About /deep/ .el-button{
-    position: absolute;
-    right:20px;
-    bottom:20px
-}
-
 #About h2 {
-    font-size: 24px;
+  font-size: 24px;
 }
 
-#About p{
-    margin: 0;
-    text-indent: 2em;
-    font-size: 16px;
+#About p {
+  margin: 0;
+  text-indent: 2em;
+  font-size: 16px;
 }
 
-#About a{
-    color:#71C49E;
-    cursor:pointer;
-    
+#About a {
+  color: #71c49e;
+  cursor: pointer;
 }

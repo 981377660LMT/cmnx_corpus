@@ -1,28 +1,44 @@
 <template>
   <div id="home" class="rwl-exempt" @keydown.ctrl="test">
     <!-- 关于对话框 -->
-    <el-dialog title="关于本站" width="60%" center :visible.sync="centerDialogVisible" @close="centerDialogVisible = false" custom-class="el-opacity">
+    <el-dialog
+      title="关于本站"
+      width="60%"
+      center
+      :visible.sync="centerDialogVisible"
+      @close="centerDialogVisible = false"
+      custom-class="el-opacity"
+    >
       <about @shut="childShutDialog" @open="childOpenDrawer"></about>
     </el-dialog>
     <!-- drawer -->
-    <el-drawer :title="drawerTitle" direction="ltr" :visible="drawerVisible" custom-class="el-opacity" @close="drawerVisible=false" size="20%">
+    <el-drawer
+      :title="drawerTitle"
+      direction="ltr"
+      :visible="drawerVisible"
+      custom-class="el-opacity"
+      @close="drawerVisible = false"
+      size="20%"
+    >
       <transition name="drawerComponent" mode="out-in">
         <keep-alive>
-          <login v-if="loginState==1&&!token"></login>
-          <signUp v-else-if="loginState==2&&!token"></signUp>
-          <afterLogin v-else-if="loginState==3||token"></afterLogin>
+          <login v-if="loginState == 1 && !token"></login>
+          <signUp v-else-if="loginState == 2 && !token"></signUp>
+          <afterLogin v-else-if="loginState == 3 || token"></afterLogin>
         </keep-alive>
       </transition>
     </el-drawer>
     <!-- 导航nav -->
     <el-header class="nav " ref="nav" :class="{ navShow: isnavShow }">
       <el-row>
-        <el-col :span="8"><a href="/" class="left">
+        <el-col :span="8"
+          ><a href="/" class="left">
             <div class="el-icon-milk-tea icon"></div>
             草莓奶昔的语料库小站
           </a>
         </el-col>
-        <el-col :span="16"><a class="right" @click="drawerVisible = true">
+        <el-col :span="16"
+          ><a class="right" @click="drawerVisible = true">
             <div class="el-icon-user-solid icon"></div>
             我的
           </a>
@@ -49,9 +65,13 @@
     <!-- 整个应用开始 -->
     <full-page :options="options" ref="fullpage">
       <!-- 第一屏 -->
-      <div class="section" id="home1" :style="{
-          backgroundImage: 'url(' + random_arr[random_home_img_index] + ')'
-        }">
+      <div
+        class="section"
+        id="home1"
+        :style="{
+          backgroundImage: 'url(' + random_arr[random_home_img_index] + ')',
+        }"
+      >
         <!-- 中部 -->
         <div class="center_info">
           <h1 class="neon" @click="moveTo(2, 0)">CMNX_CORPUS</h1>
@@ -102,21 +122,36 @@
       </div>
       <!-- glitch特效 -->
       <div class="glitch set">
-        <div class="glitch_img" :style="{
-            backgroundImage: 'url(' + random_arr[random_home_img_index] + ')'
-          }"></div>
-        <div class="glitch_img" :style="{
-            backgroundImage: 'url(' + random_arr[random_home_img_index] + ')'
-          }"></div>
-        <div class="glitch_img" :style="{
-            backgroundImage: 'url(' + random_arr[random_home_img_index] + ')'
-          }"></div>
-        <div class="glitch_img" :style="{
-            backgroundImage: 'url(' + random_arr[random_home_img_index] + ')'
-          }"></div>
-        <div class="glitch_img" :style="{
-            backgroundImage: 'url(' + random_arr[random_home_img_index] + ')'
-          }"></div>
+        <div
+          class="glitch_img"
+          :style="{
+            backgroundImage: 'url(' + random_arr[random_home_img_index] + ')',
+          }"
+        ></div>
+        <div
+          class="glitch_img"
+          :style="{
+            backgroundImage: 'url(' + random_arr[random_home_img_index] + ')',
+          }"
+        ></div>
+        <div
+          class="glitch_img"
+          :style="{
+            backgroundImage: 'url(' + random_arr[random_home_img_index] + ')',
+          }"
+        ></div>
+        <div
+          class="glitch_img"
+          :style="{
+            backgroundImage: 'url(' + random_arr[random_home_img_index] + ')',
+          }"
+        ></div>
+        <div
+          class="glitch_img"
+          :style="{
+            backgroundImage: 'url(' + random_arr[random_home_img_index] + ')',
+          }"
+        ></div>
       </div>
       <!-- 第二屏 -->
       <div class="section" id="home2">
@@ -135,21 +170,21 @@
 
 <script>
 // 改变图片的方式：import图片存入数组，style绑定
-import steins0 from "../assets/steins0.jpg"
-import lovelive0 from "../assets/lovelive0.jpg"
-import arknights2 from "../assets/arknights2.jpg"
-import arknights3 from "../assets/arknights3.jpg"
-import arknights4 from "../assets/arknights4.jpg"
-import arknights6 from "../assets/arknights6.jpg"
-import arknights7 from "../assets/arknights7.jpg"
-import arknights8 from "../assets/arknights8.jpg"
-import arknights9 from "../assets/arknights9.jpg"
+import steins0 from '../assets/steins0.jpg'
+import lovelive0 from '../assets/lovelive0.jpg'
+import arknights2 from '../assets/arknights2.jpg'
+import arknights3 from '../assets/arknights3.jpg'
+import arknights4 from '../assets/arknights4.jpg'
+import arknights6 from '../assets/arknights6.jpg'
+import arknights7 from '../assets/arknights7.jpg'
+import arknights8 from '../assets/arknights8.jpg'
+import arknights9 from '../assets/arknights9.jpg'
 
-import Corpus from "../components/Corpus"
-import Like from "../components/Like"
-import About from "../components/tips/About"
+import Corpus from '../components/Corpus'
+import Like from '../components/Like'
+import About from '../components/tips/About'
 
-import { shuffle } from "lodash"
+import { shuffle } from 'lodash'
 
 export default {
   data() {
@@ -160,7 +195,7 @@ export default {
         navigation: false,
         keyboardScrolling: false,
         controlArrows: false,
-        normalScrollElements: ".el-drawer,.nav,.aplayer,#myLikeCard",
+        normalScrollElements: '.el-drawer,.nav,.aplayer,#myLikeCard',
         // 内容超过满屏时是否显示滚动条
         scrollOverflow: true,
         //Section滚动前的回调函数onLeave (index, nextIndex, direction),从0开始计算
@@ -183,10 +218,20 @@ export default {
           } else {
             this.isnavShow = true
           }
-        }
+        },
       },
       //主页面图片
-      random_arr: shuffle([steins0, lovelive0, arknights2, arknights3, arknights4, arknights6, arknights7, arknights8, arknights9]),
+      random_arr: shuffle([
+        steins0,
+        lovelive0,
+        arknights2,
+        arknights3,
+        arknights4,
+        arknights6,
+        arknights7,
+        arknights8,
+        arknights9,
+      ]),
       random_home_img_index: 0,
       //防止切换图片过快
       isclick1: true,
@@ -199,7 +244,7 @@ export default {
       centerDialogVisible: false,
       drawerVisible: false,
       //是否显示注册组件
-      isSignUp: false
+      isSignUp: false,
     }
   },
 
@@ -213,35 +258,38 @@ export default {
     drawerTitle: function() {
       switch (this.$store.state.token || this.loginState) {
         case 1:
-          return "登录"
+          return '登录'
           break
         case 2:
-          return "注册"
+          return '注册'
           break
         default:
-          return "我"
+          return '我'
           break
       }
     },
     token: function() {
       return this.$store.state.token
-    }
+    },
   },
   watch: {},
   components: {
     Corpus,
     Like,
     About,
-    Login: () => import("../components/beforeEnter/Login"),
-    SignUp: () => import("../components/beforeEnter/SignUp"),
-    AfterLogin: () => import("../components/beforeEnter/AfterLogin")
+    Login: () => import('../components/beforeEnter/Login'),
+    SignUp: () => import('../components/beforeEnter/SignUp'),
+    AfterLogin: () => import('../components/beforeEnter/AfterLogin'),
   },
   methods: {
     image_index_plus() {
       if (this.isclick1) {
         this.isclick1 = false
         this.isclick2 = false
-        this.random_home_img_index = this.random_home_img_index == this.random_arr.length - 1 ? 0 : this.random_home_img_index + 1
+        this.random_home_img_index =
+          this.random_home_img_index == this.random_arr.length - 1
+            ? 0
+            : this.random_home_img_index + 1
 
         setTimeout(() => {
           this.isclick1 = true
@@ -253,7 +301,10 @@ export default {
       if (this.isclick2) {
         this.isclick2 = false
         this.isclick1 = false
-        this.random_home_img_index = this.random_home_img_index == 0 ? this.random_arr.length - 1 : this.random_home_img_index - 1
+        this.random_home_img_index =
+          this.random_home_img_index == 0
+            ? this.random_arr.length - 1
+            : this.random_home_img_index - 1
         setTimeout(() => {
           this.isclick2 = true
           this.isclick1 = true
@@ -269,14 +320,22 @@ export default {
     },
     childOpenDrawer(value) {
       this.drawerVisible = value
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style  lang='less' scoped >
-@import "../assets/css/glitch.css";
-@import "../assets/css/home1.css";
+<style lang="less" scoped>
+@import '../assets/css/glitch.css';
+@import '../assets/css/home1.css';
+
+/deep/ #el-drawer__title {
+  text-align: center;
+  padding: 0 20px 0 50px;
+  font-size: 30px;
+  font-family: '华文细黑';
+}
+
 .drawerComponent-enter,
 .drawerComponent-leave-to {
   transform: translateX(-50px);
