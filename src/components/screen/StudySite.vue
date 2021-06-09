@@ -1,7 +1,7 @@
 <template>
   <div id="StudySite" class="screenContainer">
     <div id="loadingTips" v-if="showLoading">
-      {{ this.$store.getters.getLoadingTips[this.randomIndex]["content"] }}
+      {{ this.$store.getters.getLoadingTips[this.randomIndex]['content'] }}
     </div>
     <div id="Loading" v-if="showLoading">
       <div class="ball-beat">
@@ -19,16 +19,14 @@
 
 <script>
 export default {
-  name: "StudySite",
+  name: 'StudySite',
   data() {
     return {
       showLoading: true,
-      randomIndex: 0
+      randomIndex: 0,
     }
   },
-  created() {
-    // console.log(this.$store)
-  },
+  created() {},
   mounted() {},
   computed: {},
   watch: {},
@@ -46,7 +44,7 @@ export default {
         }
       }, 600)
     })
-  }
+  },
 }
 </script>
 
@@ -71,14 +69,12 @@ iframe {
   color: white;
   text-align: center;
   font-size: 20px;
-  font-family: "pixChar";
+  font-family: 'pixChar';
   z-index: 100;
 }
 
 @font-face {
-  font-family: "pixChar";
-  src: url("../../assets/pixChar.ttf");
+  font-family: 'pixChar';
+  src: url('../../assets/pixChar.ttf');
 }
 </style>
-
-

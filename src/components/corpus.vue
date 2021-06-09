@@ -42,8 +42,8 @@
               <el-dropdown
                 trigger="hover"
                 @command="handleMatchCommand"
-                show-timeout="100"
-                hide-timeout="100"
+                :show-timeout="100"
+                :hide-timeout="100"
               >
                 <span class="el-dropdown-link">
                   选择搜索模式<i class="el-icon-arrow-down el-icon--right"></i>

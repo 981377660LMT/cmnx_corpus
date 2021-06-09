@@ -1,5 +1,5 @@
 <template>
-  <div id="home" class="rwl-exempt" @keydown.ctrl="test">
+  <div id="home" class="rwl-exempt">
     <!-- 关于对话框 -->
     <el-dialog
       title="关于本站"

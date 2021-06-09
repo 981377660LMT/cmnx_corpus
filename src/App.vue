@@ -6,11 +6,17 @@
 
 <script>
 export default {
-  name: "app",
+  name: 'app',
   mounted() {
-    document.body.removeChild(document.getElementById("Loading"))
-  }
+    document.body.removeChild(document.getElementById('Loading'))
+  },
 }
 </script>
 
-
+<style scoped>
+/* 加的 */
+#app {
+  height: 100%;
+  overflow: auto;
+}
+</style>

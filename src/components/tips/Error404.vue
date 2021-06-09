@@ -1,15 +1,16 @@
 <template>
   <div id="Error404">
     <div id="message">
-      <span id="head">404</span>
-      <span id="tail">This page could not be found.</span>
+      <router-link to="/home"> <span id="head">404</span></router-link>
+
+      <span id="tail"> <- Go back to Home.</span>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Error404"
+  name: 'Error404',
 }
 </script>
 
@@ -21,10 +22,12 @@ export default {
   transform: translate(-50%, -50%);
   background-color: black;
   color: white;
-  font-family: -apple-system, BlinkMacSystemFont, Roboto, "Segoe UI", "Fira Sans", Avenir, "Helvetica Neue", "Lucida Grande", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Roboto, 'Segoe UI', 'Fira Sans', Avenir,
+    'Helvetica Neue', 'Lucida Grande', sans-serif;
 }
 
 #head {
+  color: white;
   display: inline-block;
   font-size: 24px;
   font-weight: 500;
