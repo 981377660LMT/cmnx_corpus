@@ -1,0 +1,64 @@
+/* 全局样式表 */
+html,
+body,
+#app {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* 最小屏幕宽度 */
+  min-width:1180px ; 
+  /* user-select: none; */
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+  clear: both;
+}
+
+li{
+  list-style: none;
+}
+
+a{
+  text-decoration:none;
+}
+
+.el-popover {
+  max-width: 100px;
+  max-height: 100px;
+  background: rgba(0, 0, 0, 0.3);
+  text-align: center;
+  padding: 5px;
+  min-width: 0;
+  border-radius: 8px;
+  /* transition: all 0.4s ease-in-out; */
+}
+
+.el-opacity{
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+} 
+
+.fp-slidesNav{
+  text-align: center;
+}
+
+.el-pagination {
+  font-family: "Microsoft Yahei" !important;
+}
+
+.el-message{
+  font-size: 20px;
+}
+
+.el-message__content{
+  font-size: 18px;
+  font-family:'Arial', '华文细黑';
+}
+
+.el-notification{
+  opacity: 0.85;
+  width: 350px;
+  font-family: "Arial";
+}
+

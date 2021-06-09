@@ -1,0 +1,14 @@
+#About h2 {
+  font-size: 24px;
+}
+
+#About p {
+  margin: 0;
+  text-indent: 2em;
+  font-size: 16px;
+}
+
+#About a {
+  color: #71c49e;
+  cursor: pointer;
+}
