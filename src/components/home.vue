@@ -1,5 +1,5 @@
 <template>
-  <div id="home" class="rwl-exempt">
+  <div id="home">
     <!-- 关于对话框 -->
     <el-dialog
       title="关于本站"
@@ -63,7 +63,7 @@
     </el-header>
 
     <!-- 整个应用开始 -->
-    <full-page :options="options" ref="fullpage">
+    <full-page :options="options" id="fullpage" :skip-init="true" ref="fullpage">
       <!-- 第一屏 -->
       <div
         class="section"
@@ -154,14 +154,14 @@
         ></div>
       </div>
       <!-- 第二屏 -->
-      <div class="section" id="home2">
+      <div class="section">
         <!-- 第二屏Corpus -->
         <div class="slide" id="corpus">
-          <corpus></corpus>
+          <Corpus />
         </div>
         <!-- 第二屏like -->
         <div class="slide" id="like">
-          <like></like>
+          <Like />
         </div>
       </div>
     </full-page>
@@ -192,6 +192,7 @@ export default {
       isnavShow: false,
       //fullpage插件设置
       options: {
+        afterLoad: this.afterLoad,
         navigation: false,
         keyboardScrolling: false,
         controlArrows: false,
@@ -250,7 +251,14 @@ export default {
 
   created() {},
 
-  mounted() {},
+  mounted() {
+    setTimeout(() => {
+      this.$refs.fullpage.init()
+    }, 0)
+    // this.$nextTick(() => {
+    //   this.$refs.fullpage.init()
+    // })
+  },
   computed: {
     loginState: function() {
       return this.$store.state.loginState
@@ -259,13 +267,10 @@ export default {
       switch (this.$store.state.token || this.loginState) {
         case 1:
           return '登录'
-          break
         case 2:
           return '注册'
-          break
         default:
           return '我'
-          break
       }
     },
     token: function() {
@@ -282,6 +287,9 @@ export default {
     AfterLogin: () => import('../components/beforeEnter/AfterLogin'),
   },
   methods: {
+    afterLoad() {
+      console.log('After load')
+    },
     image_index_plus() {
       if (this.isclick1) {
         this.isclick1 = false

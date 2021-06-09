@@ -15,8 +15,8 @@ export default {
 
 <style scoped>
 /* 加的 */
-#app {
+/* #app {
   height: 100%;
   overflow: auto;
-}
+} */
 </style>
