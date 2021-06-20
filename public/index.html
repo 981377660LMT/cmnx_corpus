@@ -8,49 +8,8 @@
     <title>
       <%= htmlWebpackPlugin.options.title %>
     </title>
-
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.20/lodash.min.js"></script>
-
-    <style type="text/css">
-      body {
-        background-color: rgb(0, 0, 0);
-      }
-
-      #Loading {
-        top: 50%;
-        left: 50%;
-        position: absolute;
-        transform: translateY(-50%) translateX(-50%);
-        z-index: 100;
-      }
-
-      @keyframes ball-beat {
-        50% {
-          opacity: 0.2;
-          transform: scale(0.75);
-        }
-
-        100% {
-          opacity: 1;
-          transform: scale(1);
-        }
-      }
-
-      .ball-beat > div {
-        background-color: #ffffff;
-        width: 10px;
-        height: 10px;
-        border-radius: 100% !important;
-        margin: 6px;
-        display: inline-block;
-        animation: ball-beat 0.5s 0s infinite linear;
-      }
-
-      .ball-beat > div:nth-child(2n-1) {
-        animation-delay: 0.25s;
-      }
-    </style>
   </head>
 
   <body>
@@ -60,17 +19,6 @@
         JavaScript enabled. Please enable it to continue.</strong
       >
     </noscript>
-    <div id="Loading">
-      <div class="ball-beat">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-    </div>
     <div id="app"></div>
-    <!-- built files will be auto injected -->
   </body>
 </html>

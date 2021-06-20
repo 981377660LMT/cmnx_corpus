@@ -3,9 +3,9 @@ import router from './router'
 import { Message } from 'element-ui'
 import store from './store'
 
-axios.defaults.baseURL = 'http://cmnx.me:80/api'
+axios.defaults.baseURL = 'https://cmnx.me/api'
 
-axios.defaults.timeout = 8000
+axios.defaults.timeout = 5000
 
 // axios.defaults.withCredentials = true
 
@@ -26,15 +26,22 @@ axios.interceptors.response.use(
     return response
   },
   function(error) {
-    let { status } = error.response
-    // 约定好403状态码为token不正确
-    if (status == 403) {
-      router.push('/home')
-      Message.error('(◎-◎;)!!   请先进行登录!')
-      window.sessionStorage.removeItem('token')
-      store.commit('setToken', '')
-      return
+    try {
+      const { status } = error.response
+      // 约定好403状态码为token不正确
+      if (status == 403) {
+        router.push('/home')
+        Message.error('(◎-◎;)!!   请先进行登录!')
+        window.sessionStorage.removeItem('token')
+        store.commit('setToken', '')
+        return
+      }
+      return error.response
+    } catch (ignored) {
+      return {
+        data: { searchResult: [] },
+        status: 401,
+      }
     }
-    return error.response
   }
 )

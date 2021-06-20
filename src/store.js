@@ -7,6 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     loadingTips,
+    isVueScrollInit: false,
     showMusic: false,
     //用户收藏词条数
     likeNumber: 0,
@@ -34,6 +35,9 @@ export default new Vuex.Store({
     },
     changeCorpusId(state, value) {
       state.corpusId = value
+    },
+    changeIsVueScrollInit(state) {
+      state.isVueScrollInit = true
     },
   },
   actions: {},

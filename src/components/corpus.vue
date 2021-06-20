@@ -238,7 +238,13 @@ export default {
         },
       })
 
-      if (status !== 200) return this.$message.error('(◎-◎;)!!  搜索失败了...?')
+      if (status !== 200) {
+        this.$message.error('(◎-◎;)!!  搜索失败了...?')
+        this.showLoading = false
+        this.showTable = true
+        this.$parent.api.reBuild()
+        return
+      }
       if ((this.currentPage - 1) * this.pageSize >= 120) {
         this.tableData = data.searchResult
       } else {

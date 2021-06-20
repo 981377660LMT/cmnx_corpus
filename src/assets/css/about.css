@@ -12,3 +12,8 @@
   color: #71c49e;
   cursor: pointer;
 }
+
+.el-dialog__title {
+  font-size: 30px;
+  font-weight: 600;
+}

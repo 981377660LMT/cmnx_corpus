@@ -252,8 +252,10 @@ export default {
   created() {},
 
   mounted() {
+    // this.$refs.fullpage.init()
     setTimeout(() => {
       this.$refs.fullpage.init()
+      this.$store.commit('changeIsVueScrollInit')
     }, 0)
     // this.$nextTick(() => {
     //   this.$refs.fullpage.init()
@@ -287,9 +289,9 @@ export default {
     AfterLogin: () => import('../components/beforeEnter/AfterLogin'),
   },
   methods: {
-    afterLoad() {
-      console.log('After load')
-    },
+    // afterLoad() {
+    //   console.log('After load')
+    // },
     image_index_plus() {
       if (this.isclick1) {
         this.isclick1 = false
